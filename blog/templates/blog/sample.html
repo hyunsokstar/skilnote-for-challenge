@@ -1,0 +1,24 @@
+{% extends "blog/layout.html" %}
+{% load static %}
+
+{%block title %} posting 상세 {% endblock %}
+{%block content %}
+<!-- Blog Detail -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ object.title }}</title>
+</head>
+<body>
+    <h1>{{ object.title }}</h1>
+    <div>
+        {{ object.content }}
+    </div>
+</body>
+</html>
+
+
+
+{% endblock %}

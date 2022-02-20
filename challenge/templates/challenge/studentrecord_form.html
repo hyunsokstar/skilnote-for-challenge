@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ form | crispy }}
+	<button type="submit" class="btn btn-primary float-right">Submit</button>
+</form>
+
+{{ form.media }}
+
+{% endblock %}

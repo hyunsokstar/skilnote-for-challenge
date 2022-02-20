@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<br>
+<h2>개인 메모 추가 </h2>
+
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+<table>
+    {{ form | crispy }}
+
+</table>
+<button type="submit" class="btn btn-primary float-right btn-block">Submit</button>
+</form>
+
+{{ form.media }}
+
+{% endblock %}

@@ -1,0 +1,155 @@
+{% extends "challenge/layout.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+
+{%block title %} Challenge Subject {% endblock %}
+
+{%block extra_css %}
+<link rel="{% static 'challange/challange.css' %}" type="text/css" href="theme.css">
+{% endblock %}
+
+{%block content5 %}
+<br><br><br><br>
+
+<button class="new3_btn btn btn-outline-dark btn-block mt-2" onclick="window.location.href = '{% url 'challenge:CreateChallengeSubjectView' %}';">create</button> <br>
+
+{% if object_list.exists %}
+
+
+<div class="row mt-2">
+
+	{% for p in object_list %}
+	<div class="card mt-2 ml-2" style="width: 20rem;">
+		<!--		<img class="card-img-top" src="..." alt="Card image cap">-->
+		<div class="card-body">
+
+				<div class="container">
+					<div class="row">
+						<div class="">
+							<span class="card-title ">{{ forloop.counter }}</span>
+						</div>
+
+						<div class="col p-1">
+							<!-- <img src="{% static 'icon/askdjango_icon.jpg' %}" width="100%" alt=""> -->
+							{% if p.image %}
+								<img class="card-img-top" src={{ p.image.url }} alt="Card image cap" width="100%" height="80px">
+							{% endif %}
+
+						</div>
+
+						<div class="col p-1">
+							<div class="mb-2">{{p.title}}</div>
+							<div class="">
+								명성 : {{p.like_count}} 점 <br>
+								모임 : {{p.lecinfo_count2}} 개
+							</div>
+						</div>
+						<div class="col p-1">
+							<a href="{% url 'challenge:lecinfo_list_for_challenge' p.title %}"
+							   class="btn btn-outline-dark btn-block float-right">
+							   go
+						   </a>
+						   <!-- <button type="button" name="button" class="mt-2">plus</button> -->
+						   <button type="button" class="plus_minus_for_challenge btn btn-outline-warning mt-2" data-target_id="{{p.id}}" data-my_id="{{request.user.id}}">
+							   <img src="{% static 'icon/plus.png' %}" alt="">
+						   </button>
+						</div>
+					</div>
+					<div class="row mt-4">
+						{% ifequal p.leader request.user %}
+						<div class="container">
+							<div class="row">
+								<div class="col">
+									<a href="{% url "challenge:update_challenge_subject" p.id %}" class="btn btn-outline-danger float-right btn-block">update</a>
+								</div>
+								<div class="col">
+									<button class="btn btn-outline-primary delete_challenge_subject_button float-right btn-block" data-url="{% url 'challenge:delete_challenge_subject_by_id' p.id %}"{{p.id}}">삭제</button>
+
+								</div>
+							</div>
+						</div>
+						{% else %}
+						{% endifequal %}
+					</div>
+				</div>
+
+			</h5>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+{% else %}
+<tr>
+	<td colspan="">
+		<h4>no subject!</h4>
+	</td>
+</tr>
+{% endif %}
+
+<div class="mt-4">
+	{% if is_paginated %}
+	{% bootstrap_pagination page_obj size="small" justify_content="center" %}
+	{% endif %}
+
+	{% endblock %}
+</div>
+
+<script type="text/javascript">
+
+// js area
+
+{% block extra_js %}
+
+$('body').on('click', '.delete_challenge_subject_button', function (e) {
+	e.preventDefault();
+	const delete_url = $(this).data("url");
+
+	$.ajax({
+		type: "POST",
+		url: delete_url,
+		data: {
+			csrfmiddlewaretoken: '{{ csrf_token }}'
+		},
+		success: function (result) {
+			{% comment %} $("#shortcut_" + id).remove(); {% endcomment %}
+			alert(result.message);
+			window.location.href = "/challenge/"
+		}
+	});
+
+});
+
+
+$('body').on('click', '.plus_minus_for_challenge', function (e) {
+
+	// 좋아요 받을 대상의 id
+    const target_id =  $(this).data("target_id");
+	// 좋아요 누르는 사람
+    const liker = "{{request.user}}"
+
+    $.ajax({
+        type: "POST",
+        url: '/challenge/like_or_unlike_for_challenge_subject',
+        data: {
+            target_id : target_id,
+            liker: liker,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+        },
+        success: function (result) {
+			alert(result.message)
+			window.location.href = "/challenge/"
+        },
+        error:{
+            function(err){
+                console.log("err : ", err.statusText);
+            }
+        }
+    });
+
+});
+
+{% endblock %}
+
+</script>

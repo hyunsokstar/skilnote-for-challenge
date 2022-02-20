@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+{%block title %}{{team_name}}팀 회원 정보{% endblock %}
+
+{%block content %}
+
+{% if messages %}
+<div class="alert alert-success">
+    {% for message in messages %}
+     {{ message.message }}<strong>{{ message.tags }}</strong>
+     {% endfor %}
+</div>
+{% endif %}
+
+<div class="jumbotron">
+    <span id="team_name">
+        {{team_name}}팀
+    </span> &nbsp;&nbsp;
+    팀원수 : {{team_member_count}} 명 &nbsp;&nbsp;
+    팀장 이름 : {{team_leader_name}}
+    <a class="btn btn-outline-dark btn-sm team_register_button float-right btn-block" href="{% url 'todo:TeamInfoListView' %}" >팀 목록</a>
+    <a class="btn btn-outline-dark btn-sm team_register_button float-right team_todo_list_btn btn-block" href="{% url 'todo:team_todo_list' team_name  %}">팀 관리</a>
+
+</div>
+
+
+<br><br>
+
+<table class="table table-bordered" id="todo_list">
+    <tr>
+        <td>index</td>
+        <td>member</td>
+        <td>position</td>
+        <td>미완료</td>
+        <td>완료</td>
+    </tr>
+    {% if object_list.exists %}
+        {% for p in object_list %}
+
+
+            <tr id=tr_{{p.id}}>
+                <td>
+                    {{ forloop.counter }}
+                </td>
+                <td>
+                        <a href="/todo/todolist/uncomplete/admin/{{p.member.username}}/{{team_leader_name}}">
+                            {{ p.member.username }}
+                        </a>
+                        {% if p.member == request.user %}
+                            <a class="badge badge-pill badge-info withdrawl_team_button float-right" data-member_id={{p.id}} data-team_id={{p.team.id}}>탈퇴</a>
+                        {% endif %}
+                </td>
+                <td>
+                    {{ p.position }}
+                </td>
+                <td>
+                    <a href="/todo/todolist/uncomplete/admin/{{p.member.username}}/{{team_leader_name}}">
+                        {{ p.member.profile.uncompletecount }}
+                    </a>
+                </td>
+                <td>
+                    <a href="/todo/todolist/complete/admin/{{p.member.username}}/{{team_leader_name}}">
+                        {{ p.member.profile.completecount }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="5">
+                <h4>아직 등록된 멤버가 없습니다.</h4>
+            </td>
+        </tr>
+    {% endif %}
+</table>
+
+
+{% endblock %}
+
+<script type="text/javascript">
+{% block extra_js %}
+
+
+$(".withdrawl_team_button").click(function(){
+    alert(" 팀 탈퇴 버튼 클릭");
+
+    const team_memeber_id = $(this).data("member_id");
+    const team_id = $(this).data("team_id");
+    const user_id = "{{request.user.id}}";
+    const url = "/todo/withdrawl_team/"
+    const redirect_url = "/todo/team_member_list/"+team_id
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            team_id:team_id,
+            user_id:user_id,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(result) {
+            $("#tr_"+team_memeber_id).remove()
+            alert("message " + result.message);
+            //             // window.history.pushState("", "", '/todo/team_member_list/'+result.team_id)
+
+            window.location.href = redirect_url;
+        }
+    });
+})
+
+
+
+{% endblock %}
+</script>

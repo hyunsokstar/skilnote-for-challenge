@@ -1,0 +1,335 @@
+{% extends "todo/layout.html" %}
+{%block title %}todo uncomplete(me){% endblock %}
+
+{%block extra_css %}
+    .modal-dialog {
+        width: 100%;
+        height: 50%;
+        margin: 0;
+        padding: 0;
+    }
+    .modal-content {
+        width:132%;
+    }
+{% endblock %}
+
+{%block content5 %}
+{% load crispy_forms_tags %}
+
+
+<br><br>
+{% if messages %}
+<div class="alert alert-success">
+    {% for message in messages %}
+     {{ message.message }}<strong>{{ message.tags }}</strong>
+     {% endfor %}
+</div>
+{% endif %}
+
+
+<h2>Todo (미완료)</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <td>todo(my)</td>
+        <td>todo(전체)</td>
+        <td>question</td>
+    </tr>
+    <tr>
+        <td>
+            <a href="/todo/todolist/uncomplete/me"> 미완료 ({{todo_count_uncomplete}})</a> <br>
+            <a href="/todo/todolist/complete/me"> 완료 ({{todo_count_complete}})</a>
+        </td>
+        <td>
+            <a href="/todo/category/_none/"> 전체(미완료)({{total_todo_count_uncomplete}}) </a><br>
+            <a href="/todo/completeList/total"> 전체(완료) ({{total_todo_count_complete}}) </a>
+        </td>
+        <td>
+            {% for category in category_list %}
+                <a href="{{category.get_absolute_url}}">{{ category.name }} ({{ category.todo_set.count }})</a>
+            {% endfor %}
+        </td>
+    </tr>
+</table>
+
+
+<!-- 2001 -->
+<!-- <h2 class="float-left">할일 목록({{request.user}})</h2> -->
+
+마감 기한:
+<select id="select_for_dead_line">
+ <option value="1h">1시간후</option>
+ <option value="4h">4시간후</option>
+ <option value="8h">8시간후</option>
+ <option value="1d">1일후</option>
+ <option value="1w">1주일후</option>
+</select>
+
+<br><br>
+
+<!-- <div class="input-group">
+    <input type="text" onkeyup="insert_todo()" class="form-control" id="input_todo" placeholder="내가 할일을 입력!"/>
+    <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button" onclick="create_todo();">간편 입력</button>
+    </span>
+</div> -->
+
+<br>
+    {% if category %}
+        카테고리 : <small class="text-muted">{{ category }}</small>
+    {% endif %}
+    <a href="" class="btn btn-outline-info float-left" id="todo_delete_button"> 삭제(체크) </a>
+    <a href = "{% url "todo:todo_new" %}" class="btn btn-outline-info float-right">입력 </a>
+    <br><br>
+
+<table class="table table-bordered" id="todo_list">
+    <tr>
+        <td>
+            <input type="checkbox" class="all_check" value="">
+        </td>
+        <td>분류</td>
+        <td>title</td>
+        <td>director</td>
+        <td>남은 시간</td>
+        <td>마감 기한</td>
+    </tr>
+
+    {% if object_list.exists %}
+        {% for p in object_list %}
+        <tr>
+            <td>
+                <input type="checkbox" id="{{p.pk}}" class="td_check">
+            </td>
+            <td>{{p.classification}}</td>
+            <td>
+                <a href="" id={{p.pk}} class="title_for_list">
+                    {{p.title}} (<font color="blue"> from {{p.director}}</font> )
+                </a><br>
+                {% if request.user == p.author %}
+                        <a class="badge badge-pill badge-dark" href="{% url "todo:todo_complete" p.id %}">완료</a>
+                        <a class="badge badge-pill badge-dark" href="{% url "todo:todo_edit" p.id %}">수정</a>
+                        <a class="badge badge-pill badge-dark" href="{% url "todo:todo_delete" p.pk %}">삭제</a>
+                    {% if p.category.name == "help" %}
+                            <a class="badge badge-pill badge-dark" href="{% url "todo:todo_help_cancle" p.pk %}" > 질문 취소<!DOCTYPE html>
+                        </a>
+                    {% else %}
+                            <a class="badge badge-pill badge-dark" href="{% url "todo:todo_help" p.pk %}" >질문 </a>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
+                <font color="black">{{p.director}}</font>
+            </td>
+            <td>
+                {% if p.dead_line %}
+                    {{p.remaining_time}}
+                {% else %}
+                {% endif %}
+            </td>
+            <td>{{p.dead_line}}</td>
+        </tr>
+        {% endfor %}
+        <tbody id="tbody_todo"></tbody>
+    {% else %}
+        <tr>
+            <td colspan="7">
+                <h4>아직 게시물이 없습니다.</h4>
+            </td>
+        </tr>
+    {% endif %}
+</table>
+
+{% if is_paginated %}
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">이전</a>
+  {% endif %}
+  {{ page_obj.number }} 페이지
+  {% if page_obj.has_next %}
+    <a href="?page={{page_obj.next_page_number}}">다음</a>
+  {% endif %}
+{% endif %}
+
+
+<button type="button" id="myModal_button" class="btn btn-primary invisible" data-toggle="modal" data-target="#todo_detail_modal">
+    todo detail modal
+</button>
+
+
+<button type="button" id="myModal_button2" class="btn btn-primary invisible" data-toggle="modal" data-target="#myModal2">
+    todo 상세 보기 모달
+</button>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="todo_detail_modal" >
+
+</div>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal2">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <!-- Comments Form -->
+                    <span class="card-header">Leave a Comment:
+                    </span>
+                    <div class="card-body">
+
+                        <form method="post" action="{{object.get_absolute_url}}new_comment/">{% csrf_token %}
+                            <div class="form-group">
+                                {{ comment_form | crispy }}
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+<script class="todo_row" type="text/x-template">
+    <tr>
+        <td>
+            <input type="checkbox" id=<%=todoId %> class="td_check">
+        </td>
+        <td><%=classification %></td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td><%=dead_line %></td>
+    </tr>
+</script>
+
+<script type="text/javascript">
+{% block extra_js %}
+
+$(".all_check").change(function() {
+    if (this.checked) {
+        alert('모두 체크')
+        $(".td_check").each(function() {
+            this.checked=true;
+        });
+    } else {
+        $(".td_check").each(function() {
+            this.checked=false;
+        });
+    }
+});
+
+function create_todo(){
+    const title = $("#input_todo").val()
+    const dead_line_option = $("#select_for_dead_line").val()
+    window.history.pushState("", "", '/todo/')
+
+    $.ajax({
+      type: "POST",
+      url: 'add_todo_by_ajax/',
+      data: {
+          title:title,
+          dead_line_option:dead_line_option,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            alert("insert todo is success")
+            location.reload(true);
+        }
+    });
+}
+
+function insert_todo(){
+    if (window.event.keyCode == 13){
+        // alert("할일 입력")
+        create_todo();
+    }
+}
+
+function show_todo_detail(){
+  alert("modal 출력 함수")
+}
+$(document).ready(function(){
+    var id;
+    $("#todo_list a[class='title_for_list']").click(function(e){
+
+        console.log("todo 미완료 상세 보기");
+
+        e.preventDefault();
+        id = $(this).attr('id');
+        // alert("id : "+ id)
+        window.history.pushState("", "", '/todo/')
+
+
+        $.get(id)
+            .done((html) => {
+                $('#myModal_button').hide();
+                $("#todo_detail_modal").html(html)
+                $( "#myModal_button" ).trigger("click");
+            })
+            .fail(() => {
+                console.log("fail");
+            })
+            .always(() => {
+                console.log('always');
+            })
+    });
+})
+
+$(document).ready(function(){
+    $('.comment_button_for_todo_detail').click(function(e){
+        e.preventDefault();
+        id=$(this).attr('id');
+        alert('id : ', id)
+    })
+
+$('#todo_delete_button').click(function(e){
+
+    e.preventDefault();
+    alert("삭제 버튼 ")
+
+    var todo_arr = [];
+    $('.td_check').each(function() {
+        if (jQuery(this).is(":checked")) {
+            var id = this.id;
+            todo_arr.push(id);
+        }
+    });
+    alert('todo_arr : '+ todo_arr)
+
+    window.history.pushState("", "", '/todo/')
+
+    $.ajax({
+      type: "POST",
+      url: 'todo_delete_ajax/',
+      data: {
+          'todo_arr[]':todo_arr,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            alert('todo_delete_ajax is success ');
+            jQuery('input:checkbox:checked').parents("tr").remove();
+        }
+    });
+})
+
+// result is todo_arr : 78,76
+
+
+})
+
+
+{% endblock %}
+</script>

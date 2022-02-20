@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{%block sidearea2 %}
+
+<!-- Sidebar Widgets Column -->
+<!-- Search Widget -->
+<!-- <div class="card my-4">
+    <h5 class="card-header">Search</h5>
+    <div class="card-body">
+        <div class="input-group">
+            <input type="text" id="search-input" onkeyup="wait_for_enterkey_todo()" class="form-control"
+                   placeholder="Search for..."/>
+            <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button" onclick="search_todo();">Go!</button>
+
+        </span>
+        </div>
+    </div>
+</div> -->
+
+<!-- Side Widget -->
+<!-- <div class="card my-4">
+    <h5 class="card-header">todo by
+        <span class="text-primary">
+            {{user_name}}
+        </span>
+    </h5>
+    <div class="card-body">
+        <ul>
+            <li>
+                <a href="/todo/todolist/uncomplete/admin/{{user_name}}/{{team_leader_name}}">
+                    미완료 ({{todo_count_uncomplete}})
+                </a>
+            </li>
+            <li>
+                <a href="/todo/todolist/complete/admin/{{user_name}}/{{team_leader_name}}">
+                    완료 ({{todo_count_complete}})
+                </a>
+            </li>
+        </ul>
+    </div>
+</div> -->
+
+<script >
+function search_todo(){
+    var search_value = document.getElementById('search-input').value;
+    location.href="/todo/search/" + search_value + "/";
+}
+
+function wait_for_enterkey_todo(){
+    if (window.event.keyCode == 13){
+        search_todo();
+    }
+}
+</script>
+
+{%endblock%}

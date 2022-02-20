@@ -1,0 +1,50 @@
+{% extends "todo/layout.html" %}
+{%block title %}cowork list{% endblock %}
+{%block content %}
+{% load crispy_forms_tags %}
+
+<h2 class="float-left">Cowork</h2>
+    <a href = "" class="btn btn-danger float-right">입력 </a>
+    <br><br>
+
+<table class="table table-bordered" id="todo_list">
+    <tr>
+        <td>author</td>
+        <td>title</td>
+        <td>classification</td>
+        <td>importance</td>
+        <td>created</td>
+        <td>manager</td>
+        <td>completion</td>
+    </tr>
+
+    {% if object_list.exists %}
+        {% for p in object_list %}
+        <tr>
+            <td>{{p.author}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.classification}}</td>
+            <td>{{p.importance}}</td>
+            <td>{{p.created}}</td>
+            <td>{{p.manager}}</td>
+            <td>{{p.completion}}</td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="">
+                <h4>아직 게시물이 없습니다.</h4>
+            </td>
+        </tr>
+    {% endif %}
+
+</table>
+
+
+{% endblock %}
+
+<script type="text/javascript">
+{% block extra_js %}
+
+{% endblock %}
+</script>

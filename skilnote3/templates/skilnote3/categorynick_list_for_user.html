@@ -1,0 +1,1841 @@
+
+
+{% if category %}
+
+<h2>skil note2 category list for {{category.author}}</h2>
+<table class="table table-bordered" id="todo_list">
+    <tr id="ca1">
+        <td>ca1</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca1}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm cn-btn" data-id={{category.id}} data-field="ca1">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca1
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/1">이동</a>
+		</td>
+    </tr>
+    <tr id="ca2">
+        <td>ca2</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca2}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm cn-btn" data-id={{category.id}} data-field="ca2">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category="ca2"
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/2">이동</a>
+		</td>
+    </tr>
+    <tr id="ca3">
+        <td>ca3</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca3}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca3">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category="ca3"
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/3">이동</a>
+		</td>
+    </tr>
+    <tr id="ca4">
+        <td>ca4</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca4}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca4">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category="ca4" href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/4">이동</a>
+		</td>
+    </tr>
+    <tr id="ca5">
+        <td>ca5</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca5}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca5">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category="ca5"
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/5">이동</a>
+		</td>
+    </tr>
+    <tr id="ca6">
+        <td>ca6</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca6}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca6">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca6
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/6">이동</a>
+		</td>
+	</tr>
+
+    <tr id="ca7">
+        <td>ca7</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca7}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca7">수정</a>
+			{% endif %}
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/7">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca8">
+        <td>ca8</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca8}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca8">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca8
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/8">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca9">
+        <td>ca9</td>
+        <td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca9}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca9">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca9
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/9">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca10">
+        <td>ca10</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca10}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca10">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca10
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/10">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca11">
+        <td>ca11</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca11}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca11">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca11
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/11">이동</a>
+		</td>
+    </tr>
+    <tr id="ca12">
+        <td>ca12</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca12}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca12">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca12 href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/12">이동</a>
+		</td>
+
+	</tr>
+
+    <tr id="ca13">
+        <td>ca13</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca13}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca13">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca13
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/13">이동</a>
+		</td>
+    </tr>
+    <tr id="ca14">
+        <td>ca14</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca14}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca14">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca14
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/14">이동</a>
+		</td>
+    </tr>
+    <tr id="ca15">
+        <td>ca15</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca15}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca15">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca15
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/15">이동</a>
+		</td>
+    </tr>
+    <tr id="ca16">
+        <td>ca16</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca16}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca16">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca16
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/16">이동</a>
+		</td>
+    </tr>
+    <tr id="ca17">
+        <td>ca17</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca17}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca17">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca17
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/17">이동</a>
+		</td>
+
+    </tr>
+    <tr id="ca18">
+        <td>ca18</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca18}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca18">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca18
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/18">이동</a>
+		</td>
+    </tr>
+    <tr id="ca19">
+        <td>ca19</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca19}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm cn-btn" data-id={{category.id}} data-field="ca19">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca19
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/19">이동</a>
+		</td>
+	</tr>
+
+    <tr id="ca20">
+        <td>ca20</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca20}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca20">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca20
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/20">이동</a>
+		</td>
+	</tr>
+
+    <tr id="ca21">
+        <td>ca21</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca21}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca21">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca21
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/21">이동</a>
+		</td>
+    </tr>
+    <tr id="ca22">
+		<td>ca22</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca22}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca22">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca22
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/22">이동</a>
+		</td>
+    </tr>
+    <tr id="ca23">
+        <td>ca23</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca23}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca23">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca23
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/23">이동</a>
+		</td>
+    </tr>
+    <tr id="ca24">
+        <td>ca24</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca24}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca24">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca24
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/24">이동</a>
+		</td>
+    </tr>
+    <tr id="ca25">
+        <td>ca25</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca25}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca25">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca25
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/25">이동</a>
+		</td>
+    </tr>
+    <tr id="ca26">
+        <td>ca26</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca26}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca26">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca26
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/26">이동</a>
+		</td>
+    </tr>
+    <tr id="ca27">
+        <td>ca27</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca27}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca27">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca27
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/27">이동</a>
+		</td>
+    </tr>
+    <tr id="ca28">
+        <td>ca28</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca28}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca28">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca28
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/28">이동</a>
+		</td>
+    </tr>
+    <tr id="ca29">
+        <td>ca29</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca29}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca29">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca29
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/29">이동</a>
+		</td>
+    </tr>
+    <tr id="ca30">
+        <td>ca30</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca30}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca30">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca30
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/30">이동</a>
+		</td>
+	</tr>
+
+	<!-- 2244 -->
+
+    <tr id="ca31">
+        <td>ca31</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca31}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca31">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca31
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/31">이동</a>
+		</td>
+    </tr>
+    <tr id="ca32">
+        <td>ca32</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca32}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca32">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca32
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/32">이동</a>
+		</td>
+    </tr>
+    <tr id="ca33">
+        <td>ca33</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca33}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca33">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca33
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/33">이동</a>
+		</td>
+    </tr>
+    <tr id="ca34">
+        <td>ca34</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca34}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca34">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca34
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/34">이동</a>
+		</td>
+    </tr>
+    <tr id="ca35">
+        <td>ca35</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca35}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca35">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca35
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/35">이동</a>
+		</td>
+    </tr>
+    <tr id="ca36">
+        <td>ca36</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca36}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca36">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca36
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/36">이동</a>
+		</td>
+    </tr>
+    <tr id="ca37">
+        <td>ca37</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca37}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca37">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca37
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/37">이동</a>
+		</td>
+    </tr>
+    <tr id="ca38">
+        <td>ca38</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca38}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca38">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca38
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/38">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca39">
+        <td>ca39</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca39}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca39">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca39
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/39">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca40">
+        <td>ca40</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca40}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary btn-sm  cn-btn" data-id={{category.id}} data-field="ca40">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca40
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/40">이동</a>
+		</td>
+	</tr>
+
+    <tr  id="ca41">
+		<td>ca41</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca41}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca41">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca41
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/41">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca42">
+        <td>ca42</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca42}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca42">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca42
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/42">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca43">
+        <td>ca43</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca43}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca43">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca43
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/43">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca44">
+        <td>ca44</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca44}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca44">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca44
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/44">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca45">
+        <td>ca45</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca45}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca45">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca45
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/45">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca46">
+        <td>ca46</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca46}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca46">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca46
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/46">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca47">
+        <td>ca47</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca47}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca47">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca47
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/47">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca48">
+        <td>ca48</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca48}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca48">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca48
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/48">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca49">
+        <td>ca49</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca49}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca49">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca49
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/49">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca50">
+        <td>ca50</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca50}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca50">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca50
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/50">이동</a>
+		</td>
+	</tr>
+
+    <tr  id="ca51">
+        <td>ca51</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca51}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca51">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca51
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/51">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca52">
+        <td>ca52</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca52}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca52">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca52
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/52">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca53">
+        <td>ca53</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca53}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca53">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca53
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/53">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca54">
+        <td>ca54</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca54}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca54">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca54
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/54">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca55">
+        <td>ca55</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca55}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca55">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca55
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/55">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca56">
+        <td>ca56</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca56}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca56">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca56
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/56">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca57">
+        <td>ca57</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca57}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca57">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca57
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/57">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca58">
+        <td>ca58</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca58}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca58">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca58
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/58">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca59">
+        <td>ca59</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca59}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca59">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca59
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/59">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca60">
+        <td>ca60</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca60}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca60">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca60
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/60">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca61">
+        <td>ca61</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca61}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca61">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca61
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/61">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca62">
+        <td>ca62</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca62}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca62">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca62
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/62">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca63">
+        <td>ca63</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca63}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca63">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca63
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/63">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca64">
+        <td>ca64</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca64}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca64">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca64
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/64">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca65">
+        <td>ca65</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca65}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca65">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca65
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/65">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca66">
+        <td>ca66</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca66}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca66">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca66
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/66">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca67">
+        <td>ca67</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca67}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca67">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca67
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/67">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca68">
+        <td>ca68</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca68}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca68">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca68
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/68">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca69">
+        <td>ca69</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca69}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca69">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca69
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/69">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca70">
+        <td>ca70</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca70}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca70">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca70
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/70">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca71">
+        <td>ca71</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca71}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca71">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca71
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/71">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca72">
+        <td>ca72</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca72}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca72">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca72
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/72">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca73">
+        <td>ca73</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca73}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca73">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca73
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/73">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca74">
+        <td>ca74</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca74}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca74">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca74
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/74">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca75">
+        <td>ca75</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca75}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca75">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca75
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/75">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca76">
+        <td>ca76</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca76}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca76">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca76
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/76">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca77">
+        <td>ca77</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca77}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca77">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca77
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/77">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca78">
+        <td>ca78</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca78}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca78">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca78
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/78">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca79">
+        <td>ca79</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca79}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca79">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca79
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/79">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca80">
+        <td>ca80</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca80}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca80">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca80
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/80">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca81">
+        <td>ca81</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca81}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca81">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca81
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/81">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca82">
+        <td>ca82</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca82}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca82">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca82
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/82">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca83">
+        <td>ca83</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca83}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca83">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca83
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/83">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca84">
+        <td>ca84</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca84}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca84">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca84
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/84">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca85">
+        <td>ca85</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca85}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca85">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca85
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/85">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca86">
+        <td>ca86</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca86}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca86">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca86
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/86">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca87">
+        <td>ca87</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca87}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca87">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca87
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/87">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca88">
+        <td>ca88</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca88}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca88">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca88
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/88">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca89">
+        <td>ca89</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca89}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca89">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca89
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/89">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca90">
+        <td>ca90</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca90}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca90">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca90
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/90">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca91">
+		<td>ca91</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca90}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca91">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca91
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/91">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca92">
+		<td>ca92</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca92}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca92">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca92
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/92">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca93">
+        <td>ca93</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca93}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca93">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca93
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/93">이동</a>
+		</td>
+    </tr>
+    <tr  id="ca94">
+        <td>ca94</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca94}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca94">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca94
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/94">이동</a>
+		</td>
+    </tr>
+    <tr id="ca95">
+        <td>ca95</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca95}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca95">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca95
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/95">이동</a>
+		</td>
+    </tr>
+    <tr id="ca96">
+        <td>ca96</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca96}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca96">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca96
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/96">이동</a>
+		</td>
+    </tr>
+    <tr id="ca97">
+        <td>ca97</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca97}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca97">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca97
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/97">이동</a>
+		</td>
+    </tr>
+    <tr id="ca98">
+        <td>ca98</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca98}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca98">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca98
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/98">이동</a>
+		</td>
+    </tr>
+    <tr id="ca99">
+        <td>ca99</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca99}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca99">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/99">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca100">
+        <td>ca100</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca100}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca100">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/100">이동</a>
+		</td>
+    </tr>
+
+
+    <tr id="ca101">
+        <td>ca101</td>
+		<td>
+			<input type="text" name="" id="input_category_nick" value="{{category.ca101}}" class="form-control">
+		</td>
+		<td>
+			{% if category.author == request.user %}
+			<a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca101">수정</a>
+			{% endif %}
+			<!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+				href="">복사</a> -->
+			<a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/101">이동</a>
+		</td>
+    </tr>
+
+    <tr id="ca102">
+        <td>ca102</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca102}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca102">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/102">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca103">
+        <td>ca103</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca103}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca103">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/103">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca104">
+        <td>ca104</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca104}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca104">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/104">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca105">
+        <td>ca105</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca105}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca105">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/105">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca106">
+        <td>ca106</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca106}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca106">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/106">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca107">
+        <td>ca107</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca107}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca107">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/107">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca108">
+        <td>ca108</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca108}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca108">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/108">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca109">
+        <td>ca109</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca109}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca109">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/109">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca110">
+        <td>ca110</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca110}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca110">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/110">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca111">
+        <td>ca111</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca111}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca111">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/111">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca112">
+        <td>ca112</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca112}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca112">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/112">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca113">
+        <td>ca113</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca113}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca113">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/113">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca114">
+        <td>ca114</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca114}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca114">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/114">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca115">
+        <td>ca115</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca115}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca115">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/115">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca116">
+        <td>ca116</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca116}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca116">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/116">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca117">
+        <td>ca117</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca117}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca117">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/117">이동</a>
+        </td>
+    </tr>
+
+
+    <tr id="ca118">
+        <td>ca118</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca118}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca118">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/118">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca119">
+        <td>ca119</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca119}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca119">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/119">이동</a>
+        </td>
+    </tr>
+
+    <tr id="ca120">
+        <td>ca120</td>
+        <td>
+            <input type="text" name="" id="input_category_nick" value="{{category.ca120}}" class="form-control">
+        </td>
+        <td>
+            {% if category.author == request.user %}
+            <a class="btn btn-outline-primary  btn-sm cn-btn" data-id={{category.id}} data-field="ca120">수정</a>
+            {% endif %}
+            <!-- <a class="btn btn-outline-primary btn-sm copyforNickSubjectBtn" data-author="{{category.author}}" data-category=ca99
+                href="">복사</a> -->
+            <a class="btn btn-outline-primary btn-sm" href="/skilnote3/myshortcut/{{page_user}}/120">이동</a>
+        </td>
+    </tr>
+
+</table>
+
+{% else %}
+
+<table class="table table-borderd">
+    <tr>
+        <td>카테고리 정보가 없습니다.</td>
+    </tr>
+</table>
+
+{% endif %}
+
+<!-- modal area -->
+<!-- js -->
+
+<script type="text/javascript">
+
+	$(".copyforNickSubjectBtn").click(function (e){
+		const author = $(this).data("author")
+		const original_category = $(this).data("category")
+		// alert("author : "+ author);
+		// alert("category : "+ category);
+
+		var destination_category = prompt("어디로 복사 하시겠습니까? (1~99)", "");
+
+		if (destination_category.match("^[1-9][0-9]?$")) {
+
+			window.history.pushState("", "", '/skilnote3/myshortcut/')
+
+			$.ajax({
+				type: "POST",
+				url: 'copyForCategorySubjectToMyCategory/',
+				data: {
+					'author': author,
+					'original_category': original_category,
+					'destination_category': destination_category,
+					csrfmiddlewaretoken: '{{ csrf_token }}'
+				},
+				success: function (result) {
+					alert(author +'의 '+ original_category + "에서 나의 " + destination_category + '로 복사(기존 내용 삭제)');
+				}
+			});
+		} else {
+			alert("이동할 카테고리는 1~99 중에 선택해주세요")
+		}
+
+	})
+
+    $(".cn-btn").click(function(e){
+        // alert("클릭");
+        const ca_id = $(this).data("id");
+        const field = $(this).data("field");
+        const ca_nick_update = $(this).parent().parent().find("#input_category_nick").val()
+
+        // alert("ca_id : " + ca_id)
+        // alert("field : " + field);
+        // alert("ca_nick_update : " + ca_nick_update);
+
+        window.history.pushState("", "", '/skilnote3/myshortcut/')
+
+        $.ajax({
+          type: "POST",
+          url: 'update/category/nick/',
+          data: {
+              'ca_id':ca_id,
+              'field':field,
+              'ca_nick_update':ca_nick_update,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+            success: function(result) {
+                // alert("category nick update success")
+                alert("result.message : " + result.message)
+                // 이동한후 목록 버튼 클릭하도록 설정
+                // $(location). attr('href', 'http://127.0.0.1:7000/skilnote3/myshortcut/');
+
+            }
+        });
+
+
+    })
+
+
+</script>

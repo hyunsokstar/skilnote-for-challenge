@@ -1,0 +1,66 @@
+'{% extends "layout.html" %}
+
+{%block title %}단체 스터디 리스트{% endblock %}
+
+{%block content4 %}
+
+<br><br><br><br>
+<h2>공동 study</h2>
+{% if user.is_authenticated %}
+<a class="btn btn-outline-warning " href="{% url "challenge:lecinfo_list"  %}">강의 정보 리스트</a>
+{% endif %}
+
+{% if messages %}
+<div class="alert alert-success">
+    {% for message in messages %}
+     {{ message.message }}<strong>{{ message.tags }}</strong>
+     {% endfor %}
+</div>
+{% endif %}
+
+{% if user.is_authenticated %}
+<a href="{% url 'challenge:create_lec_info"  %}" class="btn btn-outline-warning float-right">입력(input)</a>
+{% endif %}
+
+<br><br>
+
+<table class="table table-bordered" id="todo_list">
+    <tr>
+        <td>check</td>
+        <td>강의 이름</td>
+        <td>teacher</td>
+        <td>student_count</td>
+    </tr>
+
+    {% if object_list.exists %}
+        {% for p in object_list %}
+            <tr>
+                <td>
+                    <input type="checkbox" id="{{p.id}}" class="td_check">
+                </td>
+                <td>
+                    {{p.lec_name}}
+                </td>
+                <td>
+                    {{p.teacher}}
+                </td>
+                <td>
+                    {{p.student_count}}
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="4">
+                <h4>아직 게시물이 없습니다.</h4>
+            </td>
+        </tr>
+    {% endif %}
+</table>
+
+{% endblock %}
+<script type="text/javascript">
+{% block extra_js %}
+
+{% endblock %}
+</script>

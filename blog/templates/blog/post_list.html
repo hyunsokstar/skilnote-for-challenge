@@ -1,0 +1,113 @@
+
+{% extends "blog/layout.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{%block title %} 사이드 프로젝트 & 구인 구직 {% endblock %}
+{%block content %}
+<br><br>
+
+<div class="container mt-2" id="main-div2">
+    {% if user.is_authenticated %}
+        <button
+                class="btn btn-primary btn-sm float-right"
+                onclick="location.href='/blog/create/'"
+        >
+            New Post
+        </button>
+    {% endif %}
+    <br>
+    <h1 class="mt-4" id="blog-list-title">
+        {% if category %}
+            <small class="text-muted">: {{ category }}</small>
+        {% endif %}
+        {% if tag %}
+            <small class="text-muted">: #{{ tag }}</small>
+        {% endif %}
+    </h1>
+
+    <div id="post_list" class="mt-2">
+        {% if object_list.exists%}
+            {% for p in object_list %}
+                <div class="card mb-4" id="post-card-{{ p.pk }}">
+                    {% if p.head_image %}
+                        <img class="card-img-top" src={{ p.head_image.url }} alt="Card image cap">
+                    {% else %}
+                        <img class="card-img-top" src="https://picsum.photos/700/300/?random" alt="Card image cap">
+                    {% endif %}
+                    <div class="card-body">
+                        {% if p.category %}
+                            <span class="badge badge-primary float-right">{{ p.category }}</span>
+                        {% else %}
+                            <span class="badge badge-primary float-right">미분류</span>
+                        {% endif %}
+                        <h2 class="card-title">{{p.title}}</h2>
+                        <p class="card-text">
+                            {{p.content | truncatewords:50}}
+                        </p>
+                        {% for tag in p.tags.all %}
+                            <a href="{{ tag.get_absolute_url }}">#{{ tag }} </a>
+                        {% endfor %}
+                        <br/>
+                        <br/>
+                        <a href="{{p.get_absolute_url}}" class="btn btn-primary">Read More &rarr;</a>
+
+                        {% if request.user == p.author %}
+                            <a href={% url 'blog:post_delete' p.pk %} class="btn btn-outline-dark">삭제</a>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on {{p.created}} {{p.author}}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h4>아직 게시물이 없습니다.</h4>
+        {% endif %}
+        </div>
+    </div>
+    <hr>
+
+    {% if is_paginated %}
+        {% bootstrap_pagination page_obj size="small" justify_content="center" %}
+    {% endif %}
+
+{% endblock %}
+
+<script type="text/javascript">
+    {%block extra_js %}
+
+    // $(document).ready(function(){
+    //     //scroll을 구현해 보자
+    //     console.log("scroll event for post_list");
+    //     $win = $(window);
+    //     var is_loaded = false;
+    //     var current_page;
+    //     $win.scroll(() => {
+    //         var diff = $(document).height() - $win.height();
+    //
+    //         if((!is_loaded) && diff - $win.scrollTop() < 1 ) {
+    //             console.log("현재 창의 위치는 바닥입니다.");
+    //             var next_page = (current_page || 1) + 1;
+    //             current_page = next_page
+    //             var next_page_url = '?page=' + next_page;
+    //             is_loaded = true;
+    //             $.get(next_page_url).
+    //             done(function(html) {
+    //                 console.log("html(next) : ", html)
+    //                 $("#post_list").append(html);
+    //                 next_page = current_page +1
+    //                 console.log("현재 페이지 번호 : ", current_page);
+    //             }).
+    //             fail(function(hxr, textStatus, error) {
+    //                 console.log(textStatus);
+    //             }).always(function() {
+    //                 console.log("always");
+    //                 is_loaded = false;
+    //             });
+    //         }
+    //     });
+    // })
+
+    {% endblock %}
+</script>

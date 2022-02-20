@@ -1,0 +1,103 @@
+{% extends "todo/layout.html" %}
+{%block title %}Blog{% endblock %}
+{%block content %}
+
+<br>
+<h2>할일 목록(admin)</h2>
+
+{% if object_list.exists%}
+    {% for p in object_list %}
+        <table class="table table-bordered">
+            <tr>
+                <td style="width: 20%">작성자</td>
+                <td>{{p.author}}</td>
+            </tr>
+            <tr>
+                <td style="width: 20%">title</td>
+                <td>{{p.title}}</td>
+            </tr>
+            <tr>
+                <td style="width: 20%">content</td>
+                <td>{{p.content}}</td>
+            </tr>
+            <tr>
+                <td style="width: 20%">note</td>
+                <td>
+                    <a href="https://{{p.note}}">note</a>
+                </td>
+            </tr>
+            <tr>
+                <td>시작 시간</td>
+                <td>{{p.created}}</td>
+            </tr>
+            <tr>
+                <td>경과 시간</td>
+                <td>{{p.now_diff}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {% if request.user == p.author %}
+                        <button type="button" class="btn btn btn-outline-danger btn-sm float-right" onclick="updateTodo(this.id)">
+            				<a href="{% url "todo:todo_complete" p.id %}" class="" data-target-id="" data-message="">
+                                완료
+                            </a>
+                        </button>
+
+                        <button type="button" class="btn btn btn-outline-danger btn-sm float-right" onclick="updateTodo(this.id)">
+            				<a href="{% url "todo:todo_delete" p.pk %}" class="" data-target-id="" data-message="">
+                                삭제
+                            </a>
+                        </button>
+
+                        <button type="button" class="btn btn btn-outline-danger btn-sm float-right" onclick="updateTodo(this.id)">
+            				<a href="{% url "todo:todo_edit" p.id %}" class="" data-target-id="" data-message="">
+                                수정
+                            </a>
+                        </button>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    {% endfor %}
+
+    <!-- 페이지 네이션 start -->
+    {% if is_paginated %}
+        <!-- Pagination -->
+        <ul class="pagination justify-content-center mb-4">
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">&larr; Older</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                    <a class="page-link" href="#">&larr; Older</a>
+            </li>
+            {% endif %}
+
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Newer &rarr;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Newer &rarr;</a>
+            </li>
+            {% endif %}
+        </ul>
+    {% endif %} <!-- 페이지 네이션 end -->
+    <hr>
+{% else %}
+    <h4>아직 게시물이 없습니다.</h4>
+{% endif %}
+
+
+<script type="text/javascript">
+    // modal 이벤트 : 상세 보기
+    $(document).on('click', '.recommand_button', function (e) {
+        e.preventDefault();
+        var href = $(this).attr("href");
+		alert(href);
+</script>
+
+
+{% endblock %}

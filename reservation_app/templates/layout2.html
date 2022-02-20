@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+    <head>
+        <title>{% block title %} {% endblock %}</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.css' %}" media="screen">
+        <link rel="stylesheet" href="{% static 'blog/_assets/css/custom.min.css' %}">
+        {%block extra_head %}{% endblock %}
+    </head>
+    <body>
+
+        <!-- Page Content1 -->
+        <div class="container">
+            <div class="row">
+                <!-- Blog Entries Column -->
+                <div class="col-md-8" id="main-div">
+                    <!-- Blog Post -->
+                    {% block content %} {% endblock %}
+                </div>
+                <div class="col-md-4">
+                    {% block sidearea %} {% endblock %}
+                </div>
+            </div>
+        </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" />
+
+    </body>
+</html>

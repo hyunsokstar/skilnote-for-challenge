@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{%block title %}todo list{% endblock %}
+
+{%block content4 %}
+
+<div class="jumbotron">
+  <h1>status 현황</h1>
+</div>
+
+<button
+    type="button"
+    class="btn btn-outline-info btn-sm float-right"
+    name="button" onclick="location.href='/bestlec/{{fn_id}}/finisher/new'"
+    >
+        post
+</button>
+
+<br><br>
+
+<table class="table table-bordered" id="todo_list">
+    <tr>
+        <td>index</td>
+        <td>username</td>
+        <td>uncomplete</td>
+        <td>complete</td>
+        <td>평점</td>
+    </tr>
+
+    {% if users.exists %}
+        {% for p in users %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td colspan="">
+                <h4>{{p.username}}</h4>
+            </td>
+            <td>
+                <a href="/todo/todolist/uncomplete/{{p.username}}">
+                    {{p.profile.uncompletecount}}
+                </a>
+            </td>
+            <td>
+                <a href="/todo/todolist/complete/{{p.username}}">
+                    {{p.profile.completecount}}</td>
+                </a>
+            <td>{{p.profile.reputation}}</td>
+
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="5">
+                <h4>아직 게시물이 없습니다.</h4>
+            </td>
+        </tr>
+    {% endif %}
+</table>
+
+
+{% endblock %}
+
+<script type="text/javascript">
+{% block extra_js %}
+
+
+
+{% endblock %}
+</script>

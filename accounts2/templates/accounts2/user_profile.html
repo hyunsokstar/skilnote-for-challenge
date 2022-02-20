@@ -1,0 +1,302 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{%block title %}user profile{% endblock %}
+
+{% block content %}
+
+<br><br>
+
+<div class="container mt-1">
+  <div class="row">
+    <div class="col">
+      <span>
+          <h4>
+              <a href="{% url 'wm:skil_note_list_by_user' profile_user 1 %}">{{profile_user}}</a>'s User Profile
+          </h4>
+      </span>
+
+    </div>
+    <div class="col">
+
+      {%if like_check == "Like" %}
+          <table class="float-right" border="1px">
+              <tr>
+                  <td>star</td>
+                  <td id="start_count">{{ profile_user.recommandationuseraboutskillnote_set.count }}</td>
+              </tr>
+              <tr>
+                  <td>like</td>
+                  <td>
+                      <button type="button" class=" btn btn-outline-dark float-right" id="like_or_unlike_btn">
+                          <img src="{% static 'icon/like2.png' %}" alt="">
+                      </button>
+                  </td>
+              </tr>
+          </table>
+          <br><br>
+      {% else %}
+      <table class="float-right" border="1px">
+          <tr>
+              <td>star</td>
+              <td>{{ profile_user.recommandationuseraboutskillnote_set.count }}</td>
+          </tr>
+          <tr>
+              <td>like</td>
+              <td>
+                  <button type="button" class=" btn btn-outline-dark float-right" id="like_or_unlike_btn">
+                      <img src="{% static 'icon/unlike.png' %}" alt="">
+                  </button>
+              </td>
+          </tr>
+      </table>
+      <br><br>
+      {%endif%}
+
+
+    </div>
+  </div>
+</div>
+
+
+<br>
+
+<table class="table table-bordered">
+    <tr>
+        <td width="20%">user_name</td>
+        <td>
+            <h4>
+                <a href="{% url 'wm:skil_note_list_by_user' profile_user 1 %}">{{profile_user}}</a>
+            </h4>
+        </td>
+    </tr>
+    <tr>
+        <td>email</td>
+        <td>
+            <div class="input-group mb-1">
+              <input type="text" class="form-control" value="{{profile_user.profile.email}}" id="profile_email" aria-describedby="basic-addon2" ></input>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button">수정</button>
+              </div>
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <td> public </td>
+        <td>
+            <div class="input-group mb-1">
+              <input type="text" class="form-control" value="{{profile_user.profile.public}}" aria-describedby="basic-addon2" id="profile_public"></input>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="modify_public_for_user">수정</button>
+              </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td> github </td>
+        <td>
+              <input type="text" class="form-control" value="{{profile_user.profile.github}}" aria-describedby="basic-addon2" id="profile_github"></input>
+        </td>
+
+    </tr>
+
+    <tr>
+        <td>site1</td>
+        <td>
+            <input type="text" class="form-control" value="{{profile_user.profile.site1}}" aria-describedby="basic-addon2" id="profile_site1"></input>
+        </td>
+    </tr>
+
+    <tr>
+        <td>site2</td>
+        <td>
+            <input type="text" class="form-control" value="{{profile_user.profile.site2}}" aria-describedby="basic-addon2" id="profile_site2"></input>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td>site3</td>
+        <td>
+            <input type="text" class="form-control" value="{{profile_user.profile.site3}}" aria-describedby="basic-addon2" id="profile_site3"></input>
+         </td>
+    </tr>
+
+    <tr>
+        <td>site4</td>
+        <td>
+            <input type="text" class="form-control" value="{{profile_user.profile.site4}}" aria-describedby="basic-addon2" id="profile_site4"></input>
+        </td>
+    </tr>
+
+</table>
+
+<!-- <button type="button" class="btn btn-outline-dark btn-block" id="update_complete_button_for_profile" data-id="{{profile_user.profile.id}}">Profile Update</button> -->
+
+
+{% endblock %}
+
+{% block sidearea %}
+
+<b class="mt-2">{{profile_user}} 님을 추천한 사람들:</b>
+
+<table class="table table-bordered">
+
+    {% for liker in profile_user.recommandationuseraboutskillnote_set.all %}
+
+    <tr>
+        <td>
+            <a href="/accounts/user_profile_information_view/{{liker.author_id}}">
+                {{ liker.author_id }}
+            </a
+        </td>
+    </tr>
+
+{% endfor %}
+
+
+</table>
+
+<b>{{profile_user}} 님이 추천한 사람들:</b>
+<table class="table table-bordered">
+
+    {% for my_favorite in favorite_users_list %}
+
+    <tr>
+        <td>
+            <a href="/accounts/user_profile_information_view/{{my_favorite.username}}">
+                {{ my_favorite.username }}
+            </a
+        </td>
+    </tr>
+
+{% endfor %}
+
+
+</table>
+
+{% endblock %}
+
+
+
+<script type="text/javascript">
+// js area
+{% block extra_js %}
+
+$('body').on('click', '#like_or_unlike_btn', function (e) {
+    const target_user = "{{profile_user}}";
+    // 좋아요를 누른 사람 나
+    const liker = "{{request.user}}"
+    console.log("modify_public_for_user 실행");
+
+    $.ajax({
+        type: "POST",
+        url: '/accounts/like_or_unlike',
+        data: {
+            target_user : target_user,
+            liker: liker,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+        },
+        success: function (result) {
+        	window.location.href = "/accounts/user_profile_information_view/"+target_user;
+
+            $("#start_count").text(result.recommand_count)
+            alert(result.message)
+        },
+        error:{
+            function(err){
+                console.log("err : ", err.statusText);
+            }
+        }
+    });
+
+});
+
+
+// $('body').on('click', '#like_or_unlike_btn', function (e) {
+//     e.preventDefault()
+//     // 어떤 아이디에 대해 취소
+//     const target_user = "{{profile_user}}";
+//     // 좋아요를 누른 사람 나
+//     const liker = "{{request.user}}"
+//
+//     if(!liker) {
+//         alert("로그인 하셔야 합니다.");
+//         return
+//     }
+//
+//     console.log("좋아요 버튼 클릭 22 ");
+//
+//
+// 	$.ajax({
+// 		type: "POST",
+// 		url: '/accounts/like_or_unlike',
+// 		data: {
+//             target_user : target_user,
+// 			liker: liker,
+// 			csrfmiddlewaretoken: '{{ csrf_token }}',
+// 		},
+// 		success: function (result) {
+//             $("#start_count").text(result.recommand_count)
+// 			alert(result.message)
+// 		},
+//         error:{
+//             function(err){
+//                 console.log("err : ", err.statusText);
+//             }
+//         }
+// 	});
+//
+//
+// })
+
+$('body').on('click', '#update_complete_button_for_profile', function (e) {
+	e.preventDefault();
+    // alert("update button click")
+
+    var profile_email = $("#profile_email").val();
+    var profile_github = $("#profile_github").val();
+    var profile_public = $("#profile_public").val();
+    var profile_site1 = $("#profile_site1").val();
+    var profile_site2 = $("#profile_site2").val();
+    var profile_site3 = $("#profile_site3").val();
+    var profile_site4 = $("#profile_site4").val();
+    var profile_id = $(this).data("id");
+
+    console.log("profile_id : ", profile_id);
+
+    if(profile_public == "yes" || profile_public=="no"){
+        var current_login_user = "{{profile_user}}"
+    	$.ajax({
+    		type: "POST",
+    		url: '/accounts/update_for_profile/' + profile_id,
+    		data: {
+
+                profile_id : profile_id,
+    			profile_email: profile_email,
+    			profile_github: profile_github,
+    			profile_public: profile_public,
+    			profile_site1: profile_site1,
+    			profile_site2: profile_site2,
+    			profile_site3: profile_site3,
+    			profile_site4: profile_site4,
+    			csrfmiddlewaretoken: '{{ csrf_token }}'
+    		},
+    		success: function (result) {
+    			alert(result.message)
+    		}
+    	});
+
+    }else{
+
+        alert("profile_public은 yes or no 이어야 합니다");
+    }
+
+
+});
+
+{% endblock %}
+
+</script>

@@ -1,0 +1,175 @@
+{% extends "layout.html" %}
+
+{%block title %}소모임 참여자 정보{% endblock %}
+{% load static %}
+
+{%block content4 %}
+
+{%block extra_head %}
+
+{% endblock %}
+
+
+<br><br><br><br>
+
+<div class="jumbotron">
+	<div class="container">
+		<div class="row p-0">
+			<div class="col p-0">
+				<h4 class="display-6">{{LecInfo.lec_name}}</h4>
+			</div>
+			<div class="col p-0">
+                <div class="float-right">
+                    평점:
+                    <input type="text" name="" value="{{recommnad_count}}">
+                    <a href="{% url "challenge:recommand_lecture" LecInfo.pk %}">
+                        <img src="{% static 'icon/plus.png' %}" alt="">
+                    </a>
+                </div>
+			</div>
+		</div>
+		<div class="row mt-2">
+            <div class="col p-0">
+                과목 담당자:  <a href="{% url 'accounts2:user_profile_information_view' LecInfo.manager %}">{{LecInfo.manager}}</a>
+				<br>
+                강의 url :
+				<a href="{{LecInfo.lec_url }}">
+					{{LecInfo.lec_url }}
+				</a>
+            </div>
+            <div class="col p-0">
+                {%if request.user.username == LecInfo.manager  %}
+                    <a class="btn btn-outline-dark float-right" href="{% url "challenge:lecinfo_list_for_challenge" LecInfo.challenge.title %}">목록</a>
+                    <a class="btn btn-outline-dark float-right" href="{% url "challenge:LecInfoDeleteView" LecInfo.id %}">삭제</a>
+                    <a href="{% url "challenge:lec_info_update" LecInfo.id LecInfo.id %}" class="btn btn-outline-dark float-right">수정</a>
+                {% else %}
+                {% endif %}
+            </div>
+		</div>
+	</div>
+</div>
+
+{% if messages %}
+<div class="alert alert-success">
+    {% for message in messages %}
+     {{ message.message }}<strong>{{ message.tags }}</strong>
+     {% endfor %}
+</div>
+{% endif %}
+
+<a href="/challenge/record/new/{{LecInfo.id}}" class="btn btn-outline-warning float-right">입력(input)</a>
+<br><br>
+<table class="table table-bordered" id="todo_list">
+    <tr>
+        <td>check</td>
+        <td>index</td>
+        <td>author</td>
+        <td>current_class</td>
+        <td>github</td>
+    </tr>
+
+    {% if object_list.exists %}
+        {% for p in object_list %}
+            <tr>
+                <td>
+                    <input type="checkbox" id="{{p.pk}}" class="td_check">
+                </td>
+                <td>
+                    {{ forloop.counter }}
+                </td>
+                <td>
+					<a href="{% url 'accounts2:user_profile_information_view' p.author %}">{{p.author}}</a>
+
+                    <a href="{% url 'wm:skil_note_list_by_user' p.author 1 %}" class="badge badge-dark " >skilnote</a>
+
+                </td>
+                <td>
+                    {{p.current_class}}
+
+                    {% if request.user == p.author %}
+                        <a class="badge badge-pill badge-primary btn-sm" href="{% url "challenge:student_record_delete" p.id LecInfo.id %}">삭제</a>
+                        <a class="badge badge-pill badge-primary btn-sm" href="{% url "challenge:student_record_update" p.id LecInfo.id %}">수정</a>
+                    {% endif %}
+
+                </td>
+                <td>
+
+                    <a class="go_to_next_channer_btn btn btn-outline-primary" href={{p.github_url}}>
+                        <img src="{% static 'icon/github.png' %}" alt="">
+                    </a>
+
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="7">
+                <h4>아직 게시물이 없습니다.</h4>
+            </td>
+        </tr>
+    {% endif %}
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Header2</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+<script type="text/javascript">
+{% block extra_js %}
+
+$(document).ready(function(){
+    $('.movetoshortcut').click(function(e){
+        e.preventDefault();
+
+        const id = this.id
+        const user_id = $(this).data("user_id")
+
+        // alert("id : " + id)
+        // alert("user_id : " +user_id)
+
+        window.history.pushState("", "", '/wm/')
+
+        $.ajax({
+          type: "POST",
+          url: 'update/shortcut_id_ajax/'+id,
+          data: {
+              'user_id':user_id,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+            success: function(result) {
+                // alert('update for user shortcut id is success ');
+                console.log("result : ", result);
+                // alert("result.message :     shorcut page로 이동")
+                var url = "http://terecal-hyun.co.kr/wm/myshortcut/"+user_id+"/1"
+                document.location.href = url
+            }
+        });
+    })
+
+
+    $("#insert_record_btn").click(function(){
+        $("#myModal").modal();
+    });
+
+});
+
+{% endblock %}
+</script>

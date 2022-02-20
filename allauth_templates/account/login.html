@@ -1,0 +1,140 @@
+{% extends "layout.html" %} {% load crispy_forms_tags %}
+
+<!-- {% load i18n %} -->
+<!-- {% load account socialaccount %} -->
+{% load static %} {% block head_title %}{% trans "Sign In" %}{% endblock %}
+{%block extra_head %}
+<link rel="stylesheet" href="{% static 'styles/login.css' %}" />
+
+{% endblock %} {% block content5 %}
+<!-- {% if socialaccount_providers %} -->
+<p>
+  {% blocktrans with site.name as site_name %}Please sign in with one of your
+  existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a> for
+  a {{ site_name }} account and sign in below:{% endblocktrans %}
+</p>
+
+<!-- <div class="socialaccount_ballot">
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
+  <div class="login-or">{% trans 'or' %}</div>
+</div> -->
+<!-- {% include "socialaccount/snippets/login_extra.html" %} -->
+{% else %} {% blocktrans %} {% endblocktrans %}
+<!-- <img src="{% static 'logo/skilnote-for-java.png' %}" width="90%" height="25%" alt="" class="mb-2"> -->
+{% endif %}
+
+
+<h2 class="login-title mt-5">Login Page &nbsp;&nbsp;</h2>
+<form method="post" class="login-form">
+  <!-- {% csrf_token %} {{ form.as_p }} -->
+  {% csrf_token %}
+  {{ form|crispy }}
+
+  <button type="submit" class="mybutton">Login</button>
+  <button class="mybutton">
+    <a href="{{ signup_url }}">register</a>
+  </button>
+</form>
+
+<div class="user_list">
+  <!-- 유저 정보 출력 -->
+</div>
+
+<br /><br />
+
+<div class="tab-menu-container">
+  <div class="tab-menu-subject-list">
+    <span class="tab-menu-subject-item active" data-tab="tab1">스킬 노트 목적</span>
+    <span class="tab-menu-subject-item" data-tab="tab2">스킬 노트 기능</span>
+    <span class="tab-menu-subject-item" data-tab="tab3">노트 단축키</span>
+    <span class="tab-menu-subject-item" data-tab="tab4">관련 노트</span>
+    <span class="tab-menu-subject-item" data-tab="tab5">깃 허브</span>
+  </div>
+  <div class="tab-menu-content-list">
+    <span href="#none" class="tab-menu-content-item" id="tab1">
+      <p>1. react-nodebird : 트위터 클론 코딩 리팩토링</p>
+      <p>2. making-daum-file-upload	: 다음 메일 파일 업로드 컴퍼넌트 구현해 보기</p>
+      <p>3. making-shopping : 간단한 쇼핑몰 만들기</p>
+    </span>
+    <span href="#none" class="tab-menu-content-item target" id="tab2">
+      1. 코딩 노트 (노트 복사, 페이지 삭제, 페이지 한칸식 이동(+,-), 타유저 노트 복사(유저 목록)) <br />
+      2. 팀 코딩 노트 (메인 페이지에서 참여 버튼에서 참여 신청 후 승인한뒤 챕터 설정하면 해당 챕터에 대해 노트 작성 및 편집 기능 생성) <br />
+      3. 스킬 컬럼 (노트중 일부를 스킬 컬럼으로 공유 게시 가능) <br />
+      4. 진도 관리 (현재 스터디중인 내용 저장 및 관리 가능) <br />
+    </span>
+    <span href="#none" class="tab-menu-content-item" id="tab3">
+      <table>
+        <tr>
+          <td>코드 내용 복사</td>
+          <td>제목 더블 클릭</td>
+        </tr>
+        <tr>
+          <td>챕터 이동</td>
+          <td>ctrl + 방향키</td>
+        </tr>
+        <tr>
+          <td>챕터 제목 수정</td>
+          <td>ctrl + 0</td>
+        </tr>
+        <tr>
+          <td>url 요청 test</td>
+          <td>파일 옆에 버튼 클릭</td>
+        </tr>
+        <tr>
+          <td>선택한후 포스팅 하나 다른 챕터로 이동</td>
+          <td>원하는 포스팅 체크 + 왼쪽 이동 버튼 클릭 + 챕터 입력 (제일 아래로 이동)</td>
+        </tr>
+      </table>
+    </span>
+    <span href="#none" class="tab-menu-content-item" id="tab4">
+      <div>
+        1.
+        <a href="https://github.com/hyunsokstar/skilnote-for-java">skilnote-for-java</a>
+        <br />
+        2. <a href="http://www.skilnote-for-ts.co.kr.co.kr"> skilnote-for-jpa</a>
+        <br />
+        3. <a href="http://www.skilnote-for-ts.co.kr"> skilnote-for-ts</a>
+      </div>
+    </span>
+    <span href="#none" class="tab-menu-content-item" id="tab5">
+      <div>
+        1.
+        <a href="https://github.com/hyunsokstar/skilnote-for-jpa">skilnote react (현재 프로젝트)</a> <br>
+        2.
+        <a href="http://skilnote-for-innotree.co.kr/skilnote1/myshortcut/deploy-skilnote/1">skilnote 배포</a>
+        <br />
+        3.
+        <a href="http://skilnote-for-innotree.co.kr/skilnote1/myshortcut/setting-skilnote/1">skilnote 설치</a>
+        <br />
+        4.
+        <a href="https://github.com/hyunsokstar/skilnote-v2">skilnote 기본 버젼(초기화 버젼)</a>
+      </div>
+    </span>
+
+  </div>
+</div>
+
+
+<script src="{% static 'script/login.js' %}"></script>
+
+{% endblock %}
+
+<script type="text/javascript">
+  {% block extra_js %}
+  $(document).ready(function () {
+    const url = "/wm/userlist/loginpage"
+    $.get(url)
+      .done((result) => {
+        $(".user_list").html(result)
+      })
+      .fail(() => {
+        console.log("fail");
+      })
+      .always(() => {
+        console.log('always');
+      })
+  });
+  {% endblock %}
+</script>

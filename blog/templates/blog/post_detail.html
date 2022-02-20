@@ -1,0 +1,115 @@
+{% extends "blog/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{%block title %}블로그 상세보기{% endblock %}
+{%block content %}
+
+    <!-- Blog Detail -->
+    <!-- Preview Image -->
+    {% if object.head_image %}
+        <img class="img-fluid rounded" src="{{ object.head_image.url }}" alt="{{ object.title }}">
+    {% endif %}
+
+    <h1>{{ object.title }}</h1>
+    {% if object.category %}
+        <span class="badge badge-primary float-right">{{ object.category }}</span>
+    {% else %}
+        <span class="badge badge-primary float-right">미분류</span>
+    {% endif %}
+    <div>
+        {{ object.content | safe }}
+    </div>
+    <!-- Author -->
+    <p class="lead">
+        by
+        <a href="#">{{ object.author.username }}</a>
+    </p>
+    <br/>
+    <br>
+    <!-- EDIT -->
+    <!-- {{object.author}} -->
+    {% if request.user == object.author %}
+        <button type="button" class="btn btn-sm btn-outline-secondary float-right" onclick=location.href='{% url "blog:post_list"  %}'>목록</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary float-right" onclick=location.href='{% url "blog:post_delete" object.id %}'>삭제</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary float-right" onclick=location.href='{{ object.get_update_url }}'>EDIT</button>
+    {% endif %}
+
+    {% for tag in object.tags.all %}
+        <a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>
+    {% endfor %}
+    <hr>
+
+    {% if user.is_authenticated %}
+        <div class="card my-4">
+            <h5 class="card-header">Leave a Comment:</h5>
+            <div class="card-body">
+                <form method="post" action="{{ object.get_absolute_url }}new_comment/">{% csrf_token %}
+                    <div class="form-group">
+                        {{ comment_form | crispy }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    {% else  %}
+        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/accounts/login'"> 로그인 </button>
+    {% endif %}
+
+    <!-- post_detail 댓글 영역 -->
+    <div id="comment-list">
+        {% for comment in object.comment_set.all %}
+            <div class="media mb-4" id="comment-id-{{ comment.pk }}">
+                <!-- <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt=""> -->
+                {% if comment.author.socialaccount_set.all.0.get_avatar_url %}
+                <img width="50px" class="d-flex mr-3 rounded-circle" src="{{ comment.author.socialaccount_set.all.0.get_avatar_url }}" alt="">
+                {% else %}
+                    <img width="50px" class="d-flex mr-3 rounded-circle" src="https://api.adorable.io/avatars/285/{{ comment.author }}.png" alt="">
+                {% endif %}
+
+                <div class="media-body">
+                    <!-- 버튼 영역 -->
+                    {% if comment.author == request.user %}
+                        <button class="btn btn-sm btn-info float-right" onclick="location.href='/blog/edit_comment/{{ comment.pk }}/'">
+                                edit
+                        </button>
+                        <button class="btn btn-sm btn-warning float-right" data-toggle="modal" data-target="#deleteCommentModal-{{ comment.pk }}">
+                                delete
+                        </button>
+                    {% endif %}
+                    <h5 class="mt-0">
+                        {{ comment.author }}
+                        <small class="text-muted">{{ comment.created_at }}</small>
+                    </h5>
+                    {{ comment.get_markdown_content | safe }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- 댓글 삭제 모달  -->
+    {% for comment in object.comment_set.all %}
+        {% if user == comment.author %}
+            <div class="modal fade" id="deleteCommentModal-{{ comment.pk }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">정말로 삭제하시겠습니까?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{ comment.get_markdown_content | safe  }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="location.href='/blog/delete_comment/{{comment.pk}}'">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

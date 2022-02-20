@@ -1,0 +1,506 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+<br><br><br><br>
+{%block title %}my profile{% endblock %}
+
+{%block content%}
+<br><br>
+
+<span class="mt-2">my profile</span>
+
+
+
+<table class="table table-bordered">
+
+	<tr>
+		<td width="20%">user_id</td>
+		<td colspan="3">
+			<div class="input-group mb-1">
+				<input type="text" class="form-control" value="{{request.user}}" id="profile_user"
+					aria-describedby="basic-addon2"></input>
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button">중복 검사</button>
+				</div>
+			</div>
+		</td>
+	</tr>
+
+	<tr>
+
+		<td>email</td>
+
+		<td colspan="3">
+			<div class="input-group mb-1">
+				<input type="text" class="form-control" value="{{request.user.profile.email}}" id="profile_email"
+					aria-describedby="basic-addon2"></input>
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button">수정</button>
+				</div>
+			</div>
+		</td>
+	</tr>
+
+	<tr>
+
+		<td>first_category</td>
+		<td>
+			<input type="text" class="form-control" value="{{request.user.profile.first_category}}"
+				aria-describedby="basic-addon2" id="first_category"></input>
+		</td>
+		<td>last_category</td>
+
+		<td>
+
+			<input type="text" class="form-control" value="{{request.user.profile.last_category}}"
+				aria-describedby="basic-addon2" id="last_category"></input>
+
+		</td>
+
+	</tr>
+
+
+
+	<tr>
+
+		<td>lecture_url</td>
+
+		<td colspan="3">
+			<div class="input-group mb-1">
+				<input type="text" class="form-control" value="{{request.user.profile.lecture_url}}"
+					aria-describedby="basic-addon2" id="profile_lecture_url"></input>
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button">수정</button>
+				</div>
+			</div>
+		</td>
+	</tr>
+
+	<tr>
+
+		<td> github_original</td>
+		<td colspan="3">
+			<input type="text" class="form-control" value="{{request.user.profile.github_original}}"
+				aria-describedby="basic-addon2" id="profile_github_original"></input>
+		</td>
+
+	</tr>
+
+	<tr>
+		<td> github1</td>
+		<td colspan="3">
+			<input type="text" class="form-control" value="{{request.user.profile.github1}}"
+				aria-describedby="basic-addon2" id="profile_github1"></input>
+		</td>
+	</tr>
+
+	<tr>
+		<td> github2</td>
+		<td colspan="3">
+			<input type="text" class="form-control" value="{{request.user.profile.github2}}"
+				aria-describedby="basic-addon2" id="profile_github2"></input>
+		</td>
+	</tr>
+
+	<tr>
+		<td> github3</td>
+		<td colspan="3">
+			<input type="text" class="form-control" value="{{request.user.profile.github3}}"
+				aria-describedby="basic-addon2" id="profile_github3"></input>
+		</td>
+	</tr>
+
+	<tr>
+		<td> github4</td>
+		<td colspan="3">
+			<input type="text" class="form-control" value="{{request.user.profile.github4}}"
+				aria-describedby="basic-addon2" id="profile_github4"></input>
+		</td>
+	</tr>
+
+	<tr>
+		<td>public</td>
+		<td colspan="3">
+			<label for="profile_public1"> yes</label>
+			<input type="radio" id="profile_public1" name="profile_public" value="True" {%if request.user.profile.public == True %}checked{% endif %} >
+			<label for="profile_public2"> no</label>
+			<input type="radio" id="profile_public2" name="profile_public" value="False" {%if request.user.profile.public == False %}checked{% endif %} >
+		</td>
+	</tr>
+
+
+	<tr>
+		<td>reputation</td>
+		<td colspan="3"> {{ request.user.recommandationuseraboutskillnote_set.count }} 점</td>
+	</tr>
+
+
+
+</table>
+
+
+
+<button type="button" class="btn btn-outline-dark btn-block" id="update_complete_button_for_profile"
+	data-id="{{request.user.profile.id}}">Profile Update
+
+</button>
+
+<button type="button" class="btn btn-outline-primary btn-block" id="delete_login_user_btn"
+	data-id="{{request.user.profile}}">회원 탈퇴
+
+</button>
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block sidearea %}
+
+<br><br>
+
+나를 추천한 사람들:
+
+<table class="table table-bordered">
+
+	{% for liker in request.user.recommandationuseraboutskillnote_set.all %}
+	<tr id="lier_for_me_{{liker.id}}">
+		<td>
+			<a href="/accounts/user_profile_information_view/{{liker.author_id.username}}">
+
+				{{ liker.author_id }}
+			</a>
+			<a>
+				<img class="delete_for_liker_user_for_me float-right" src="{% static 'icon/x_mark.png' %}"
+					data-target_user_id="{{request.user.id}}" data-author_id="{{liker.author_id.id}}"
+					data-row_id="{{liker.id}}">
+			</a>
+		</td>
+	</tr>
+
+	{% endfor %}
+
+
+</table>
+
+
+내가 추천한 사람들:
+
+<table class="table table-bordered">
+
+
+
+	{% for my_favorite_user in my_favorite_user_list %}
+
+	<tr id="myFavorite_{{my_favorite_user.id}}">
+
+		<td>
+
+			<a href="/accounts/user_profile_information_view/{{my_favorite_user.username}}">
+
+				{{ my_favorite_user.username }}
+
+			</a>
+
+			<a>
+
+				<img class="delete_for_my_favorite_user float-right" src="{% static 'icon/x_mark.png' %}"
+					data-target_user="{{my_favorite_user}}" data-row_id="{{my_favorite_user.id}}">
+
+			</a>
+
+		</td>
+
+	</tr>
+
+	{% endfor %}
+
+
+
+
+
+</table>
+
+
+
+{% endblock %}
+
+
+
+
+
+<script type="text/javascript">
+
+
+
+	// js area
+
+	{% block extra_js %}
+
+
+
+	$('body').on('click', '.delete_for_liker_user_for_me', function (e) {
+
+		e.preventDefault();
+
+		// alert("클릭 확인")
+
+		const rowId = $(this).data("row_id");
+
+		const target_user_id = $(this).data("target_user_id");
+
+		const author_id = $(this).data("author_id");
+
+		// alert(rowId)
+
+		// alert(target_user);
+
+		var con_test = confirm(target_user_id + "에 대한 좋아요를 취소 하시겠습니까?");
+
+
+
+		if (con_test == true) {
+
+
+
+			$.ajax({
+
+				type: "POST",
+
+				url: '/accounts/delete_for_liker_user_for_me',
+
+				data: {
+
+					target_user_id: target_user_id,
+
+					author_id: author_id,
+
+					csrfmiddlewaretoken: '{{ csrf_token }}',
+
+				},
+
+				success: function (result) {
+
+					$("#lier_for_me_" + rowId).remove();
+
+					alert(result.message);
+
+				}
+
+			});
+
+
+
+		}
+
+		else if (con_test == false) {
+
+			alert("취소를 선택")
+
+			return
+
+		}
+
+	});
+
+
+
+	$('body').on('click', '.delete_for_my_favorite_user', function (e) {
+
+		e.preventDefault();
+
+		// alert("클릭 확인")
+
+		const rowId = $(this).data("row_id");
+
+		const target_user = $(this).data("target_user");
+
+		// alert(rowId)
+
+		// alert(target_user);
+
+		var con_test = confirm(target_user + "에 대한 좋아요를 취소 하시겠습니까?");
+
+
+
+		if (con_test == true) {
+
+
+
+			$.ajax({
+
+				type: "POST",
+
+				url: '/accounts/delete_for_my_favorite_user',
+
+				data: {
+
+					target_user: target_user,
+
+					csrfmiddlewaretoken: '{{ csrf_token }}',
+
+				},
+
+				success: function (result) {
+
+					alert(result.message);
+
+					$("#myFavorite_" + rowId).remove();
+
+				}
+
+			});
+
+
+
+		}
+
+		else if (con_test == false) {
+
+			alert("취소를 선택")
+
+			return
+
+		}
+
+	});
+
+
+
+
+
+	$('body').on('click', '#delete_login_user_btn', function (e) {
+
+		e.preventDefault();
+
+		var userId = $(this).data("id");
+
+
+
+		var delete_id = prompt("본인 id를 입력하세요", "");
+
+		var option = prompt("진짜 탈퇴하실건가요? (yes or no)", "");
+
+		var userId = "{{request.user.username}}"
+
+
+
+		if (delete_id == userId & option == "yes") {
+
+			$.ajax({
+
+				type: "POST",
+
+				url: '/accounts/delete_login_user/',
+
+				data: {
+
+					csrfmiddlewaretoken: '{{ csrf_token }}',
+
+					userId: userId
+
+				},
+
+				success: function (result) {
+
+					alert(result.message);
+
+					window.location.href = "/accounts/login/"
+
+					// http://localhost:80/accounts/login/
+
+				}
+
+			});
+
+		} else {
+
+			alert("탈퇴를 취소합니다. 입력한 id가 부정확할수 있습니다.")
+
+		}
+
+	});
+
+
+
+	$('body').on('click', '#update_complete_button_for_profile', function (e) {
+
+		e.preventDefault();
+
+		// alert("update button click")
+
+
+
+		var profile_id = $(this).data("id");
+		var profile_user = $("#profile_user").val();
+		var profile_email = $("#profile_email").val();
+		var profile_github_original = $("#profile_github_original").val();
+		var profile_github1 = $("#profile_github1").val();
+		var profile_github2 = $("#profile_github2").val();
+		var profile_github3 = $("#profile_github3").val();
+		var profile_github4 = $("#profile_github4").val();
+		var profile_lecture_url = $("#profile_lecture_url").val();
+		var profile_first_category = $("#first_category").val();
+		var profile_last_category = $("#last_category").val();
+		var profile_public = $("input[name='profile_public']:checked").val();
+		
+		console.log("profile_id : ", profile_id);
+
+		var current_login_user = "{{request.user}}"
+
+		$.ajax({
+
+			type: "POST",
+			url: '/accounts/update_for_profile/' + profile_id,
+
+			data: {
+
+				profile_id: profile_id,
+				profile_user: profile_user,
+				profile_email: profile_email,
+				profile_github_original: profile_github_original,
+				profile_github1: profile_github1,
+				profile_github2: profile_github2,
+				profile_github3: profile_github3,
+				profile_github4: profile_github4,
+				profile_lecture_url: profile_lecture_url,
+				first_category: profile_first_category,
+				last_category: profile_last_category,
+				profile_public : profile_public,
+				csrfmiddlewaretoken: '{{ csrf_token }}'
+
+			},
+
+			success: function (result) {
+
+				alert(result.message)
+
+			}
+
+		});
+
+
+
+	});
+
+
+
+	{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

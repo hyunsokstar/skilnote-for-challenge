@@ -1,0 +1,262 @@
+{% extends "todo/layout.html" %}
+{%block title %}todo list{% endblock %}
+
+{%block content %}
+{% load crispy_forms_tags %}
+
+{%block extra_css %}
+
+.modal-content {
+    width:132%;
+}
+
+{% endblock %}
+
+{% if messages %}
+<div class="alert alert-success">
+    {% for message in messages %}
+     {{ message.message }}<strong>{{ message.tags }}</strong>
+     {% endfor %}
+</div>
+{% endif %}
+
+admin page
+<h2 class="float-left">할일 관리 by ({{request.user}})</h2>
+    {% if category %}
+        카테고리 : <small class="text-muted">{{ category }}</small>
+    {% endif %}
+
+
+    <a href = "{% url "todo:todo_new" %}" class="btn btn-outline-info float-right">입력 </a>
+    <a href="" class="btn btn-outline-info float-right" id="todo_delete_button"> 삭제 </a>
+    <hr>
+    <!-- <a class="btn btn-outline-info" href="{% url "todo:isnert_todo_popup_by_admin" "tiger" %}">입력 페이지로 이동</a> -->
+    <!-- <a class="btn btn-outline-info btn-sm float-right insert_todo_by_admin_btn"  href="">입력(admin)</a> -->
+
+
+    <input type="button" class="float-right" onclick="goToAdminInsert()" value="입력(admin)">
+    <input type="text" class="float-right" name="" value="" size="40" id="user_id">
+    <br><br>
+
+<table class="table table-bordered" id="todo_list">
+    <tr>
+        <td>check</td>
+        <td>분류</td>
+        <td>title</td>
+        <td>경과시간</td>
+        <td></td>
+    </tr>
+
+    {% if object_list.exists %}
+        {% for p in object_list %}
+        <tr>
+            <td>
+                <input type="checkbox" id="{{p.pk}}" class="td_check">
+            </td>
+            <td>{{p.classification}}</td>
+            <td>
+                <a href="" id={{p.id}} class="title_for_list">
+                    {{p.title}}
+                </a>
+                <a class="badge badge-pill badge-warning btn-sm" href="{% url "todo:todo_edit" p.id %}">수정</a>
+                <a class="badge badge-pill badge-warning btn-sm" href="{% url "todo:todo_delete" p.pk %}">삭제</a>
+
+            </td>
+            <td>{{p.now_diff}}</td>
+            <td>
+            </td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="5">
+                <h4>아직 게시물이 없습니다.</h4>
+            </td>
+        </tr>
+    {% endif %}
+</table>
+<hr>
+
+<button type="button" id="myModal_button" class="btn btn-primary invisible" data-toggle="modal" data-target="#myModal">
+    todo detail modal
+</button>
+
+
+<button type="button" id="myModal_button2" class="btn btn-primary invisible" data-toggle="modal" data-target="#myModal2">
+    todo 상세 보기 모달
+</button>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+
+</div>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal2">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <!-- Comments Form -->
+                    <h5 class="card-header">Leave a Comment:
+                    </h5>
+                    <div class="card-body">
+
+                        <form method="post" action="{{object.get_absolute_url}}new_comment/">{% csrf_token %}
+                            <div class="form-group">
+                                {{ comment_form | crispy }}
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal area -->
+<!-- Modal -->
+
+<div class="modal fade" id="insert_todo_by_admin_modal" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Header</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+<script type="text/javascript">
+{% block extra_js %}
+
+function goToAdminInsert(){
+    const user_name = $("#user_id").val()
+    if(user_name == ""){
+        $("#user_id").focus();
+        alert("id를 입력하세요")
+        return false;
+    }
+
+
+    alert("user_name : "+ user_name)
+    window.history.pushState("", "", '/todo/')
+    location.href = "todolist/admin/insert_popup/"+user_name
+
+}
+
+$(".insert_todo_by_admin_btn").click(function(e){
+    e.preventDefault();
+    const user_name = $("#user_id").val()
+    const url = "insert_popup/"+user_name
+    alert("user_name : " + user_name)
+    alert("url : "+ url)
+
+    $.get(url)
+    .done((html) => {
+            alert("html" + html)
+            console.log("html : ", html);
+        })
+        .fail(() => {
+            console.log("fail");
+        })
+        .always(() => {
+            console.log('always');
+        })
+        $("#insert_todo_by_admin_modal").modal()
+
+});
+
+
+$(document).ready(function(){
+    var id;
+    $("#todo_list a[class='title_for_list']").click(function(e){
+        e.preventDefault();
+        id = $(this).attr('id');
+
+        window.history.pushState("", "", '/todo/')
+
+        $.get(id)
+            .done((html) => {
+                $('#myModal_button').hide();
+                $("#myModal").html(html)
+                $( "#myModal_button" ).trigger("click");
+                // $( "#myModal_button3" ).trigger("click");
+            })
+            .fail(() => {
+                console.log("fail");
+            })
+            .always(() => {
+                console.log('always');
+            })
+    });
+})
+
+$(document).ready(function(){
+    $('.comment_button_for_todo_detail').click(function(e){
+        e.preventDefault();
+        id=$(this).attr('id');
+        alert('id : ', id)
+    })
+
+$('#todo_delete_button').click(function(e){
+    e.preventDefault();
+    // todo_check
+    // window.location = "/todo/"
+    alert("삭제 버튼 ")
+    // Get checked checkboxes
+    var todo_arr = [];
+    $('.td_check').each(function() {
+        if (jQuery(this).is(":checked")) {
+            var id = this.id;
+            todo_arr.push(id);
+        }
+    });
+    alert('todo_arr : '+ todo_arr)
+
+    window.history.pushState("", "", '/todo/')
+
+
+    $.ajax({
+      type: "POST",
+      url: 'todo_delete_ajax/',
+      data: {
+          'todo_arr[]':todo_arr,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            alert('todo_delete_ajax is success ');
+            jQuery('input:checkbox:checked').parents("tr").remove();
+        }
+    });
+})
+
+// result is todo_arr : 78,76
+
+
+})
+
+
+{% endblock %}
+</script>

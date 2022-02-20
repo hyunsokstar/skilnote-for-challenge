@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{%block title %}완료 명단 등록{% endblock %}
+
+{%block content %}
+<hr>
+
+<h2>완강 등록</h2>
+
+<hr>
+
+<form action="" method="post">
+  {% csrf_token %}
+  <table>
+    {{form.as_table}}
+  </table>
+  <input type="submit">
+</form>
+
+{% endblock %}
+
+<script type="text/javascript">
+{% block extra_js %}
+
+
+
+{% endblock %}
+</script>

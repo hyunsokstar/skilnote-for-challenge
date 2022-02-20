@@ -1,0 +1,185 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{%block title %}Skil Search Page{% endblock %}
+{%block extra_css %}
+
+
+{% endblock %}
+
+{%block content4 %}
+<br><br>
+<h2>Skil Search Page(file_name)</h2>
+
+<a class="btn btn-outline-dark float-right m-2" href="{% url 'wm:my_shortcut_list' %}">스킬 노트로 이동</a>
+
+<table class="table table-bordered">
+	<tr>
+		<td width="">
+			<br>
+			<div class="container">
+			  <div class="row">
+				  <br><br>
+					<div class="col">
+						<br>
+						<form class="" action="" method="get">
+							<div class="input-group mb-3">
+								<input type="text" class="form-control" placeholder="serach word" aria-label="유저 검색" aria-describedby="basic-addon2" id="search_word_for_user"  name="q">
+								<div class="input-group-append">
+									<!-- search_btn_for_user_list -->
+									<button class="btn btn-outline-secondary" type="submit">검색</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+			  </div>
+			</div>
+		</td>
+	</tr>
+
+</table>
+
+{% if messages %}
+<div class="alert alert-success">
+	{% for message in messages %}
+	{{ message.message }}<strong>{{ message.tags }}</strong>
+	{% endfor %}
+</div>
+{% endif %}
+
+<!-- <span class="float-right"> {{request.user}} 님의 skill note 입니다. </span> -->
+
+
+검색 결과:
+<table class="table table-bordered mb-2" >
+	<tr>
+		<td>번호</td>
+		<td>category</td>
+		<td>title 22</td>
+		<td>name</td>
+	</tr>
+	<tbody>
+	{% if object_list.exists %}
+		{% for p in object_list %}
+			<tr>
+				<td>
+					{{ forloop.counter }}
+				</td>
+				<td>
+					<a href="/wm/myshortcut/category/{{p.category}}/">
+						{{p.category}}
+					</a>
+				</td>
+				<td>
+					{{p.title}}
+					<a href="#wm_detail_{{p.id}}" class="badge badge-dark" data-toggle="collapse">상세 보기</a>
+					{% ifequal p.type.type_name "input" %}
+					<br />
+					<input type="text" id="wm_detail_{{p.id}}" class="collapse " value="{{p.content1}}" size="100%" />
+					{% endifequal %}
+
+					{% ifequal p.type.type_name "textarea" %}
+					<br />
+					<textarea id="wm_detail_{{p.id}}" class="collapse" cols="100" rows="10">{{p.content2}}</textarea>
+					{% endifequal %}
+
+					{% ifequal p.type.type_name "summer_note" %}
+					<br />
+					<div id="wm_detail_{{p.id}}" class="collapse" width="100%">{{p.content2 | safe}}</div>
+					{% endifequal %}
+
+				</td>
+
+				<td>
+					<a href="" onclick="change_user_for_search(this)" id={{p.author}}>
+						{{p.author}}
+					</a>
+				</td>
+			</tr>
+		{% endfor %}
+	{% else %}
+		<tr>
+			<td colspan="4">
+				<h4>검색 결과가 존재하지 않습니다.</h4>
+			</td>
+		</tr>
+	{% endif %}
+
+	</tbody>
+</table>
+
+query:{{query}}
+
+{% if query %}
+
+	{% if is_paginated %}
+		<div class="pagination">
+			<span class="page-links">
+				{% if page_obj.has_previous %}
+					<a class="btn btn-outline-dark btn-sm" href="?q={{query}}&page={{ page_obj.previous_page_number }}">previous</a>
+				{% endif %}
+				<span class="page-current">
+					Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+				</span>
+				{% if page_obj.has_next %}
+					<a class="btn btn-outline-dark btn-sm" href="?q={{query}}&page={{ page_obj.next_page_number }}">next</a>
+				{% endif %}
+		   </span>
+	   </div>
+	{% endif  %}
+
+
+{% else %}
+
+	{% if is_paginated %}
+		{% bootstrap_pagination page_obj size="small" justify_content="center" %}
+	{% endif %}
+
+{% endif %}
+
+
+
+
+<span class="myshort_list_area"></span>
+
+
+{% endblock %}
+
+<!-- js area -->
+<script type="text/javascript">
+{% block extra_js %}
+$(function() {
+
+});
+
+
+(function($) {
+    $.fn.flash_message = function(options) {
+      options = $.extend({
+        text: 'Done',
+        time: 1000,
+        how: 'before',
+        class_name: ''
+      }, options);
+
+      return $(this).each(function() {
+        if( $(this).parent().find('.flash_message').get(0) )
+          return;
+
+        var message = $('<span />', {
+          'class': 'flash_message ' + options.class_name,
+          text: options.text
+        }).hide().fadeIn('fast');
+        $(this)[options.how](message);
+
+        message.delay(options.time).fadeOut('normal', function() {
+          $(this).remove();
+        });
+      });
+    };
+})(jQuery);
+
+{% endblock %}
+</script>

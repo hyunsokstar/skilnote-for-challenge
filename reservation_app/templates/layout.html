@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>{%block title %} ask_class project {% endblock %}</title>
+	<!-- bootstrao css -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<link rel="stylesheet" href="{% static 'bootstrap/bootstrap.css' %}" media="screen">
+	<link rel="stylesheet" href="{% static '_assets/css/custom.min.css' %}">
+	{%block extra_head %}{% endblock %}
+	<style>
+	.navbar {
+		height:7%;
+		padding-top:19.1px;
+	}
+	@media screen and (min-width: 60em) {
+	  .page-top {
+		/* margin-top:40px; */
+	  }
+	}
+    {%block extra_css %}
+    {% endblock %}
+	</style>
+</head>
+
+<body>
+
+	
+	{% if user.is_authenticated %}
+
+
+	<div class="navbar navbar-expand-sm fixed-top navbar-light bg-light" id="navbar" style="margin-bottom:4px;">
+		<div class="container">
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link" href="http://www.skilnote-for-ts.co.kr.co.kr">
+					<p style="color:blue">Skil Note For Challenge</p>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'wm:my_shortcut_list' %}">Note1</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'skilnote2:my_shortcut_list' %}">Note2</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'skilnote3:my_shortcut_list' %}">Note3</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'skilnote4:my_shortcut_list' %}">Note4</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'skilblog:SkilBlogTitleList' %}">Skil Column</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'pd:private_task_list' %}"> 진도 관리 </a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'challenge:challenge_subject_list'  %}">Challenge</a>
+			</li>
+
+
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'wm:user_list_for_memo' %}">유저 목록</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'accounts2:my_profile_information_view' %}">MyProfile</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'blog:post_list' %}"> 정보 공유 </a>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="false">게시판<span
+						class="caret"></span></a>
+				<div class="dropdown-menu" aria-labelledby="download">
+					<a class="dropdown-item" href="{% url 'board:manual_list' %}"> 메뉴얼 </a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="{% url 'management:suggestion_list' %}">건의 사항</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="{% url 'bestlec:best20_list' %}">강의 추천</a>
+				</div>
+			</li>
+			{% if user.is_authenticated %}
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">{{ user }} <span
+						class="caret"></span></a>
+				<div class="dropdown-menu" aria-labelledby="download">
+					<a class="dropdown-item" href="{% url 'accounts2:logout' %}">Log out</a>
+				</div>
+			</li>
+			{% else %}
+			<li class="nav-item">
+				<button type="button" class="btn btn-outline-primary btn-sm mt-2 ml-4">
+					<a href="/accounts/login">
+						Log in
+					</a>
+				</button>
+			</li>
+			{% endif %}
+		</ul>
+		</div>
+	</div>
+
+	{% endif %}
+
+
+<div class="container page-top">
+	<div class="row">
+		<!-- Blog Entries Column -->
+		<div class="col-md-8" id="main-div">
+			<!-- Blog Post -->
+			{% block content %} {% endblock %}
+		</div>
+		<div class="col-md-4">
+			{% block sidearea %} {% endblock %}
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<!-- Blog Entries Column -->
+		<div class="col-md-10" id="main-div">
+			<!-- Blog Post -->
+			{% block content2 %}{% endblock %}
+		</div>
+		<div class="col-md-2">
+			{% block sidearea2 %} {%endblock%}
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<!-- Blog Entries Column -->
+		<div class="col-md-12 col-sm-12" id="main-div">
+			<!-- Blog Post -->
+			{% block content4 %} {% endblock %}
+		</div>
+	</div>
+</div>
+	<div class="col-sm-12 col-md-12">
+		{% block content5 %} {% endblock %}
+	</div>
+	<!-- <div class="col-md-5">
+		{% block sidearea5 %} {% endblock %}
+	</div> -->
+<div class="container">
+	<div class="row">
+		<!-- Blog Entries Column -->
+		<div class="col-md-3">
+			<!-- Blog Post -->
+			{% block content6 %}{% endblock %}
+		</div>
+
+	</div>
+</div>
+
+<!-- 모달 -->
+{% load socialaccount %}
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Please Log in</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<a role="button" class="btn btn-primary" href="{% provider_login_url 'google' %}"><i
+						class="fab fa-google"></i> Log in with Google</a>
+				<hr>
+				<a href="/accounts/login">일반 로그인</a>
+				<hr>
+				<a href="/accounts/signup">회원 가입</a>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="{% static '_assets/js/custom.js' %}"></script>
+<script src="{% static '_assets/js/jquery.min.js' %}"></script>
+<script src="{% static '_assets/js/popper.min.js' %}"></script>
+<script src="{% static 'bootstrap/bootstrap.min.js' %}"></script>
+
+<script>
+    function search_post(){
+        var search_value = document.getElementById('search-input').value;
+        location.href="/blog/search/" + search_value + "/";
+    }
+    function wait_for_enterkey(){
+        if (window.event.keyCode == 13){
+            search_post();
+        }
+    }
+
+$(document).ready(function () {
+    $(document).on('click', '#recommandation_site a', function (e) {
+        e.preventDefault();
+        $.get('?page=2')
+            .done((html) => {
+                console.log("얻어온 html으로 화면을 바꿔 치기 ");
+                console.log("html : ", html)
+                $('#post-list-wrapper').html(html)
+            })
+            .fail(() => {
+                console.log("fail");
+            })
+            .always(() => {
+                console.log('always');
+            })
+            $('.modal22').removeAttr('hidden');
+            $( ".modal22" ).modal('show');
+            $(".modal22").css("z-index", "1500");
+    })
+});
+
+{%block extra_js %}
+{% endblock %}
+
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+
+</body>
+</html>

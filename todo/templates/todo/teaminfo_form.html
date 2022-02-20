@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{%block title %}팀 등록{% endblock %}
+{% load crispy_forms_tags %}
+
+{%block content %}
+
+<hr>
+<h2>팀 등록</h2>
+<hr>
+
+<form action="" method="post" enctype='multipart/form-data'>
+  {% csrf_token %}
+  <table>
+    {{ form }}
+  </table>
+  <input type="submit">
+</form>
+
+{% endblock %}
+
+<script type="text/javascript">
+{% block extra_js %}
+
+{% endblock %}
+</script>

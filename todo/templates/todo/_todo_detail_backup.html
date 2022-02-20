@@ -1,0 +1,306 @@
+{% load crispy_forms_tags %}
+
+<!-- <div class="modal fade" id="myModal"> -->
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <h2 style="background-color:skyblue;">todo detai</h2>
+            <!-- Modal Header -->
+
+            <div class="modal-header">
+                <h4 class="modal-title">{{ object.title }}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                {{ object.get_markdown_content | safe }}
+                <hr>
+
+
+                <div class="card border-info mb-3" style="max-width: 60rem;">
+                    <div class="card-header"><h2 style="background-color:lightgreen">Insert code</h2></div>
+                    <div class="card-body">
+
+                        <!-- comment insert -->
+                        <div class="comment_insert_area" style="background-color:white">
+
+                            <form method="post" action="{{object.get_absolute_url}}new_comment/" id="comment_form" class="hi">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ comment_form | crispy }}
+                                </div>
+                                <button type="submit" class="btn btn-primary float-right" style="margin-right:20px;">Submit</button>
+                                <br>
+                            </form>
+                            {{ form.media }}
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <hr>
+
+
+                <!-- comment output -->
+                <div class="card border-danger mb-3" style="max-width: 60rem;">
+                    <div class="card-header">
+                        <h2 style="background-color:lightgreen">Step-by-Step Code</h2>
+                    </div>
+                    <div class="card-body">
+
+                        {% for comment in comments.all %}
+                        <table class="table table-bordered" id="comment_table_{{comment.id}}">
+                            <tr>
+                                <td>author2</td>
+                                <td>{{ comment.author }}</td>
+                            </tr>
+                            <tr>
+                                <td>title</td>
+                                <td colspan="3">
+                                    <input type="text" class="form-control" name="" value="{{comment.title}}" id="todo_comment_title_{{comment.id}}">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>file_name</td>
+                                <td colspan="3">
+                                    <input type="text" class="form-control" name="" value="{{comment.file_name}}" id="todo_comment_file_name_{{comment.id}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>code</td>
+                                <td colspan="3">
+                                    <textarea name="name" rows="10" cols="110" id="my_code_{{comment.id}}" class="todo_comment_text_{{comment.id}}">{{comment.text}}</textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <!-- onclick="location.href='/todo/delete_comment/{{ comment.pk }}/'" -->
+                                    <button type="button" name="button" id="{{comment.id}}" class="copy_code">copy</button>
+                                    {% if comment.author == request.user %}
+                                    <button class="btn btn-sm btn-warning float-right comment_delete_button" id="{{comment.pk}}">delete</button>
+                                    <button class="btn btn-sm btn-info float-right comment_edit_button" id="{{comment.pk}}">edit</button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3" border="0"></td>
+                            </tr>
+                        </table>
+                        <br>
+                        {% endfor %}
+                        <div class="reply_list"></div>
+
+
+                    </div>
+                </div>
+
+            </div> <!-- modeal body end -->
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+
+<!-- 댓글 템플릿 -->
+<script class="reply_template" type="text/x-template">
+    <table class="table table-bordered" id="comment_table_<%= comment_id %>">
+        <tr>
+            <td>author</td>
+            <td><%= author %></td>
+        </tr>
+        <tr>
+            <td>title</td>
+            <td colspan="3">
+                <input type="text" size="50" name="" value="<%= title %>" id="todo_comment_title_<%= comment_id %>">
+            </td>
+        </tr>
+
+        <tr>
+            <td>file_name</td>
+            <td colspan="3">
+                <input type="text" name="" value="<%= file_name %>" id="todo_comment_file_name_<%= comment_id %>">
+            </td>
+        </tr>
+        <tr>
+            <td>code</td>
+            <td colspan="3">
+                <textarea name="name" rows="10" cols="80" id="my_code_<%= comment_id %>" class="todo_comment_text_<%= comment_id %>"><%= text %></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button type="button" name="button" id="<%= comment_id %>" class="copy_code">copy</button>
+                <button class="btn btn-sm btn-warning float-right" onclick = deleteToDoComment(<%= comment_id %>)>delete</button>
+                <button class="btn btn-sm btn-info float-right "  onclick = editToDoComment(<%= comment_id %>)>edit</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3" border="0"></td>
+        </tr>
+    </table>
+
+</script>
+
+<!-- _todo_detail.html -->
+<script type="text/javascript">
+
+{% block extra_js %}
+
+$(document).ready(function(){
+    $("#comment_form").submit(function(e){
+        e.preventDefault();
+        var $form = $(this);
+        var url = $form.attr('action');
+        var data = $form.serialize();
+
+        $.post(url,data)
+            .done(function(obj){
+                alert("ajax request is done")
+                console.log(obj)
+                var raw_template = $('.reply_template').html();
+                console.log("raw_template : ", raw_template);
+                var tpl = _.template(raw_template);
+
+                var rendered = tpl({
+                    title : obj.title,
+                    author : obj.author,
+                    text : obj.text,
+                    file_name: obj.file_name,
+                    created_at : obj.created_at,
+                    comment_id : obj.edit_id
+                });
+                console.log("rendered : " , rendered);
+                $(rendered).appendTo($('.reply_list'));
+            })
+            .fail(function(xhr, textStatus, error){
+                alert("failed : " + error);
+            });
+    });
+
+    $(".copy_code").click(function(e){
+
+        e.preventDefault();
+        var id = $(this).attr('id')
+
+        var text = document.getElementById(id),
+        textVal = text.innerText;
+        textTd = $(`#my_code_${id}`).val()
+        // alert(textTd)
+
+        var dummy = document.createElement('textarea');
+        dummy.value = textTd;
+        //
+        document.body.appendChild(dummy );
+        dummy.select();
+        //
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+
+        alert("copy is completed")
+    });
+
+    // 댓글 수정 버튼
+    $(".comment_edit_button").click(function(e) {
+        e.preventDefault();
+        var id = $(this).attr("id");
+        var title = $("#todo_comment_title_"+id).val();
+        var file_name = $("#todo_comment_file_name_"+id).val();
+        var text = $(".todo_comment_text_"+id).val();
+
+        // alert('id : ' + id);
+        // alert('title : ' + title);
+        // alert('file_name : ' + file_name);
+        // alert('text : ' + text);
+
+        $.ajax({
+          type: "POST",
+          url: 'update_comment_ajax/'+id,
+          data: {
+              id:id,
+              title:title,
+              file_name:file_name,
+              text:text,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+            success: function(result) {
+                alert('comment update complete ');
+            }
+        });
+    });
+
+    // 댓글 삭제 버튼
+    $(".comment_delete_button").click(function(e) {
+        e.preventDefault();
+        var id = $(this).attr("id");
+        alert('삭제 id : ' + id);
+        $.ajax({
+          type: "POST",
+          url: 'delete_comment_ajax/'+id,
+          data: {
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+            success: function(result) {
+                $("#comment_table_"+id ).remove();
+                alert('comment 삭제 complete ');
+            }
+        });
+    });
+
+})
+
+function deleteToDoComment(id){
+    alert("id : " +id)
+    $.ajax({
+      type: "POST",
+      url: 'delete_comment_ajax/'+id,
+      data: {
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            $("#comment_table_"+id ).remove();
+            alert('comment 삭제 complete ');
+        }
+    });
+
+}
+
+function editToDoComment(id){
+    var title = $("#todo_comment_title_"+id).val();
+    var file_name = $("#todo_comment_file_name_"+id).val();
+    var text = $(".todo_comment_text_"+id).val();
+
+    alert('id : ' + id);
+    alert('title : ' + title);
+    alert('file_name : ' + file_name);
+    alert('text : ' + text);
+
+    $.ajax({
+      type: "POST",
+      url: 'update_comment_ajax/'+id,
+      data: {
+          id:id,
+          title:title,
+          file_name:file_name,
+          text:text,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            alert('comment update complete ');
+        }
+    });
+}
+
+{% endblock %}
+
+</script>
+
+<!-- </div> -->

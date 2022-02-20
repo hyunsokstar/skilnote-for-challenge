@@ -1,0 +1,173 @@
+{% load static %}
+
+
+
+        <button type="button" class="btn btn-outline-primary insert_btn_for_guset_book_list" style="float: right;">계획 쓰기</button>
+
+
+        <table class="table table-bordered" id="todo_list" width="100%">
+            <tr>
+                <td>id</td>
+                <td>author</td>
+                <td>content</td>
+                <td>created_at</td>
+                <td>삭제</td>
+            </tr>
+            {% if object_list.exists %}
+
+            {% for guest_book in object_list %}
+            <tr id="guest_book_row_{{guest_book.id}}">
+                <td>{{guest_book.id}}</td>
+                <td id=author_{{guest_book.id}}>{{guest_book.author}}</td>
+                <td>
+                    <input type="text" class=""  size="100%" value="{{guest_book.content}}">
+                </td>
+                <td>
+                    {{guest_book.created_at}}
+                </td>
+                <td>
+                    <a href="#">
+                        <img class="delete_btn_for_guest_book_list" src="{% static 'icon/x_mark.png' %}" data-author={{guest_book.author}} id="{{guest_book.id}}" alt="" >
+                    </a>
+
+                </td>
+            </tr>
+            {% endfor %}
+
+            {% else %}
+            <tr>
+                <td colspan="5">
+                    <h4>아직 계획이 없습니다.</h4>
+                </td>
+            </tr>
+            {% endif %}
+            <tbody id="guest_book_tbody"></div>
+        </table>
+
+
+<!-- underscore template area -->
+
+<!-- mini note for backend modal insert textarea -->
+<script class="guest_book_row" type="text/x-template">
+
+    <tr id="guest_book_row_<%=guest_book_id%>">
+        <td><%=guest_book_id%></td>
+        <td><%=guest_book_author%></td>
+        <td>
+            <input type="text" class=""  size="100%" value="<%=guest_book_content%>">
+        </td>
+        <td>
+            <%=guest_book_created_at%>
+        </td>
+        <td>
+            <a href="#">
+                <img class="delete_btn_for_guest_book_list" src="{% static 'icon/x_mark.png' %}" data-author=<%=guest_book_author%> id=<%=guest_book_id %> alt="" >
+            </a>
+        </td>
+    </tr>
+
+</script>
+
+
+<!-- js area -->
+<script type="text/javascript">
+
+    $('body').on('click', '.delete_btn_for_guest_book_list', function(e) {
+        console.log('delete guest book row!');
+        e.preventDefault();
+        var id = $(this).attr("id");
+        const current_user = "{{request.user}}"
+        const author = $(this).data('author');
+        console.log("current user : ", current_user);
+        console.log(" author : ", author);
+
+    if(current_user === author ){
+        // alert("삭제 하겠습니다.")
+        $.ajax({
+                type: "POST",
+                url: '/skilnote4/myshortcut/delete_guest_book_list/' + id,
+                data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function (result) {
+                            $("#guest_book_row_" + id).remove();
+                            alert(result.message);
+                        }
+                    });
+    } else {
+        alert("작성자만 지울수 있습니다. 작성자는 " + author)
+    }
+
+
+    });
+
+
+    // $(".delete_btn_for_guest_book_list").click(function (e) {
+    //     // alert("삭제 버튼 클릭 확인");
+    //
+    //     e.preventDefault();
+    // 	var id = $(this).attr("id");
+    //
+    // 	$.ajax({
+    // 		type: "POST",
+    // 		url: '/skilnote4/myshortcut/delete_guest_book_list/' + id,
+    // 		data: {
+    // 			csrfmiddlewaretoken: '{{ csrf_token }}'
+    // 		},
+    // 		success: function (result) {
+    // 			$("#guest_book_row_" + id).remove();
+    // 			alert(result.message);
+    // 		}
+    //     });
+    //
+    // });
+
+    $(".insert_btn_for_guset_book_list").click(function () {
+        // alert("계획 입력 버튼 클릭")
+    	window.history.pushState("", "", '/skilnote4/myshortcut/')
+    	const text = prompt("text를 입력해 주세요 ", "");
+        const page_user = "{{request.user}}";
+        console.log("text, page_user : ", text, page_user);
+
+    	if (!text) {
+    		return;
+    	};
+
+    	if (text) {
+    		$.ajax({
+    			type: "POST",
+    			url: 'insert_for_guest_book/',
+    			data: {
+                    text: text,
+                    page_user: page_user,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+    			},
+    			success: function (result) {
+    				alert(result.message);
+
+    				// underscore를 이용해 row 추가 하기
+    				var guest_book_row_template = $('.guest_book_row').html();
+    				var tpl = _.template(guest_book_row_template);
+    				var table_row = $('.table_row').length;
+                    //
+    				var rendered = tpl({
+    					table_row_id: table_row + 1,
+                        guest_book_id : result.guest_book_id,
+    					guest_book_author: result.guest_book_author,
+    					guest_book_content: result.guest_book_content,
+    					guest_book_created_at: result.guest_book_created_at,
+    				});
+    				$(rendered).appendTo($('#guest_book_tbody'));
+    			}
+    		});
+    	} else {
+    		alert("내용을 입력하지 않으셨어여 다시 시도해주세요")
+        }
+
+    })
+
+</script>
+
+
+
+</body>

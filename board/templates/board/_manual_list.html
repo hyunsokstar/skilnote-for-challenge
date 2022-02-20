@@ -1,0 +1,37 @@
+    <!-- <tr>
+        <td>index</td>
+        <td>title</td>
+        <td>author</td>
+        <td>created_at</td>
+    </tr> -->
+    {% if object_list.exists %}
+    {% for p in object_list %}
+    <tr>
+        <td>
+            {{ p.id }}
+        </td>
+        <td>
+            <a href="{{p.get_absolute_url}}">
+                {{p.title}}
+                {% if p.author == request.user %}
+                <a href = "{% url "board:delete_manual" p.id %}" class="badge badge-pill badge-info">삭제</a>
+                <a class="badge badge-pill badge-info" href="{% url "board:edit_manual" p.id %}">수정</a>
+                {% endif %}
+
+            </a>
+        </td>
+        <td>
+            {{p.author}}
+        </td>
+        <td>
+            {{p.created_at}}
+        </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td colspan="4">
+            <h4>아직 게시물이 없습니다.</h4>
+        </td>
+    </tr>
+    {% endif %}

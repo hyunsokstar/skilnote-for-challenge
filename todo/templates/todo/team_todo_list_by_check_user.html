@@ -1,0 +1,43 @@
+<table class="table table-bordered" id="todo_list">
+    <tr>
+        <td>check</td>
+        <td>classification</td>
+        <td>author</td>
+        <td>title</td>
+        <td>남은 시간</td>
+        <td>마감 기한</td>
+    </tr>
+
+    {% if team_todo_list.exists %}
+    {% for p in team_todo_list %}
+    <tr>
+        <td>
+            <input type="checkbox" id="{{p.pk}}" class="td_check">
+        </td>
+        <td>{{p.classification}}</td>
+        <td>{{p.author}}</td>
+        <td>
+            <a href="" id={{p.id}} class="title_for_list">
+                {{p.title}} (<font color="blue"> from {{p.director}}</font> )
+            </a><br>
+            <a class="badge badge-pill badge-dark" href="{% url "todo:todo_edit" p.id %}">수정</a>
+        </td>
+        <td>
+            {% if p.dead_line %}
+            {{p.remaining_time}}
+            {% else %}
+            {% endif %}
+        </td>
+        <td>{{p.dead_line}}</td>
+    </tr>
+    {% endfor %}
+    <tbody id="tbody_todo"></tbody>
+    {% else %}
+    <tr>
+        <td colspan="5">
+            <h4>아직 게시물이 없습니다.</h4>
+        </td>
+    </tr>
+    {% endif %}
+
+</table>

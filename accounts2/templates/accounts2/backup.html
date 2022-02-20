@@ -1,0 +1,25 @@
+{% extends "layout2.html" %}
+
+{% block content %}my title{% endblock %}
+
+{% block content %}
+    <table border="1">
+        <tr>
+            <td>user_name</td>
+            <td>{{requset.username}}</td>
+        </tr>
+        <tr>
+            <td>eamil</td>
+            <td>eamil</td>
+        </tr>
+        <tr>
+            <td> public </td>
+            <td> ?? </td>
+        </tr>
+        <tr>
+            <td>reputation</td>
+            <td> {{ user.recommandationuseraboutskillnote_set.count }} 점</td>
+        </tr>
+
+    </table>
+{% endblock %}

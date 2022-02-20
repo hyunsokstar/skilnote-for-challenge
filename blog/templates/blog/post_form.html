@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ object.title }} - Blog {% endblock %}
+
+{% block content %}
+
+<form method="post" enctype="multipart/form-data" class="mt-1">
+	{% csrf_token %}
+	{{ form | safe  }}
+	<button type="submit" class="btn btn-primary float-right btn-block">Submit</button>
+</form>
+
+<br>
+<br>
+
+{% endblock %}

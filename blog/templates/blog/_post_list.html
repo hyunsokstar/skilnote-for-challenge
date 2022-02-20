@@ -1,0 +1,75 @@
+{% load static %}
+{%block title %}tech news{% endblock %}
+{%block content %}
+
+<style>
+  table {
+    width: 100%;
+    border: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #444444;
+    padding: 10px;
+  }
+</style>
+
+<!-- Blog Post -->
+<div class="container" id="main-div2">
+    <br>
+    {% if object_list.exists%}
+        {% for p in object_list %}
+        <table>
+            <tr>
+                <td>
+                    <a href="{{p.get_absolute_url}}">
+                        {{p.title}}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>{{p.content | truncatewords:50}}</td>
+            </tr>
+        </table>
+        <hr>
+
+        {% if request.user == p.author %}
+            <a href="{% url "blog:post_delete" p.pk %}" class="btn btn-outline-dark">삭제</a>
+        {% endif %}
+
+        {% endfor %}
+    {% else %}
+        <h4>아직 게시물이 없습니다.</h4>
+    {% endif %}
+
+
+</div>
+
+<hr>
+{% if is_paginated %}
+<!-- Pagination -->
+<ul class="pagination justify-content-center mb-4">
+    {% if page_obj.has_next %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">&larr; Older</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" href="#">&larr; Older</a>
+    </li>
+    {% endif %}
+
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Newer &rarr;</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" href="#">Newer &rarr;</a>
+    </li>
+    {% endif %}
+</ul>
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{%block title %}메뉴얼 등록{% endblock %}
+
+{%block content %}
+
+<h2>자유 게시판 등록</h2>
+
+<form action="" method="post" enctype='multipart/form-data'>
+  {% csrf_token %}
+    {{ form }}
+
+  <input type="submit" class="button btn-block">
+</form>
+
+{% endblock %}
+
+<script type="text/javascript">
+{% block extra_js %}
+
+{% endblock %}
+</script>

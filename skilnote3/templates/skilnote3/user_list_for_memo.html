@@ -1,0 +1,278 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{%block title %}(board)manual{% endblock %}
+
+{%block extra_head %}
+
+{% endblock %}
+
+{%block content5%}
+
+<br><br>
+
+<h2>skilnote2</h2>
+
+    <input type="button" class="btn btn-outline-dark btn-block btn-sm mt-4" onclick="location.href='/skilnote2/myshortcut/'" value="skil note로 이동"/> <br><br>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+
+            <form class="" action="" method="get">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="serach word" aria-label="유저 검색" aria-describedby="basic-addon2" id="search_word_for_user"  name="q">
+                  <div class="input-group-append">
+                      <!-- search_btn_for_user_list -->
+                    <button class="btn btn-outline-secondary" type="submit">검색</button>
+                  </div>
+                </div>
+            </form>
+
+        </div>
+      </div>
+    </div>
+
+
+    <table class="table table-bordered" id="todo_list">
+        <tr>
+            <td>id</td>
+            <td width="20%">username</td>
+            <td>skill note subject</td>
+            <td>복사</td>
+            <td>skilnote</td>
+            <td>추천</td>
+        </tr>
+        {% if object_list.exists %}
+        {% for u in object_list %}
+
+
+        <tr>
+            <td>{{u.id}}</td>
+            <td id=user_name_{{u.id}} >
+                <a href="/accounts/user_profile_information_view/{{u.username}}">
+                    {{u.username}}
+                </a
+            </td>
+            {% if u.username == request.user.username %}
+            <td style="background-color:#DFF3FA">
+                <input type="text" class="shortcut_subject_input_{{u.id}} form-control" value="{{u.profile.subject_of_memo}}"><br>
+                <a href="" class="btn btn-outline-primary btn-sm update_memo_subject_btn float-right" data-id={{u.id}}>수정</a>
+            </td>
+            {% else %}
+            <td>
+                <input type="text" class="shortcut_subject_input_{{u.id}} form-control" value="{{u.profile.subject_of_memo}}">
+            </td>
+            {% endif %}
+            <td>
+                <a href="" class="btn btn-outline-dark btn-sm copy_to_me_from_user_id_btn" data-id={{u.id}} id={{u.username}}>
+                    copy_to_me
+                    <span class="" id="loading_for_copy_{{u.id}}" role="status" aria-hidden="true"></span>
+                </a>
+            </td>
+            <td>
+                <a href="" class="btn btn-outline-dark move_to_user_btn1 btn-sm" id={{u.id}}>wm</a>
+<a href="" class="btn btn-outline-dark move_to_user_btn2 btn-sm" id={{u.id}}>skilnote2</a>
+            </td>
+            <td>
+                <button type="button" class="plus_btn_for_user btn btn-outline-dark" data-author_id="{{u.id}}" data-my_id="{{request.user.id}}">
+                    <img src="{% static 'icon/plus.png' %}" alt="">
+                </button>
+                <span id="skill_note_point_{{u.id}}">
+                    {{ u.recommandationuseraboutskillnote_set.count }}
+                </span>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="4">
+                <h4>아직 게시물이 없습니다.</h4>
+            </td>
+        </tr>
+        {% endif %}
+        <tbody id="post_list"></div>
+    </table>
+
+<!-- {% if is_paginated %}
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">이전</a>
+  {% endif %}
+  {{ page_obj.number }} 페이지
+  {% if page_obj.has_next %}
+    <a href="?page={{page_obj.next_page_number}}">다음</a>
+  {% endif %}
+{% endif %} -->
+
+{% endblock %}
+
+
+<script type="text/javascript">
+
+// wm 앱임
+{% block extra_js %}
+
+$(() => {
+    //scroll을 구현해 보자
+    $win = $(window);
+    var is_loaded = false;
+    var current_page;
+    $win.scroll(() => {
+        var diff = $(document).height() - $win.height();
+
+        if((!is_loaded) && diff - $win.scrollTop() < 1 ) {
+            console.log("현재 창의 위치는 바닥입니다.");
+            var next_page = (current_page || 1) + 1;
+            current_page = next_page
+            var next_page_url = '?page=' + next_page;
+            is_loaded = true;
+            $.get(next_page_url).
+                done(function(html) {
+                    // console.log("html(next) : ", html)
+                    $("#post_list").append(html);
+                    console.log("next_page_url : " , next_page_url);
+                    next_page = current_page +1
+                    console.log("현재 페이지 번호 : ", current_page);
+                }).
+                fail(function(hxr, textStatus, error) {
+                    console.log(textStatus);
+                }).always(function() {
+                    console.log("always");
+                    is_loaded = false;
+                });
+            }
+    });
+});
+
+
+$(".search_btn_for_user_list").click(function(){
+    // alert("search button 클릭");
+    const search_word_for_user = $("#search_word_for_user").val()
+    alert("search_word_for_user : " + search_word_for_user)
+    // 1122
+});
+
+function refresh_user_list_popup(){
+
+    // console.log("refresh_user_list_popup 실행");
+    // alert("refresh_user_list_popup()");
+    const url = "userlist/byajax"
+	window.history.pushState("", "", '/skilnote2/')
+
+	$.get(url)
+		.done((result) => {
+            $("#user_table_area").html("")
+			$("#user_table_area").html(result)
+
+			window.history.pushState("", "", '/skilnote2/myshortcut')
+
+		})
+		.fail(() => {
+			console.log("fail");
+		})
+		.always(() => {
+			console.log('always');
+		})
+
+}
+
+$('body').on('click', '.plus_btn_for_user', function (e) {
+
+    // alert('plus button 클릭');
+    const my_id = $(this).data("my_id");     // 누가 추천
+    const author_id = $(this).data("author_id"); // 누구를 추천
+    console.log("author_id : " , author_id);
+    console.log("my_id : " , my_id);
+
+    window.history.pushState("", "", '/skilnote2/myshortcut/')
+
+    $.ajax({
+        type: "POST",
+        url: 'plus_recommand_for_skillnote_user/',
+        data: {
+            "my_id":my_id,
+            "author_id":author_id,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(result) {
+            alert(result.message)
+            $("#skill_note_point_"+author_id).text(result.recommand_count)
+            window.location.href = '/skilnote2/userlist/byajax'
+        }
+    });
+});
+
+
+$(".copy_to_me_from_user_id_btn").click(function(e){
+    e.preventDefault();
+    const author = this.id
+    // alert("this.id : " + this.id);
+    const row_id = $(this).data("id");
+
+    if (!author) {
+		return;
+	};
+
+    const selection = prompt("나의 note를 모두 지운뒤 선택한 유저"+author+"의 노트를 복사하시겠습니까?(x,y)", "");
+    window.history.pushState("", "", '/skilnote2/myshortcut/')
+
+    if (selection == "y" || selection == "Y") {
+        $("#loading_for_copy_"+row_id).addClass("spinner-border spinner-border-sm");
+
+        $.ajax({
+            type: "POST",
+            url: 'copy_to_me_from_user_id/',
+            data: {
+                "author":author,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(result) {
+                $("#loading_for_copy_"+row_id).removeClass("spinner-border spinner-border-sm");
+                alert("result.message (user_list_for_memo) : " + result.message)
+            }
+        });
+    } else {
+        alert("취소 하셨습니다.")
+    }
+
+});
+
+$(".update_memo_subject_btn").click(function(e){
+    e.preventDefault();
+    const id = $(this).data("id")
+    // alert("id : " +id)
+    const shortcut_subject = $(".shortcut_subject_input_"+id).val()
+    // alert("shortcut_subject : "+shortcut_subject)
+
+    window.history.pushState("", "", '/skilnote2/myshortcut/')
+
+    $.ajax({
+      type: "POST",
+      url: 'update/shortcut_subject/',
+      data: {
+          'shortcut_subject':shortcut_subject,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            alert("result.message : " + result.message)
+        }
+    });
+
+})
+$(".move_to_user_btn").click(function(e){
+    e.preventDefault();
+    const id = this.id
+    alert("id : "+ id)
+    const user_id = $(this).parent().parent().find("#user_name_"+id).text().trim()
+    alert(user_id + "의 skil note로 이동")
+    location.href = "/skilnote2/myshortcut/"+user_id+"/1";
+})
+
+{% endblock %}
+
+</script>

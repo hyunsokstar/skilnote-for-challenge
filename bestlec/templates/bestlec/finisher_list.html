@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{%block title %}todo list{% endblock %}
+
+{%block content %}
+
+<div class="jumbotron">
+  <h1>완강자 목록</h1>
+  <p>완강자 리스트</p>
+</div>
+
+<button
+    type="button"
+    class="btn btn-outline-info btn-sm float-right"
+    name="button" onclick="location.href='/bestlec/{{fn_id}}/finisher/new'"
+    >
+        post
+</button>
+
+<br><br>
+
+<table class="table table-bordered" id="todo_list">
+    <tr>
+        <td>순번</td>
+        <td>author</td>
+        <td>comment</td>
+        <td>git_hub</td>
+        <td>note</td>
+        <td>created_at</td>
+    </tr>
+
+    {% if fl.exists %}
+        {% for p in fl %}
+            <tr>
+                <td>
+                    {{ forloop.counter }}
+                </td>
+                <td>
+                    {{p.author}}
+                </td>
+                <td>
+                    {{p.comment}}
+
+                    {% if request.user == p.author %}
+                        <a class="badge badge-pill badge-primary btn-sm" href="{% url "bestlec:finisher_delete" p.id %}">삭제</a>
+                    {% endif %}
+
+                </td>
+                <td>
+                    <a class="btn btn-outline-info" href="{{p.git_hub}}">github</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-info" href="{{p.note}}">note</a>
+                </td>
+                <td>
+                    {{p.created_at}}
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="6">
+                <h4>아직 게시물이 없습니다.</h4>
+            </td>
+        </tr>
+    {% endif %}
+</table>
+
+
+{% endblock %}
+
+<script type="text/javascript">
+{% block extra_js %}
+
+
+
+{% endblock %}
+</script>

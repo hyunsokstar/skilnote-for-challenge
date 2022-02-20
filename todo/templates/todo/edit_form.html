@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block title %} 할일 수정 {% endblock %}
+
+{% block content %}
+<br><br><br><br>
+<h2>todo 수정</h2>
+
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button type="submit" class="btn btn-primary btn-block ">Submit</button>
+</form>
+
+{% endblock %}

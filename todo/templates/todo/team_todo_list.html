@@ -1,0 +1,432 @@
+{% extends "layout.html" %}
+{%block title %}팀업무 관리 by 팀장{% endblock %}
+
+{%block content4 %}
+{% load crispy_forms_tags %}
+
+<br><br>
+
+{%block extra_css %}
+
+.modal-content {
+    width:132%;
+}
+
+{% endblock %}
+
+{% if messages %}
+<div class="alert alert-success">
+    {% for message in messages %}
+     {{ message.message }}<strong>{{ message.tags }}</strong>
+     {% endfor %}
+</div>
+{% endif %}
+
+<!-- 2001 -->
+<!-- <h2 class="float-left">할일 목록({{request.user}})</h2> -->
+
+<h4 id="">
+    팀명 : <span id="team_name">{{team_name}}</span> &nbsp;&nbsp;
+    팀장 : <span id="team_leader_name">{{team_leader_name}}</span>
+</h4>
+
+<table>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+
+팀원:
+<select id="select_for_team_member">
+    {% if team_member_list.exists %}
+        {% for p in team_member_list %}
+        <option value="{{p.member}}">{{p.member}}</option>
+        {% endfor %}
+    {% endif %}
+</select>
+
+분류 :
+<select id="select_for_classification">
+    {% if classification_list.exists %}
+        {% for p in classification_list %}
+        <option value="{{p.name}}">{{p.name}}</option>
+        {% endfor %}
+    {% endif %}
+</select>
+
+마감 기한:
+<select id="select_for_dead_line">
+ <option value="1h">1시간후</option>
+ <option value="4h">4시간후</option>
+ <option value="8h">8시간후</option>
+ <option value="1d">1일후</option>
+ <option value="1w">1주일후</option>
+</select>
+
+<br><br>
+
+<div class="input-group">
+    <input type="text" onkeyup="insert_todo()" class="form-control" id="input_todo" placeholder="팀장만 입력 가능"/>
+    <span class="input-group-btn">
+        <a class="btn btn-secondary create_todo_for_team_btn" type="button"  id="{{team_name}}" data-userid={{request.user}}>팀장 입력!</a>
+    </span>
+</div>
+
+<br>
+
+<select id="select_for_team_member2">
+    {% if team_member_list.exists %}
+        {% for p in team_member_list %}
+        <option value="{{p.member}}">{{p.member}}</option>
+        {% endfor %}
+    {% endif %}
+</select>
+
+<button type="button" name="button" class="user_change_button" data-team_name="{{team_name}}">유저로 업무 이관</button> &nbsp;&nbsp;
+
+
+    {% if team_member_list.exists %}
+        {% for p in team_member_list %}
+            <input type="checkbox" name="vehicle1" value="{{p.member.id}}" id="{{p.member.id}}" class="checkbox_for_search"> {{p.member}}
+        {% endfor %}
+    {% endif %}
+    <input type="button" value="검색" class="search_by_check_user_btn">
+    <a href = "{% url "todo:todo_new" %}" class="btn btn-outline-info float-right btn-sm">입력 </a>
+    <a href="" class="btn btn-outline-info float-right btn-sm" id="todo_delete_button"> 삭제 </a>
+    <br><br>
+
+<div class="todo-list-area">
+
+    <table class="table table-bordered" id="todo_list">
+
+
+        {% regroup team_todo_list by author as author_list %}
+
+        {% for author in author_list %}
+            <tr>
+                <td colspan="6">
+                    <h4>
+                        {{ author.grouper }}
+                    </h4>
+                </td>
+            </tr>
+
+            <tr>
+                <td>체크</td>
+                <td>분류</td>
+                <td>담당</td>
+                <td>title</td>
+                <td>남은 시간</td>
+                <td>마감 기한</td>
+            </tr>
+
+            {% for todo in author.list %}
+
+            <tr>
+                <td>
+                    <input type="checkbox" id="{{todo.pk}}" class="team_todo_check" >
+                </td>
+                <td>{{todo.classification}}</td>
+                <td>{{todo.author}}</td>
+                <td>
+                    <a href="" id={{p.id}} class="title_for_list">
+                        {{todo.title}} (<font color="blue"> from {{todo.director}}</font> )
+                    </a><br>
+                    <a class="badge badge-pill badge-dark" href="{% url "todo:todo_edit" todo.id %}">수정</a>
+                </td>
+                <td>
+                    {% if todo.dead_line %}
+                        {{todo.remaining_time}}
+                    {% else %}
+
+                    {% endif %}
+                </td>
+                <td>{{todo.dead_line}}</td>
+            </tr>
+            {% endfor %}
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+<button type="button" id="myModal_button" class="btn btn-primary invisible" data-toggle="modal" data-target="#myModal">
+    todo detail modal
+</button>
+
+
+<button type="button" id="myModal_button2" class="btn btn-primary invisible" data-toggle="modal" data-target="#myModal2">
+    todo 상세 보기 모달
+</button>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+
+</div>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal2">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <!-- Comments Form -->
+                    <h5 class="card-header">Leave a Comment:
+                    </h5>
+                    <div class="card-body">
+
+                        <form method="post" action="{{object.get_absolute_url}}new_comment/">{% csrf_token %}
+                            <div class="form-group">
+                                {{ comment_form | crispy }}
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<script class="todo_row" type="text/x-template">
+    <tr>
+        <td>
+            <input type="checkbox" id="<%=todoId %>" class="td_check">
+        </td>
+        <td><%=classification %></td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td><%=dead_line %></td>
+    </tr>
+</script>
+
+<script type="text/javascript">
+{% block extra_js %}
+
+$('body').on('click', '.user_change_button', function(e) {
+
+    const selected_user = $("#select_for_team_member2").val()
+    const team_name=$(this).data("team_name");
+    var todo_arr = [];
+    // alert('team_name : ' + team_name)
+    // alert("selected_user : " + selected_user)
+
+	$('.team_todo_check').each(function () {
+		if (jQuery(this).is(":checked")) {
+			var id = this.id;
+			todo_arr.push(id);
+		}
+	});
+
+	// alert('todo_arr : '+ shortcut_arr)
+
+
+    // 새로 고침 눌렀을때 원래 페이지로 돌아오도록 수정
+	option = prompt("체크한 todo 업무를 "+ selected_user+ "에게 이관하시겠습니까? (x,y)?", "");
+
+	if (todo_arr != "") {
+		if (option == "y") {
+			$.ajax({
+				type: "POST",
+				url: 'pass_task_to_selected_user/',
+				data: {
+					'todo_arr[]': todo_arr,
+                    'selected_user':selected_user,
+					csrfmiddlewaretoken: '{{ csrf_token }}'
+				},
+				success: function (result) {
+					alert(result.message);
+                    location.reload(true);
+				}
+			});
+		} else {
+			alert("이관을 취소하셨습니다.")
+		}
+	} else {
+		alert("체크 박스를 체크해주세요")
+	}
+})
+
+
+$('body').on('click', '.search_by_check_user_btn', function(e) {
+
+    e.preventDefault();
+    const team_name = $("#team_name").text()
+
+    var user_arr = [];
+    // td_check
+    $('.checkbox_for_search').each(function() {
+        if (jQuery(this).is(":checked")) {
+            var id = this.id;
+            user_arr.push(id);
+        }
+    });
+    window.history.pushState("", "", '/todo/')
+    console.log("user_arr : ", user_arr);
+
+
+    $.ajax({
+      type: "POST",
+      url: 'team_todo_list_by_check_user/'+team_name,
+      data: {
+          'user_arr[]':user_arr,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+
+            alert("result : 체크 유저로 검색 성공");
+            $(".todo-list-area").html(result);
+            window.history.pushState("", "", '/todo/team_todo_list/'+team_name)
+        }
+    });
+
+});
+
+
+// create_todo_for_team_btn
+$('body').on('click', '.create_todo_for_team_btn', function(e) {
+    e.preventDefault();
+    const team_name = $("#team_name").text()
+    const team_leader_name = $("#team_leader_name").text()
+    const title = $("#input_todo").val()
+    const dead_line_option = $("#select_for_dead_line").val()
+
+    const select_for_team_member = $("#select_for_team_member").val()
+
+    const select_for_classification = $("#select_for_classification").val()
+    const userid = $(this).data("userid");
+
+    // data-userid={{request.user}}
+    if(team_leader_name != userid){
+        alert("team_leader_name : "+ team_leader_name)
+        alert("userid : "+ userid)
+        alert('팀장이 아니면 입력할수 없습니다')
+        return
+    }
+
+    window.history.pushState("", "", '/todo/')
+
+    $.ajax({
+      type: "POST",
+      url: 'add_todo_for_team_by_ajax/',
+      data: {
+          title:title,
+          dead_line_option:dead_line_option,
+          select_for_team_member:select_for_team_member,
+          select_for_classification:select_for_classification,
+          team_name:team_name,
+          team_leader_name:team_leader_name,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            alert("insert todo is success")
+            window.history.pushState("", "", '/todo/team_todo_list/'+team_name)
+
+            location.reload(true);
+        }
+    });
+})
+
+
+function insert_todo(){
+    if (window.event.keyCode == 13){
+        alert("할일 입력")
+        $(".create_todo_for_team_btn").trigger("click");
+    }
+}
+
+function show_todo_detail(){
+  alert("modal 출력 함수")
+}
+$(document).ready(function(){
+
+    var id;
+
+    $("#todo_list a[class='title_for_list']").click(function(e){
+
+        alert("hi")
+        e.preventDefault();
+        id = $(this).attr('id');
+        window.history.pushState("", "", '/todo/'+id)
+
+        $.get(id)
+            .done((html) => {
+                console.log(html);
+                $('#myModal_button').hide();
+                $("#myModal").html(html)
+                $( "#myModal_button" ).trigger( "click" );
+            })
+            .fail(() => {
+                console.log("fail");
+            })
+            .always(() => {
+                console.log('always');
+            })
+    });
+})
+
+
+
+
+$(document).ready(function(){
+    $('.comment_button_for_todo_detail').click(function(e){
+        e.preventDefault();
+        id=$(this).attr('id');
+        alert('id : ', id)
+    })
+
+$('#todo_delete_button').click(function(e){
+
+    e.preventDefault();
+    alert("삭제 버튼 ")
+
+    var todo_arr = [];
+    $('.td_check').each(function() {
+        if (jQuery(this).is(":checked")) {
+            var id = this.id;
+            todo_arr.push(id);
+        }
+    });
+    alert('todo_arr : '+ todo_arr)
+
+    window.history.pushState("", "", '/todo/')
+
+    $.ajax({
+      type: "POST",
+      url: 'todo_delete_ajax/',
+      data: {
+          'todo_arr[]':todo_arr,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            alert('todo_delete_ajax is success ');
+            jQuery('input:checkbox:checked').parents("tr").remove();
+        }
+    });
+})
+
+// result is todo_arr : 78,76
+
+
+})
+
+
+{% endblock %}
+</script>

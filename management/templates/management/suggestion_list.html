@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{%block title %}todo list{% endblock %}
+{%block content2 %}
+
+<div class="jumbotron">
+  <h1>제안 사항</h1>
+  <p>제안 사항을 적어주세요</p>
+</div>
+
+<a href="/management/suggestion/new/" class="btn btn-outline-info float-right">입력 </a>
+<br><br>
+
+<table class="table table-bordered" id="todo_list">
+    <tr>
+        <td>index</td>
+        <td>title</td>
+        <td>author</td>
+        <td>created</td>
+        <td>평점</td>
+        <td></td>
+    </tr>
+
+    {% if object_list.exists %}
+        {% for p in object_list %}
+            <tr>
+                <td>
+                    {{ forloop.counter }}
+                </td>
+                <td>
+                    {{p.title}}
+
+                    {% if request.user == p.author %}
+                    <a class="badge badge-pill badge-danger btn-sm" href="{% url "management:suggestion_update" p.id %}">수정</a>
+                        <a class="badge badge-pill badge-primary btn-sm" href="{% url "management:suggestion_delete" p.id %}">삭제</a>
+
+                    {% endif %}
+                </td>
+                <td>
+                    {{p.author}}
+                </td>
+                <td>
+                    {{p.created}}
+                </td>
+                <td>
+                    {{ p.recommandsuggestion_set.count }}
+
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" href="{% url "management:recommand_suggestion" p.pk %}"> 추천 </a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="4">
+                <h4>아직 게시물이 없습니다.</h4>
+            </td>
+        </tr>
+    {% endif %}
+</table>
+{% endblock %}
+
+<script type="text/javascript">
+{% block extra_js %}
+
+{% endblock %}
+</script>

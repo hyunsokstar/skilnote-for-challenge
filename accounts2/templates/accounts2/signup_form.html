@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2>회원 가입</h2>
+
+<form action="" method="post" style="padding:20px;">
+  {% csrf_token %}
+  <table>
+    {{form | crispy }}
+  </table>
+  <input type="submit" class="btn btn-outline-success btn-block"/>
+</form>
+
+{% endblock %}

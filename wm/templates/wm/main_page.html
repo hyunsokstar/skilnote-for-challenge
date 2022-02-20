@@ -1,0 +1,394 @@
+{% extends "todo/layout.html" %}
+{% load static %}
+{%block title %} 메뉴얼 {% endblock %}
+
+{%block content5 %}
+<br><br><br><br>
+
+<h2>
+  Main Page(개인 note는 상단의 노트1을 클릭)
+</h2>
+
+{% load static %}
+<style>
+  table,
+  td,
+  th {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+  .table-responsive {
+    display: table;
+  }
+
+  table {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  td,
+  th {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  td>a,
+  img {
+    cursor: pointer;
+  }
+
+  .login_user_row {
+    background-color: azure;
+  }
+</style>
+
+<div class="table-responsive">
+
+  <table class="">
+    <tr style="background-color: #edf3fa">
+      <td>user</td>
+      <td>lecture/git</td>
+      <td>chapter</td>
+      <td>git1</td>
+      <td>git2</td>
+      <td>git3</td>
+      <td>git4</td>
+      <td>created / updated</td>
+      <td>최근 진도</td>
+      <td>조회수</td>
+    </tr>
+
+    {% if object_list.exists %} {% for u in user_list %}
+    <tr class={% if u.username == request.user.username %} {{"login_user_row"}} {% endif %}>
+      <td id="user_name_{{u.id}}">
+        <a href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/{{u.username}}/1" title="{{u.profile.phone}}">
+          {{u.username}}
+        </a>
+      </td>
+
+      <td>
+        {% if u.profile.lecture_url %}
+        <a href="http://{{u.profile.lecture_url}}">
+          <img src="{% static 'icon/home_page.png' %}" width="%" alt="" />
+        </a>
+        {% elif not u.profile.lecture_url %}
+        <img src="{% static 'icon/home_page_empty.png' %}" width="%" alt="" />
+        {% endif %} {% if u.profile.github_original %}
+        <a href="http://{{u.profile.github_original}}">
+          <img src="{% static 'icon/github_original.png' %}" width="%" alt="" />
+        </a>
+        {% elif not u.profile.github_original %}
+        <img src="{% static 'icon/github_empty.png' %}" width="%" alt="" />
+
+        {% endif %}
+      </td>
+
+      <td>
+        ({{ u.profile.first_category }} ~ {{ u.profile.last_category }})
+        <button type="button" class="btn btn-sm btn-outline-dark category_name_list_icon"
+          data-username="{{u.username}}">
+          목록
+        </button>
+
+        <button class="btn btn-sm btn-outline-dark">
+          <a href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/{{u.username}}/119">결과1</a>
+        </button>
+        <button class="btn btn-sm btn-outline-dark">
+          <a href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/{{u.username}}/120">결과2</a>
+        </button>
+
+      </td>
+
+      <td>
+        {% if u.profile.github1 %}
+        <a href="http://{{u.profile.github1}}">
+          <img src="{% static 'icon/github.png' %}" width="%" alt="" />
+        </a>
+        {% elif not u.profile.github1 %}
+        <img src="{% static 'icon/github_empty.png' %}" width="%" alt="" />
+
+        {% endif %}
+      </td>
+
+      <td>
+        {% if u.profile.github2 %}
+        <a href="http://{{u.profile.github2}}">
+          <img src="{% static 'icon/github.png' %}" width="%" alt="" />
+        </a>
+        {% elif not u.profile.github2 %}
+        <img src="{% static 'icon/github_empty.png' %}" width="%" alt="" />
+        {% endif %}
+      </td>
+
+      <td>
+        {% if u.profile.github3 %}
+        <a href="http://{{u.profile.github3}}">
+          <img src="{% static 'icon/github.png' %}" width="%" alt="" />
+        </a>
+        {% elif not u.profile.github3 %}
+        <img src="{% static 'icon/github_empty.png' %}" width="%" alt="" />
+        {% endif %}
+      </td>
+
+      <td>
+        {% if u.profile.github4 %}
+        <a href="http://{{u.profile.github4}}">
+          <img src="{% static 'icon/github.png' %}" width="%" alt="" />
+        </a>
+        {% elif not u.profile.github4 %}
+        <img src="{% static 'icon/github_empty.png' %}" width="%" alt="" />
+        {% endif %}
+      </td>
+
+      <td>
+        {{u.profile.last_updated}} / <br />
+        {{u.profile.last_modified}}
+      </td>
+
+      <td>
+        <a
+          href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/{{u.username}}/{{ u.profile.last_updated_category }}">ca{{u.profile.last_updated_category}}</a>
+      </td>
+
+      {% if u.username == request.user.username %} {% else %} {% endif %}
+
+      <td>{{u.profile.click_count}}</td>
+
+      
+
+    </tr>
+    <tr>
+      <td>
+        멤버 ( 총 {{u.allowlistforskilnote_set.count}} 명 )
+        <button data-username="{{u.username}}" class="btn btn-sm btn-outline-dark showAllowListButton">참여 </button>
+
+        <button class="btn btn-sm btn-outline-dark">
+          <a href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/{{u.username}}/1">도전 과제</a>
+        </button>
+
+      </td>
+      <td colspan="9">
+        {%if u.allowlistforskilnote_set.exists %}
+          {% for a in u.allowlistforskilnote_set.all %}
+
+            <a href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/{{a.member}}/1" title="{{u.profile.phone}}" style="color:blue">
+              {{a.member}} &nbsp;
+            </a>
+
+          {% endfor %}
+        {% endif %}
+
+      </td>
+    </tr>
+
+    {% endfor %} {% else %}
+
+    <tr>
+      <td colspan="4">
+        <h4>아직 게시물이 없습니다.</h4>
+      </td>
+    </tr>
+
+    {% endif %}
+  </table>
+<br>
+  <div class="pagination" style="display: flex; justify-content: center;">
+    <span class="page-links">
+        {% if page_obj.has_previous %}
+            <a href="/?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+            <span class="page-current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+        {% if page_obj.has_next %}
+            <a href="/?page={{ page_obj.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+</div>
+
+
+
+<!-- modal area start -->
+
+<div class="modal fade history_modal" id="history_modal" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">history-list-for-update</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body history-list-area-for-sn-update"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade categoynick_modal" id="CategoryModal" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">user list for skill</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body category_nick_area"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="guest_book_list_modal" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">계획</h4>
+
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <div class="modal-body" id="guest_list_table_area"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="allow_list_modal" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">노트 참여자 목록</h4>
+
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- 참여 리스트 body -->
+      <div class="modal-body" id="allow_list_body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+<!-- modal area end -->
+
+<!-- js area -->
+<script type="text/javascript">
+
+  {% block extra_js %}
+
+  // 2244
+  // showAllowListButton
+
+  $(document).on('click', '.showAllowListButton', function (e) {
+    const username = $(this).data("username");
+    const url = "/myshortcut/allow_list/" + username
+    // window.history.pushState("", "", '/wm/myshortcut/')
+
+    $.get(url)
+      .done((result) => {
+        $("#allow_list_body").html(result)
+        $("#allow_list_modal").modal();
+        // console.log("result : ", result);
+      })
+      .fail(() => {
+        console.log("fail");
+      })
+      .always(() => {
+        console.log('always');
+      })
+  });
+
+  $(document).on('click', '.guest_book_list_btn', function (e) {
+    const username = $(this).data("username");
+    const url = "guest_book_list/" + username
+    window.history.pushState("", "", '/wm/myshortcut/')
+
+    $.get(url)
+      .done((result) => {
+        $("#allow_list_body").html(result)
+        $("#guest_book_list_modal").modal();
+        window.history.pushState("", "", '/accounts/login/')
+      })
+      .fail(() => {
+        console.log("fail");
+      })
+      .always(() => {
+        console.log('always');
+      })
+  });
+
+
+  $(document).on('click', '.history_button', function (e) {
+    console.log("history button click")
+    var userId = $(this).data("id");
+    const url = "/accounts/history/" + userId
+    alert("userId : " + userId)
+
+
+    $.get(url)
+      .done((result) => {
+        $(".history-list-area-for-sn-update").html(result)
+        $("#history_modal").modal();
+      })
+      .fail(() => {
+        console.log("fail");
+      })
+      .always(() => {
+        console.log('always');
+      })
+
+  });
+
+  $('.category_name_list_icon').click(function (e) {
+    const username = $(this).data("username");
+    const url = '/wm/myshorcut/nicklist_for_user/' + username
+    const ch = $("#current_category").text()
+
+    $.get(url)
+      .done((result) => {
+        $(".category_nick_area").html(result)
+        $("#CategoryModal").modal();
+        $("#"+ch).css("background-color", "skyblue");
+      })
+      .fail(() => {
+        console.log("fail");
+      })
+      .always(() => {
+        console.log('always');
+      })
+  });
+
+  {% endblock %}
+</script>
+
+
+
+
+
+

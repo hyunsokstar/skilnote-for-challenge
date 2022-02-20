@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{%block sidearea %}
+
+<!-- Sidebar Widgets Column -->
+  <!-- Search Widget -->
+  <div class="card my-4">
+    <h5 class="card-header">Search</h5>
+    <div class="card-body">
+      <div class="input-group">
+        <!-- <input type="text" class="form-control" placeholder="Search for..."> -->
+        <input type="text" id="search-input" onkeyup="wait_for_enterkey()" class="form-control" placeholder="Search for..."/>
+
+        <span class="input-group-btn">
+          <!-- <button class="btn btn-secondary" type="button">Go!</button> -->
+          <button class="btn btn-secondary" type="button" onclick="search_post();">Go!</button>
+
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categories Widget -->
+  <div class="card my-4" id="category-card">
+    <h5 class="card-header">Categories</h5>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-12">
+            <ul>
+                <li>
+                    <a href="/blog/category/_none/">미분류 ({{ posts_without_category }})</a>
+                </li>
+                {% for category in category_list %}
+                <li>
+                    <a href="{{category.get_absolute_url}}">{{ category.name }} ({{ category.post_set.count }})</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Side Widget -->
+  <div class="card my-4">
+    <h5 class="card-header">메뉴 소개    </h5>
+    <div class="card-body">
+      it tech & news
+    </div>
+</div>
+
+
+{%endblock%}

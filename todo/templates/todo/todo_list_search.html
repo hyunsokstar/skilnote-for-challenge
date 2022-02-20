@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+{%block title %}검색 페이지{% endblock %}
+
+{%block content4 %}
+
+<br><br><br><br>
+<h2>할일 검색 결과 1122 : {{search_word}}</h2>
+<table class="table table-bordered">
+
+<tr>
+    <td>id</td>
+    <td>author</td>
+    <td>제목</td>
+    <td>소요 시간</td>
+    <td>남은 시간</td>
+    <td>마감 시간</td>
+</tr>
+
+{% for p in object_list %}
+    <tr>
+        <td>
+            {{ forloop.counter }}
+        </td>
+        <td>{{p.author}}</td>
+        <td>
+            <a href="" id={{p.id}} class="title_for_list">
+                {{p.title}}
+            </a>
+        </td>
+        <td>{{p.now_diff}}</td>
+        <td>{{p.remaining_time}}</td>
+        <td>{{p.dead_line}}</td>
+    </tr>
+{% endfor %}
+</table>
+
+
+
+<hr>
+{% if is_paginated %}
+    <!-- Pagination -->
+    <ul class="pagination justify-content-center mb-4">
+        {% if page_obj.has_next %}
+        <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">&larr; Older</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+                <a class="page-link" href="#">&larr; Older</a>
+        </li>
+        {% endif %}
+
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Newer &rarr;</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">Newer &rarr;</a>
+        </li>
+        {% endif %}
+    </ul>
+{% endif %}
+
+<hr>
+
+<!-- Modal -->
+<button type="button" id="myModal_button" class="btn btn-primary invisible" data-toggle="modal" data-target="#myModal">
+    todo detail modal
+</button>
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+
+</div>
+
+
+<script type="text/javascript">
+    // modal 이벤트 : 상세 보기
+    {% block extra_js %}
+    $(".title_for_list").click(function(e){
+        e.preventDefault();
+        id = $(this).attr('id');
+        alert("id : " +id)
+
+        window.history.pushState("", "", '/todo/')
+
+        $.get(id)
+        .done((html) => {
+            console.log("html : ", html);
+            $('#myModal_button').hide();
+            $("#myModal").html(html)
+            $( "#myModal_button" ).trigger("click");
+            // $( "#myModal_button3" ).trigger("click");
+        })
+        .fail(() => {
+            console.log("fail");
+        })
+        .always(() => {
+            console.log('always');
+        })
+    });
+    {% endblock %}
+
+</script>
+
+
+{% endblock %}

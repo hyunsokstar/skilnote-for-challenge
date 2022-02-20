@@ -1,0 +1,257 @@
+{% extends "todo/layout_by_admin.html" %}
+{%block title %}todo 입력 by admin{% endblock %}
+
+{%block extra_css %}
+
+.modal-dialog {
+  width: 100%;
+  height: 50%;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-content {
+    width:132%;
+}
+
+{% endblock %}
+
+{%block content5 %}
+{% load crispy_forms_tags %}
+
+
+<br>
+109821
+<h4>팀장: <span class="text-primary team_leader_name"> {{team_leader_name}} </span> &nbsp;&nbsp;
+회원:<span class="text-primary team_member_name"> {{user_name}} </span> </h4>
+
+<table width="100%">
+    <tr>
+        <td width="100%">
+            <div class="card my-4">
+                <h5 class="card-header">Search</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" id="search-input" onkeyup="wait_for_enterkey_todo()" class="form-control"
+                               placeholder="Search for..."/>
+                        <span class="input-group-btn">
+                      <button class="btn btn-secondary" type="button" onclick="search_todo();">Go!</button><br><br>
+
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td width="100%">
+            <div class="card my-4">
+                <h5 class="card-header">todo by
+                    <span class="text-primary">
+                        {{user_name}}
+                    </span>
+                </h5>
+                <div class="card-body">
+                    <ul>
+                        <li>
+                            <a href="/todo/todolist/uncomplete/admin/{{user_name}}/{{team_leader_name}}">
+                                미완료 ({{todo_count_uncomplete}})
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/todo/todolist/complete/admin/{{user_name}}/{{team_leader_name}}">
+                                완료 ({{todo_count_complete}})
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<hr>
+
+<h2 > <span class="text-info">{{current_state_for_list}}</span> </h2>
+
+<table class="table table-bordered" id="todo_list">
+    <tr>
+        <td>분류</td>
+        <td>title</td>
+        <td>경과시간</td>
+        <td>남은 시간</td>
+        <td>마감 기한</td>
+    </tr>
+
+    {% if object_list.exists %}
+        {% for p in object_list %}
+
+        <tr>
+            <td>{{p.classification}}</td>
+            <td>
+                <a href="" id={{p.id}} class="title_for_list">
+                    {{p.title}} (<font color="blue"> from {{p.director}}</font> )
+                </a>
+            </td>
+            <td>{{p.now_diff}}</td>
+            <td>
+                {% if p.dead_line %}
+                    {{p.remaining_time}}
+                {% else %}
+                {% endif %}
+            </td>
+            <td>{{p.dead_line}}</td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="5">
+                <h4>아직 게시물이 없습니다.</h4>
+            </td>
+        </tr>
+    {% endif %}
+</table>
+<hr>
+
+<button type="button" id="myModal_button" class="btn btn-primary invisible" data-toggle="modal" data-target="#myModal">
+    todo detail modal
+</button>
+
+<!-- <button type="button" id="myModal_button" class="btn btn-primary" onclick="show_todo_detail();">
+    todo detail modal
+</button> -->
+
+<button type="button" id="myModal_button2" class="btn btn-primary invisible" data-toggle="modal" data-target="#myModal2">
+    todo 상세 보기 모달
+</button>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+
+</div>
+
+
+<!-- The Modal -->
+<div class="modal fade modal-xl" id="myModal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <!-- Comments Form -->
+                    <h5 class="card-header">Leave a Comment:
+                    </h5>
+                    <div class="card-body">
+
+                        <form method="post" action="{{object.get_absolute_url}}new_comment/">{% csrf_token %}
+                            <div class="form-group">
+                                {{ comment_form | crispy }}
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+<script type="text/javascript">
+{% block extra_js %}
+
+function search_todo(){
+    var search_value = document.getElementById('search-input').value;
+    location.href="/todo/search/" + search_value + "/";
+}
+
+function wait_for_enterkey_todo(){
+    if (window.event.keyCode == 13){
+        search_todo();
+    }
+}
+
+function create_todo(){
+    const title = $("#input_todo").val()
+    // alert( "title : " + title )
+    // 2244
+    const dead_line_option = $("#select_for_dead_line").val()
+    const team_leader_name = $(".team_leader_name").text().trim()
+    const team_member_name = $(".team_member_name").text().trim()
+    const classification = $("#select_for_classification").val()
+
+    // alert("team_member_name : "+team_member_name)
+    // alert("classification : " +classification)
+
+    window.history.pushState("", "", '/todo/')
+
+    $.ajax({
+      type: "POST",
+      url: 'add_todo_by_ajax_by_teamleader/',
+      data: {
+          title:title,
+          team_leader_name : team_leader_name,
+          team_member_name : team_member_name,
+          dead_line_option:dead_line_option,
+          classification:classification,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            alert("insert todo is success")
+            window.history.pushState("", "", '/todo/todolist/uncomplete/admin/'+team_member_name+"/"+team_leader_name+"/")
+            location.reload(true);
+        }
+    });
+
+}
+
+function insert_todo(){
+    if (window.event.keyCode == 13){
+        alert("할일 입력")
+        create_todo();
+    }
+}
+
+function show_todo_detail(){
+  alert("modal 출력 함수")
+}
+$(document).ready(function(){
+    var id;
+    $("#todo_list a[class='title_for_list']").click(function(e){
+        e.preventDefault();
+        id = $(this).attr('id');
+        window.history.pushState("", "", '/todo/'+id)
+        $.get(id)
+            .done((html) => {
+                $('#myModal_button').hide();
+                $("#myModal").html(html)
+                $( "#myModal_button" ).trigger("click");
+                // $( "#myModal_button3" ).trigger("click");
+            })
+            .fail(() => {
+                console.log("fail");
+            })
+            .always(() => {
+                console.log('always');
+            })
+    });
+})
+
+$(document).ready(function(){
+    $('.comment_button_for_todo_detail').click(function(e){
+        e.preventDefault();
+        id=$(this).attr('id');
+        alert('id : ', id)
+    })
+})
+
+
+{% endblock %}
+</script>

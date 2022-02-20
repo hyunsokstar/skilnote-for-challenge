@@ -1,0 +1,341 @@
+{% load static %}
+<style>
+    table,
+    td,
+    th {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    .table-responsive {
+        display: table;
+    }
+
+    table {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    td,
+    th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    td>a,
+    img {
+        cursor: pointer;
+    }
+
+    .login_member_row {
+        background-color: chartreuse;
+    }
+</style>
+
+
+
+
+<!-- body start -->
+<!-- body end -->
+{{note_owner}}
+{%if request.user.is_authenticated and login_user_join_status == False %}
+<button data-username="{{note_owner}}" class="btn btn-primary btn-sm joinForOtherMemberNoteButton float-right mb-2">멤버
+    신청</button>
+<button data-username="{{note_owner}}" class="btn btn-info btn-sm CancleForOtherMemberNoteButton float-right mb-2"
+    hidden>멤버 탈퇴</button>
+
+{% elif request.user.is_authenticated and login_user_join_status == True %}
+<button data-username="{{note_owner}}" class="btn btn-info btn-sm CancleForOtherMemberNoteButton float-right mb-2">멤버
+    탈퇴</button>
+
+{% else %}
+<p class="float-right">
+    로그인 하시면 멤버 신청 가능 합니다.
+</p>
+{% endif %}
+
+
+<table>
+    <tr>
+        <td>Owner</td>
+        <td>member</td>
+        <td>
+            permission
+        </td>
+        <td>start_at</td>
+        <td>end_et</td>
+    </tr>
+    {% if object_list.exists %}
+    {% for p in object_list %}
+    <tr id=allow_list_row_{{p.id}} class={% if p.member == request.user %} {{"login_member_row"}} {% endif %}>
+        <td>
+            {{ p.note_owner.username}}
+        </td>
+        <td>
+            {{ p.member }}
+        </td>
+        <td class="permission_change" id={{p.id}} data-note_owner={{p.note_owner.username}} data-member={{p.member}}
+            data-permission={{p.permission}}>
+            <div class="permission_text_{{p.id}}">
+                {% if p.permission == True %}
+                yes
+                {% else %}
+                no
+                {% endif %}
+            </div>
+        </td>
+        <td>
+            <div class="update_start_at" data-note_owner={{p.note_owner.username}} data-member={{p.member}}>
+                {{p.start_at}}
+            </div>
+        </td>
+        <td>
+            <div class="update_end_at" data-note_owner={{p.note_owner.username}} data-member={{p.member}}>
+                {{p.end_at}}
+            </div>
+        </td>
+    </tr>
+
+    {% endfor %}
+    {% else %}
+    <tr class="empty_message">
+        <td colspan="4">
+            <h4>아직 게시물이 없습니다.</h4>
+        </td>
+    </tr>
+    {% endif %}
+    <tbody id="allow_member_list"></tbody>
+
+</table>
+
+<!-- templaet area -->
+<script class="allow_table_row" type="text/x-template">
+    <tr id="allow_list_row_<%=note_id%>">
+        <td><%=note_owner%></td>
+        <td><%=note_member%></td>
+        <td><%=note_permission%></td>
+    </tr>
+</script>
+
+
+<!-- js area -->
+<script type="text/javascript">
+    {% block extra_js %}
+
+    $('body').unbind("click").on('click', '.update_start_at', function (e) {
+        const note_owner = $(this).data("note_owner");
+        const login_user = "{{request.user}}"
+        // alert("login_user : "+ login_user)
+        const member = $(this).data("member");
+
+        const authority = note_owner == "{{request.user}}" ? "owner" : "member"
+        // alert("authority : "+ authority )
+        const start_at = window.prompt("start_at 을 입력하세요");
+        // const end_at = window.prompt("end_at 을 입력하세요");
+
+        if (authority == "owner") {
+            // alert("start_at : " + start_at)
+
+            $.ajax({
+                type: "POST",
+                url: '/wm/myshortcut/update_for_start',
+                data: {
+                    note_owner: note_owner,
+                    member: member,
+                    start_at: start_at,
+                    // end_at: end_at,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (result) {
+                    alert(result.message);
+                    $(".update_start_at").html(start_at)
+                    $(".update_start_at").css("background-color", "yellow");
+                    // permission_for_change = !permission_for_change;
+                }
+            });
+
+        } else {
+            alert("노트 오너인" + note_owner + "만 노트 범위 권한 설정 할수 있습니다.");
+        }
+    })
+
+    $('body').on('click', '.update_end_at', function (e) {
+        const note_owner = $(this).data("note_owner");
+        const login_user = "{{request.user}}"
+        const member = $(this).data("member");
+        const authority = note_owner == "{{request.user}}" ? "owner" : "member"
+        const end_at = window.prompt("end_at 을 입력하세요");
+
+        // alert("login_user : "+ login_user)
+        // alert("authority : "+ authority )
+        // const start_at = window.prompt("start_at 을 입력하세요");
+
+        if (authority == "owner") {
+            // alert("start_at : "+ start_at)
+            // alert("end_at : " + end_at)
+
+            $.ajax({
+                type: "POST",
+                url: '/wm/myshortcut/update_for_end',
+                data: {
+                    note_owner: note_owner,
+                    member: member,
+                    // start_at: start_at,
+                    end_at: end_at,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (result) {
+                    alert(result.message);
+                    $(".update_end_at").html(end_at)
+                    $(".update_end_at").css("background-color", "yellow");
+                    // permission_for_change = !permission_for_change;
+                }
+            });
+
+        } else {
+            alert("노트 오너인" + note_owner + "만 노트 범위 권한 설정 할수 있습니다.");
+        }
+    })
+
+    $('body').on('click', '.joinForOtherMemberNoteButton', function (e) {
+
+        const note_owner = "{{note_owner}}"
+        const member = "{{request.user}}"
+
+        const yn = confirm("{{note_owner}} 의 노트에 가입 신청하시겠습니까?")
+        console.log("yn : ", yn);
+
+
+        // 진행 여부 ok 일 경우 
+        if (yn) {
+            $.ajax({
+                type: "POST",
+                url: '/wm/myshortcut/joinForOtherMemberNote',
+                data: {
+                    note_owner: note_owner,
+                    member: member,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (result) {
+
+                    var raw_template = $('.allow_table_row').html();
+                    var tpl = _.template(raw_template);
+
+                    var rendered = tpl({
+                        note_id: result.note_id,
+                        note_owner: result.note_owner,
+                        note_member: result.note_member,
+                        note_permission: result.note_permission,
+                    });
+
+                    console.log("rendered : ", rendered);
+                    $(".empty_message").remove();
+                    $(rendered).appendTo($('#allow_member_list'));
+                    $(".joinForOtherMemberNoteButton").attr("hidden", true);
+                    $(".CancleForOtherMemberNoteButton").attr('hidden', false);
+
+                    alert(result.message);
+                }
+            });
+        } else {
+
+            alert("취소 하셨습니다")
+        }
+
+    });
+
+    // CancelForOtherMemberNoteButton
+    $('body').on('click', '.CancleForOtherMemberNoteButton', function (e) {
+
+        const note_owner = "{{note_owner}}"
+        const member = "{{request.user}}"
+
+        const yn = confirm("{{note_owner}} 의 노트에 가입 취소하시겠습니까?")
+        console.log("yn : ", yn);
+
+
+        // 진행 여부 ok 일 경우 
+        if (yn) {
+            $.ajax({
+                type: "POST",
+                // url: '/wm/myshortcut/update_skil_note_file_name/' + id,
+                url: '/wm/myshortcut/cancleForOtherMemberNote',
+                data: {
+                    note_owner: note_owner,
+                    member: member,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (result) {
+                    console.log("delete_id : ", result.delete_id);
+                    $("#allow_list_row_" + result.delete_id).remove()
+                    $(".joinForOtherMemberNoteButton").attr('hidden', false);
+                    $(".CancleForOtherMemberNoteButton").attr("hidden", true);
+                    alert(result.message);
+                }
+            });
+        } else {
+
+            alert("취소 하셨습니다")
+        }
+
+    });
+
+    $('body').on('click', '.permission_change', function (e) {
+        const id = this.id
+        const note_owner = $(this).data("note_owner");
+        const member = $(this).data("member");
+        const permission = $(".permission_text_" + id).text().trim()
+        console.log("permission : ", permission);
+        let permission_for_change = permission == "yes" ? "no" : "yes";
+        let bgcolor = permission_for_change == "yes" ? "yellow" : "#ffadad"
+        const current_login_user = "{{request.user}}"
+
+        if (note_owner !== current_login_user) {
+            alert("owner만 허용할수 있습니다.");
+            return;
+        }
+
+        console.log("note_owner : ", note_owner);
+        console.log("member : ", member);
+
+        $.ajax({
+            type: "POST",
+            // url: '/wm/myshortcut/update_skil_note_file_name/' + id,
+            url: '/wm/myshortcut/update_for_permission',
+            data: {
+                note_owner: note_owner,
+                member: member,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (result) {
+                alert(result.changed_permission);
+                $(".permission_text_" + id).html(result.changed_permission);
+                $(".permission_text_" + id).css("background-color", bgcolor);
+                // permission_for_change = !permission_for_change;
+            }
+        });
+
+    });
+
+
+
+    //   $('body').on('click', '.permission_change', function (e) {
+    //     const username = $(this).data("username");
+    //     const url = "guest_book_list/" + username
+    //     window.history.pushState("", "", '/wm/myshortcut/')
+
+    //     $.get(url)
+    //       .done((result) => {
+    //         $("#guest_list_table_area").html(result)
+    //         $("#guest_book_list_modal").modal();
+    //         window.history.pushState("", "", '/accounts/login/')
+    //       })
+    //       .fail(() => {
+    //         console.log("fail");
+    //       })
+    //       .always(() => {
+    //         console.log('always');
+    //       })
+    //   });
+    {% endblock %}
+</script>

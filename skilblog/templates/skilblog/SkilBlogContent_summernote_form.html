@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+<!-- summer note 수정 2244 0913 -->
+
+{% block content2 %}
+<br><br>
+<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ form }}
+	<button type="submit" class="btn btn-primary float-right btn-block">submit</button>
+</form>
+{{ form.media }}
+
+{% endblock %}

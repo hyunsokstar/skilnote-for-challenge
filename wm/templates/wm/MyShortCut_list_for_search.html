@@ -1,0 +1,80 @@
+<h2>검색 결과</h2>
+
+<a href = "{% url "board:insert_manual" %}" class="btn btn-outline-info float-right">입력</a>
+<form method="GET" >
+    <div class="input-field float-right">
+        <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search Here...">
+       <button class="btn btn-outline-secondary" type="submit" name="action">Search</button>
+    </div>
+</form>
+
+    <table class="table table-bordered" id="todo_list">
+        <tr>
+            <td>categirt</td>
+            <td>title</td>
+            <td>author</td>
+            <td>created_at</td>
+        </tr>
+            {% for p in posts %}
+                <tr>
+                    <td>
+                        {{ p.category }}
+                    </td>
+                    <td>
+                        <a href="{{p.get_absolute_url}}">
+                            {{p.title}}
+                            {% if p.author == request.user %}
+                            {% endif %}
+
+                        </a>
+                    </td>
+                    <td>
+                        {{p.author}}
+                    </td>
+                    <td>
+                        {{p.created_at}}
+                    </td>
+                </tr>
+            {% endfor %}
+
+        <tbody id="post_list">
+        </tbody>
+    </table>
+
+    {% if posts.has_other_pages %}
+        <ul class="pagination">
+            {% if posts.has_previous %}
+                <li class="waves-effect">
+                    <a href="?page={{ posts.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                        <i class="btn btn-outline-dark">before</i>
+                    </a>
+                </li>
+            {% else %}
+                <li class="disabled"><a href="#!"><i class="btn btn-outline-secondary">before</i></a></li>
+            {% endif %}
+            {% for num in posts.paginator.page_range %}
+                {% if posts.number == num %}
+                    <li class="active"><a class="btn btn-outline-primary" href="#!">{{ num }}</a></li>
+                {% else %}
+                    <li class="waves-effect">
+                        <a class="btn btn-outline-dark" href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                            {{ num }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if posts.has_next %}
+                <li class="waves-effect">
+                    <a href="?page={{ posts.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                        <i class="btn btn-outline-dark">after</i>
+                    </a>
+                </li>
+            {% else %}
+                <li class="disabled">
+                    <a href="#!">
+                        <i class="btn btn-outline-dark">after</i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}

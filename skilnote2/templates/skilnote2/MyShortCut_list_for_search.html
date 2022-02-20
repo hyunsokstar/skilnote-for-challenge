@@ -1,0 +1,77 @@
+	<!-- <table class="table table-borderd"> -->
+
+	검색 결과2:
+	<table class="table table-bordered mb-2" width="100%">
+		<tr>
+			<td>번호</td>
+			<td>category</td>
+			<td>title 22</td>
+			<td>name</td>
+		</tr>
+		<tbody>
+		{% if object_list.exists %}
+			{% for p in object_list %}
+				<tr>
+					<td>
+						{{ forloop.counter }}
+					</td>
+					<td>
+						<a href="/skilnote2/myshortcut/category/{{p.category}}/">
+							{{p.category}}
+						</a>
+					</td>
+					<td>
+						{{p.title}}
+						<a href="#wm_detail_{{p.id}}" class="badge badge-dark" data-toggle="collapse">상세 보기</a>
+						{% ifequal p.type.type_name "input" %}
+						<br />
+						<input type="text" id="wm_detail_{{p.id}}" class="collapse " value="{{p.content1}}" size="100%" />
+						{% endifequal %}
+
+						{% ifequal p.type.type_name "textarea" %}
+						<br />
+						<textarea id="wm_detail_{{p.id}}" class="collapse" cols="100" rows="10">{{p.content2}}</textarea>
+						{% endifequal %}
+
+						{% ifequal p.type.type_name "summer_note" %}
+						<br />
+						<div id="wm_detail_{{p.id}}" class="collapse" width="100%">{{p.content2 | safe}}</div>
+						{% endifequal %}
+
+					</td>
+
+					<td>
+						<a href="" onclick="change_user_for_search(this)" id={{p.author}}>
+							{{p.author}}
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		{% else %}
+			<tr>
+				<td colspan="4">
+					<h4>검색 결과가 존재하지 않습니다.</h4>
+				</td>
+			</tr>
+		{% endif %}
+
+		</tbody>
+	</table>
+
+	{% for page_number in page_obj.paginator.page_range %}
+	<!-- ---------------------------------------- [edit] ---------------------------------------- -->
+	{% if page_number >= page_obj.number|add:-5 and page_number <= question_list.number|add:5 %}
+	<!-- ---------------------------------------------------------------------------------------- -->
+    {% if page_number == page_obj.number %}
+    <li class="page-item active" aria-current="page">
+        <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% endif %}
+	<!-- ---------------------------------------- [edit] ---------------------------------------- -->
+	{% endif %}
+	<!-- ---------------------------------------------------------------------------------------- -->
+	{% endfor %}

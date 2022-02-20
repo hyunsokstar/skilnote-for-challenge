@@ -1,0 +1,107 @@
+{% extends "todo/layout.html" %}
+{%block title %}todo 완료(me){% endblock %}
+
+{%block extra_css %}
+
+.modal-dialog {
+  width: 100%;
+  height: 50%;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-content {
+    width:132%;
+}
+
+{% endblock %}
+
+{%block content5 %}
+
+<br>
+<h2> Todo 완료 목록 </h2>
+
+{% if object_list.exists%}
+    {% for p in object_list %}
+        <table class="table table-bordered">
+            <tr>
+                <td style="width: 20%">작성자</td>
+                <td>{{p.author}}</td>
+            </tr>
+            <tr>
+                <td style="width: 20%">task</td>
+                <td>{{p.title}}</td>
+            </tr>
+            <tr>
+                <td style="width: 20%">상세 사항</td>
+                <td>
+                    {{ p.get_markdown_content | safe }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%">note</td>
+                <td>
+                    <a href="https://{{p.note}}">note</a>
+                </td>
+            </tr>
+            <tr>
+                <td>시작 시간</td>
+                <td>{{p.created}}</td>
+            </tr>
+            <tr>
+                <td>소요 시간</td>
+                <td>{{p.elapsed_time}}</td>
+            </tr>
+                    <tr>
+                        <td colspan="2">
+                        {% if request.user == p.author %}
+                        <button type="button" class="btn btn btn-outline-danger btn-sm float-right" onclick="updateTodo(this.id)">
+            				<a
+            				href="{% url "todo:todo_complete" p.id %}"
+                            class=""
+                            data-target-id=""
+                            data-message=""
+                            >
+                                완료
+                            </a>
+                        </button>
+
+                        <button type="button" class="btn btn btn-outline-danger btn-sm float-right" onclick="updateTodo(this.id)">
+            				<a
+            				href="{% url "todo:todo_delete" p.pk %}"
+                            class=""
+                            data-target-id=""
+                            data-message=""
+                            >
+                                삭제
+                            </a>
+                        </button>
+
+                        <button type="button" class="btn btn btn-outline-danger btn-sm float-right" onclick="updateTodo(this.id)">
+            				<a
+            				href="{% url "todo:todo_edit" p.id %}"
+                            class=""
+                            data-target-id=""
+                            data-message=""
+                            >
+                                수정
+                            </a>
+                        </button>
+                        {% endif %}
+                    </td>
+                </tr>
+        </table>
+    {% endfor %}
+{% else %}
+    <h4>아직 게시물이 없습니다.</h4>
+{% endif %}
+
+<script type="text/javascript">
+    // modal 이벤트 : 상세 보기
+    $(document).on('click', '.recommand_button', function (e) {
+        e.preventDefault();
+        var href = $(this).attr("href");
+		alert(href);
+</script>
+
+{% endblock %}

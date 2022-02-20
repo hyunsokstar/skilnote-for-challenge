@@ -1,0 +1,90 @@
+.login-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+    /* margin-top: -0px;
+    /* position: left; */
+    /* margin: auto; */
+    /* border: 1px solid black; */
+    /* width: 400px; */
+}
+
+.requiredField{
+  display: none;
+}
+
+.textinput {
+  min-width: 120px;
+}
+
+.login-title {
+  /* margin-top: -90px; */
+}
+
+.mybutton {
+    /* background-color: purple; */
+    border: 1px solid black;
+    display: block;
+    width: 60px;
+    height: 30px;
+    margin-left: 5px;
+    border-radius: 5px;
+    text-align: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+
+.mybutton:hover {
+    color:orangered;
+    background-color: skyblue;
+}
+
+body {
+  /* margin: 100px; */
+}
+
+.tab-menu-subject-list > .tab-menu-subject-item {
+  background-color: #ddd;
+  display: inline-block;
+  width: 140px;
+  padding: 5px;
+  border-radius: 5px 5px 0 0;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #000;
+  margin-right: -7px;
+  transition: 0.3s;
+}
+
+.tab-menu-container {
+  /* border: 1px solid red; */
+  width: 900px;
+}
+
+.tab-menu-content-list  span {
+  display: none;
+}
+
+.tab-menu-subject-list > span.active {
+  background-color: orange;
+}
+
+.tab-menu-content-list > span.target {
+  display: block;
+  height: 140px;
+  width: 1000px;
+  border: 1px solid green;
+  padding-top: 10px;
+  padding-left: 5px;
+}
+
+.tab-row {
+  border: 1px solid blue;
+}
+
+.tab-row a {
+  display: block;
+  text-decoration: none;
+}
+

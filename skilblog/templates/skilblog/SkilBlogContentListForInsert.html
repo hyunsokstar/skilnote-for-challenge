@@ -1,0 +1,473 @@
+{% extends "layout.html" %}
+{%block title %}스킬 블로그(상세 보기){% endblock %}
+
+{%block content4 %}
+
+<div class="jumbotron">
+    <table class="table table-bordered">
+        <tr>
+            <td>title</td>
+            <td>{{title}}</td>
+        </tr>
+        <tr>
+            <td>writer</td>
+            <td>{{author}}</td>
+        </tr>
+    </table>
+    <a class="btn btn-outline-dark float-right" href="{% url 'skilblog:SkilBlogTitleList' %}">title list로 이동</a>
+</div>
+
+{% if messages %}
+<div class="alert alert-success">
+    {% for message in messages %}
+     {{ message.message }}<strong>{{ message.tags }}</strong>
+     {% endfor %}
+</div>
+{% endif %}
+
+{% ifequal author request.user %}
+    <a class="btn btn-outline-success float-right m-1" href="{% url 'skilblog:SkilBlogContentList' skil_blog_title_id %}">리스트 모드</a><br>
+{% else %}
+    <span class="float-right"> {{author}} 님만 입력할수 있습니다. </span>
+{% endifequal %}
+
+
+{% if sbc_list.exists %}
+{% for p in sbc_list %}
+<table class="table table-bordered table_row" id="todo_list">
+
+	{% ifequal p.type.type_name "input" %}
+
+	<!-- 2244 -->
+	<tr id="shortcut_{{p.id}}" style="background-color:#f1f9f0;">
+		<td id=index_{{ forloop.counter }} width="10%">
+			<input type="checkbox" id="{{p.pk}}" class="shortcut_check">
+			{{ forloop.counter }}
+		</td>
+		<td>
+			<span id=title_{{p.id}}>
+				{{p.title}}
+			</span>
+			{% if p.author == request.user %}
+				<button class="badge badge-pill badge-primary sbc_delete_btn float-right" id="{{p.id}}">삭제</button>
+				<button class="badge badge-pill badge-primary sbc_modify_btn float-right" id="{{p.id}}">제목 수정</button>
+			{% endif %}
+		</td>
+	</tr>
+    <tr style="background-color:#f1f9f0">
+        <td>filename</td>
+        <td>{{p.filename}}</td>
+    </tr>
+
+
+	<tr id="shortcut_{{p.id}}-2" style="background-color:#f0f1f5">
+		<td colspan="2">
+			<input type="text" name="" value="{{p.content1}}" size="40" id="select-input-{{p.id}}" class="form-control">
+			<button class="btn btn-outline-danger btn-sm myinput float-right copy_code1" id="{{p.id}}">copy</button>
+
+            {% ifequal author request.user.username %}
+                <button class="btn btn-outline-danger btn-sm float-right edit_skil_blog_for_content1_btn" id="{{p.id}}">edit_complete</button>
+                <button class="btn btn-outline-danger btn-sm shortcut_comment_button" id="{{p.id}}">댓글 추가</button>
+            {% else %}
+            {% endifequal %}
+
+		</td>
+	</tr>
+	{% endifequal %}
+
+	{% ifequal p.type.type_name "textarea" %}
+	<tr id="shortcut_{{p.id}}" style="background-color:#f1f9f0">
+		<td id=index_{{ forloop.counter }} width="10%">
+			<input type="checkbox" id="{{p.pk}}" class="shortcut_check">
+			{{ forloop.counter }}
+		</td>
+		<td>
+			<span id=title_{{p.id}}>{{p.title}}</span>
+			{% if p.author == request.user %}
+			<button class="badge badge-pill badge-primary sbc_delete_btn float-right" id="{{p.id}}">삭제</button>
+			<button class="badge badge-pill badge-primary sbc_modify_btn float-right" id="{{p.id}}">제목 수정</button>
+
+			{% endif %}
+		</td>
+	</tr>
+    <tr style="background-color:#f1f9f0">
+        <td>filename</td>
+        <td>{{p.filename}}</td>
+    </tr>
+	<tr id="shortcut_{{p.id}}-2" style="background-color:#f0f1f5">
+		<td colspan="2">
+			<button class="btn btn-outline-primary btn-sm show_total_textInput_button" id={{p.id}}>24row</button>
+			<button class="btn btn-outline-primary btn-sm show_basic_textInput_button" id={{p.id}}>8row</button>
+			<button class="btn btn-outline-primary btn-sm show_text_popup_button" id={{p.id}}>popup</button>
+
+			<textarea id="select-textarea-{{p.id}}" cols="120" rows="10"
+				class="form-control">{{p.content2 }}</textarea><br>
+			<button class="btn btn-outline-danger btn-sm myinput float-right copy_code2 float-right"
+				id="{{p.id}}">copy</button>
+
+                {% ifequal author request.user.username %}
+                    <button class="btn btn-outline-danger btn-sm float-right edit_skil_blog_for_content2_btn float-right" id="{{p.id}}" data-user_id="{{request.user}}">edit_complete</button>
+                    <button class="btn btn-outline-danger btn-sm shortcut_comment_button" id="{{p.id}}">댓글 추가</button>
+                {% endifequal %}
+		</td>
+	</tr>
+	{% endifequal %}
+
+	{% ifequal p.type.type_name "summer_note" %}
+	<tr id="shortcut_{{p.id}}" style="background-color:#f1f9f0">
+		<td id=index_{{ forloop.counter }} width="10%">
+			<input type="checkbox" id="{{p.pk}}" class="shortcut_check">
+			{{ forloop.counter }}
+		</td>
+		<td width="90%">
+			<span id=title_{{p.id}}>{{p.title}}</span>
+			{% if p.author == request.user %}
+			<button class="badge badge-pill badge-primary sbc_delete_btn float-right" id="{{p.id}}">삭제</button>
+			<button class="badge badge-pill badge-primary sbc_modify_btn float-right" id="{{p.id}}">제목 수정</button>
+			{% endif %}
+		</td>
+	</tr>
+    <tr style="background-color:#f1f9f0">
+        <td>filename</td>
+        <td>{{p.filename}}</td>
+    </tr>
+
+	<tr id="shortcut_{{p.id}}-2" style="background-color:#f0f1f5">
+		<td colspan="2">
+
+				<span id="select-textarea-{{p.id}}" style="width:900px; background-color:white;" contenteditable="true">
+					{{p.content2 | safe}}
+				</span>
+
+			<br>
+			<button class="btn btn-outline-danger btn-sm shortcut_comment_button" id="{{p.id}}">댓글 추가</button>
+			<button class="btn btn-outline-danger btn-sm myinput float-right copy_code2" id="{{p.id}}">copy</button>
+			<!-- <a href="{% url "wm:update_skilnote_by_summernote" p.id %}"
+				class="btn btn-outline-danger float-right btn-sm">summernote 수정</a> -->
+                {% if p.author == request.user %}
+                <a href={% url "skilblog:modify_skilblog_content2_by_summernote" p.pk %} class="btn btn-outline-danger float-right btn-sm">summernote 수정</a>
+                {% endif %}
+    		</td>
+	</tr>
+	{% endifequal %}
+
+    {% ifequal p.type.type_name "image" %}
+	<tr style="background-color:#caf5f5; color:black;" id="shortcut_{{p.id}}">
+		<td id=index_{{ forloop.counter }} width="10%">
+			<input type="checkbox" id="{{p.pk}}" class="shortcut_check">
+			{{ forloop.counter }}
+		</td>
+		<td>
+			제목 :
+			<span id=title_{{p.id}}>{{p.title}}</span>
+			{% if p.author == request.user %}
+			<button class="badge badge-pill badge-primary short_delete_button float-right" id="{{p.id}}">삭제</button>
+			<button class="badge badge-pill badge-primary short_update_button float-right" id="{{p.id}}">제목 수정</button>
+			{% endif %}
+		</td>
+	</tr>
+	<tr id="shortcut_{{p.id}}-2" style="background-color:#f0f1f5;">
+		<td colspan="2">
+			{% if p.image %}
+				<img class="card-img-top" src="{{ p.image.url }}" alt="Card image cap">
+			{% else %}
+				<img class="card-img-top" src="https://picsum.photos/700/300/?random" alt="Card image cap">
+			{% endif %}
+		</td>
+	</tr>
+	{% endifequal %}
+
+</table>
+
+{% endfor %}
+{% else %}
+
+<table class="table table-bordered">
+	<tr>
+		<td colspan="4" background-color="skyblue">
+			<h4>there is no article</h4>
+		</td>
+	</tr>
+</table>
+{% endif %}
+
+
+<!-- underscore area template area -->
+
+<script class="comment_for_sbt" type="text/x-template">
+
+    <table class="table" id="comment_table_<%= id %>">
+        <tr>
+            <td width="10%"><%=author%></td>
+            <td width="70%">
+                <%=content%>
+                <a class="badge badge-pill badge-primary btn-sm delete_comment_for_sbt_btn" data-comment_id = <%= id %>>삭제</a>
+                <a class="badge badge-pill badge-primary btn-sm modify_comment_for_sbt_btn" data-comment_id = <%= id %>>수정</a>
+            </td>
+            <td><%=created_at%></td>
+        </tr>
+    </table>
+
+</script>
+
+<!-- 댓글 영역 -->
+<!-- <div class="input-group mb-3">
+  <input type="text" class="form-control comment_input" onkeyup="enter_for_insert_comment_for_sbt()" placeholder="댓글을 입력하세요" aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary insert_commment_for_sbt_btn" data-sbt_id = {{sbt.id}} type="button">댓글</button>
+  </div>
+</div>
+
+<div id="comment-list">
+    {% for co in sbt.commentforskilblogtitle_set.all %}
+    <table class="table" id="comment_table_{{co.id}}">
+        <tr>
+            <td width="10%">{{co.author}}</td>
+            <td width="70%">
+                <span id="comment_text_{{co.id}}">{{co.content}}</span>
+                {% if request.user == co.author %}
+                    <a class="badge badge-pill badge-primary btn-sm delete_comment_for_sbt_btn" data-comment_id = {{co.id}}>삭제</a>
+                    <a class="badge badge-pill badge-primary btn-sm modify_comment_for_sbt_btn" data-comment_id = {{co.id}}>수정</a>
+                {% endif %}
+            </td>
+            <td width="20%">{{co.created_at}}</td>
+
+        </tr>
+    </table>
+    {% endfor %}
+</div>
+
+<div class="comment_area">
+
+</div> -->
+
+<form method="post" action="/skilblog/insert_skil_column_content/{{skil_blog_title_id}}" class="hi m-2">
+	{% csrf_token %}
+	<div class="form-group">
+		{{ SkilBlogContentForm | safe }}
+	</div>
+	<button type="submit" class="btn btn-primary btn-block " style="margin-right:20px;">Submit</button>
+</form>
+
+
+
+{%endblock%}
+
+<!-- js area -->
+<script type="text/javascript">
+{% block extra_js %}
+
+$(function() {
+  $('body').keyup(function(e) {
+  })
+  window.scrollTo(0,document.body.scrollHeight);
+});
+
+
+function enter_for_insert_comment_for_sbt(){
+    if (window.event.keyCode == 13){
+        $( ".insert_commment_for_sbt_btn" ).trigger( "click" );
+    }
+}
+
+// modify_comment_for_sbt_btn
+$('body').on('click', '.modify_comment_for_sbt_btn', function (e) {
+    const comment_id = $(this).data("comment_id");
+    const before_comment_text = $("#comment_text_"+comment_id).text()
+    const comment_text_for_modify = prompt("수정 text를 입력해주세요", before_comment_text);
+
+    if(comment_text_for_modify == "" & comment_text_for_modify != null){
+        alert("수정할 문자를 입력해 주세요");
+        return
+    }
+
+    if(!comment_text_for_modify){
+        return
+    }
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'skilblog:modify_comment_for_sbt'%}",   // sbt = skil blog title
+            data: {
+                comment_id: comment_id,
+                comment_text_for_modify: comment_text_for_modify,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (result) {
+                $("#comment_text_"+result.comment_id).text(result.comment_text_for_modify);
+                alert(result.message);
+            }
+        });
+});
+
+$('body').on('click', '.delete_comment_for_sbt_btn', function (e) {
+    const comment_id = $(this).data("comment_id");
+
+    const option = prompt("삭제 하시겠습니까 (x,y)", "");
+
+    if(option =="y"){
+        $.ajax({
+            type: "POST",
+            url: "{% url 'skilblog:delete_comment_for_sbt' %}",
+            data: {
+                comment_id: comment_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (result) {
+                alert(result.message);
+                $("#comment_table_"+result.comment_id).remove();
+            }
+        });
+    }else{
+        alert("삭제 취소")
+    }
+
+})
+
+$('body').on('click', '.insert_commment_for_sbt_btn', function (e) {
+
+    const content = $(".comment_input").val();
+    const sbt_id = $(this).data("sbt_id")
+    // alert("content : " +content);
+
+    if (!content) {
+        alert("내용을 입력해 주세요")
+		return;
+	};
+
+    $.ajax({
+        type: "POST",
+        url: "{% url 'skilblog:insert_comment_for_sbt' %}",
+        data: {
+            sbt_id: sbt_id,
+            content:content,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function (result) {
+            alert(result.message);
+            var raw_template = $('.comment_for_sbt').html();
+            var tpl = _.template(raw_template);
+            //
+            var rendered = tpl({
+                id: result.id,
+                content: result.content,
+                author: result.author,
+                created_at:result.created_at
+            });
+            $(rendered).appendTo($('.comment_area'));
+            // location.reload(true);
+            $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+
+        }
+    });
+
+});
+
+$('body').on('click', '.copy_code1', function (e) {
+
+	e.preventDefault();
+	var id = this.id
+
+	document.execCommand('copy', false, $(this).parent().find('#select-input-' + id).select());
+	alert("copy is completed")
+});
+
+$('body').on('click', '.copy_code2', function (e) {
+	e.preventDefault();
+	var id = this.id
+	// alert(id)
+	document.execCommand('copy', false, $(this).parent().find('#select-textarea-' + id).select());
+	alert("copy is completed")
+});
+
+$('body').on('click', '.edit_skil_blog_for_content2_btn', function (e) {
+    e.preventDefault();
+    var id = $(this).attr("id");
+    var content2 = $("#select-textarea-"+id).val();
+    console.log("content2 for update : " +content2)
+
+    $.ajax({
+        type: "POST",
+        url: '/skilblog/edit_skil_blog_for_content2/' + id,
+        data: {
+            id: id,
+            content2: content2,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function (result) {
+            alert("message : " +result.message)
+        }
+    });
+});
+
+
+$('body').on('click', '.edit_skil_blog_for_content1_btn', function (e) {
+	e.preventDefault();
+	var id = $(this).attr("id");
+	const content1 = $("#select-input-" + id).val();
+
+	$.ajax({
+		type: "POST",
+		url: '/skilblog/edit_skil_blog_for_content1/'+id,
+		data: {
+			id: id,
+			content1: content1,
+			csrfmiddlewaretoken: '{{ csrf_token }}'
+		},
+		success: function (result) {
+			alert("modify is completted")
+		}
+	});
+});
+
+$('body').on('click', '.sbc_delete_btn', function (e) {
+
+	e.preventDefault();
+	var id = $(this).attr("id");
+
+	$.ajax({
+		type: "POST",
+		url: '/skilblog/delete_sbc_content/' + id,
+		data: {
+			csrfmiddlewaretoken: '{{ csrf_token }}'
+		},
+		success: function (result) {
+            alert("message 확인 : " + result.message);
+			$("#shortcut_" + id).remove();
+			$("#shortcut_" + id + "-2").remove();
+		}
+	});
+});
+
+$('body').on('click', '.sbc_modify_btn', function (e) {
+
+	e.preventDefault();
+	var id = $(this).attr("id");
+	const before_title = $("#title_"+id).text().trim()
+    // console.log("sbc_modify_btn 클릭");
+    // console.log("id : " , id);
+
+	const title = prompt("title을 입력해 주세요 ", before_title);
+
+	if (!title) {
+		return;
+	};
+
+	$.ajax({
+		type: "POST",
+    	url: '/skilblog/sbc_title_modify/' + id,
+		data: {
+			title: title,
+			csrfmiddlewaretoken: '{{ csrf_token }}'
+		},
+		success: function (result) {
+			$("#title_" + id).text(result.title)
+			alert(result.message);
+		}
+	});
+
+});
+
+
+{% endblock %}
+</script>

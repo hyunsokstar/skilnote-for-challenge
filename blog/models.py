@@ -1,0 +1,65 @@
+from django.db import models
+from django.contrib.auth.models import User
+from django.urls import reverse
+from markdownx.models import MarkdownxField
+from markdownx.utils import markdown
+
+# Create your models here.
+class Tag(models.Model):
+    name = models.CharField(max_length=40, unique=True)
+    slug = models.SlugField(unique=True, allow_unicode=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return '/blog/tag/{}/'.format(self.slug)
+
+class Category(models.Model):
+    name = models.CharField(max_length=25, unique=True)
+    description = models.TextField(blank=True)
+    slug = models.SlugField(unique=True, allow_unicode=True)
+
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name_plural = 'categories'
+
+    def get_absolute_url(self):
+        return '/blog/category/{}/'.format(self.slug)
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=30)
+    content = models.TextField(blank=True)
+    head_image = models.ImageField(upload_to='blog/%y%m%d', blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag, blank=True)
+
+    def get_markdown_content(self):
+        return markdown(self.content)
+
+    def __str__(self):
+        return '{}::{}'.format(self.title, self.author)
+
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', args=[self.id])
+
+    def get_update_url(self):
+        return self.get_absolute_url() + 'update/'
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    text = MarkdownxField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    def get_markdown_content(self):
+        return markdown(self.text)
+
+    def get_absolute_url(self):
+        return self.post.get_absolute_url() + '#comment-id-{}'.format(self.pk)

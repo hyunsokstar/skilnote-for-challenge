@@ -1,0 +1,251 @@
+{% extends "layout.html" %}
+{% load static %}
+{%block title %}private desk{% endblock %}
+{% load bootstrap4 %}
+
+
+{%block extra_css %}
+
+
+
+{% endblock %}
+
+{%block content4 %}
+
+<br><br>
+
+{% if messages %}
+<div class="alert alert-success">
+    {% for message in messages %}
+     {{ message.message }}<strong>{{ message.tags }}</strong>
+     {% endfor %}
+</div>
+{% endif %}
+<br><br>
+
+<h2 align="center">진도표</h2>
+<a href="{% url 'pd:mytask_new' %}" class="btn btn-outline-dark float-right">진도표 추가</a>
+<br><br>
+{% if object_list.exists %}
+    {% for p in object_list %}
+    <table class="table table-bordered" id=mytask_table_{{p.id}} style="background-color:#e6eff5">
+        <tr>
+            <td></td>
+            <td >진도</td>
+            <td>프로젝트</td>
+        </tr>
+        <tr>
+            <td style="width:10%;">1</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub1_{{p.id}} >{{p.sub1}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub1_memo_{{p.id}} >{{p.sub1_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">2</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub2_{{p.id}} >{{p.sub2}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub2_memo_{{p.id}} >{{p.sub2_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">3</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub3_{{p.id}} >{{p.sub3}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub3_memo_{{p.id}} >{{p.sub3_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">4</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub4_{{p.id}} >{{p.sub4}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub4_memo_{{p.id}} >{{p.sub4_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">5</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub5_{{p.id}} >{{p.sub5}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub5_memo_{{p.id}} >{{p.sub5_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">6</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub6_{{p.id}} >{{p.sub6}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub6_memo_{{p.id}} >{{p.sub6_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">7</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub7_{{p.id}} >{{p.sub7}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub7_memo_{{p.id}} >{{p.sub7_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">8</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub8_{{p.id}} >{{p.sub8}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub8_memo_{{p.id}} >{{p.sub8_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">9</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub9_{{p.id}} >{{p.sub9}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub9_memo_{{p.id}} >{{p.sub9_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">10</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub10_{{p.id}} >{{p.sub10}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub10_memo_{{p.id}} >{{p.sub10_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">11</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub11_{{p.id}} >{{p.sub11}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub11_memo_{{p.id}} >{{p.sub11_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">12</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub12_{{p.id}} >{{p.sub12}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub12_memo_{{p.id}} >{{p.sub12_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">13</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub13_{{p.id}} >{{p.sub13}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub13_memo_{{p.id}} >{{p.sub13_memo}}</textarea></td>
+        </tr>
+        <tr>
+            <td style="width:10%;">14</td>
+            <td><textarea name="name" rows="8" cols="50" id=sub14_{{p.id}} >{{p.sub14}}</textarea></td>
+            <td><textarea name="name" rows="8" cols="50" id=sub14_memo_{{p.id}} >{{p.sub14_memo}}</textarea></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td colspan="2">
+                <div class="row m-1">
+                    <div class="col ">
+                        <a href="" class="btn btn-outline-info btn-sm float-right mytask_update_btn btn-block" id={{p.id}} >update</a>
+                    </div>
+                    <div class="col">
+                        <a href="" class="btn btn-outline-primary btn-sm float-right mytask_delete_btn btn-block" id={{p.id}} >delete</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="4">
+            <h4>아직 게시물이 없습니다.</h4>
+        </td>
+    </tr>
+{% endif %}
+
+
+{% if is_paginated %}
+{% bootstrap_pagination page_obj size="small" justify_content="center" %}
+{% endif %}
+
+{% endblock content4 %}
+
+
+<script type="text/javascript">
+{% block extra_js %}
+
+
+$(".mytask_delete_btn").click(function(e) {
+
+    e.preventDefault();
+    // alert("my task 삭제 버튼 클릭")
+    var mytask_id = $(this).attr("id");
+    window.history.pushState("", "", '/pd/')
+
+    $.ajax({
+      type: "POST",
+      url: 'delete_mytask_by_ajax/',
+      data: {
+          mytask_id:mytask_id,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            $("#mytask_table_"+mytask_id).remove()
+            alert("delete_mytask_by_ajax is success")
+            window.history.pushState("", "", '/pd/private_task_list/')
+        }
+    });
+
+});
+
+$(".mytask_update_btn").click(function(e) {
+    e.preventDefault();
+    // alert("버튼 클릭 확인");
+
+    var mytask_id = $(this).attr("id");
+    var sub1 = $("#sub1_"+mytask_id).val();
+    var sub2 = $("#sub2_"+mytask_id).val();
+    var sub3 = $("#sub3_"+mytask_id).val();
+    var sub4 = $("#sub4_"+mytask_id).val();
+    var sub5 = $("#sub5_"+mytask_id).val();
+    var sub6 = $("#sub6_"+mytask_id).val();
+    var sub7 = $("#sub7_"+mytask_id).val();
+    var sub8 = $("#sub8_"+mytask_id).val();
+    var sub9 = $("#sub9_"+mytask_id).val();
+    var sub10 = $("#sub10_"+mytask_id).val();
+    var sub11 = $("#sub11_"+mytask_id).val();
+    var sub12 = $("#sub12_"+mytask_id).val();
+    var sub13 = $("#sub13_"+mytask_id).val();
+    var sub14 = $("#sub14_"+mytask_id).val();
+_
+    var sub1_memo = $("#sub1_memo_"+mytask_id).val();
+    var sub2_memo = $("#sub2_memo_"+mytask_id).val();
+    var sub3_memo = $("#sub3_memo_"+mytask_id).val();
+    var sub4_memo = $("#sub4_memo_"+mytask_id).val();
+    var sub5_memo = $("#sub5_memo_"+mytask_id).val();
+    var sub6_memo = $("#sub6_memo_"+mytask_id).val();
+    var sub7_memo = $("#sub7_memo_"+mytask_id).val();
+    var sub8_memo = $("#sub8_memo_"+mytask_id).val();
+    var sub9_memo = $("#sub9_memo_"+mytask_id).val();
+    var sub10_memo = $("#sub10_memo_"+mytask_id).val();
+    var sub11_memo = $("#sub11_memo_"+mytask_id).val();
+    var sub12_memo = $("#sub12_memo_"+mytask_id).val();
+    var sub13_memo = $("#sub13_memo_"+mytask_id).val();
+    var sub14_memo = $("#sub14_memo_"+mytask_id).val();
+
+    window.history.pushState("", "", '/pd/')
+
+    $.ajax({
+      type: "POST",
+      url: 'update_mytask_by_ajax/',
+      data: {
+          mytask_id:mytask_id,
+          sub1:sub1,
+          sub2:sub2,
+          sub3:sub3,
+          sub4:sub4,
+          sub5:sub5,
+          sub6:sub6,
+          sub7:sub7,
+          sub8:sub8,
+          sub9:sub9,
+          sub10:sub10,
+          sub11:sub11,
+          sub12:sub12,
+          sub13:sub13,
+          sub14:sub14,
+          sub1_memo:sub1_memo,
+          sub2_memo:sub2_memo,
+          sub3_memo:sub3_memo,
+          sub4_memo:sub4_memo,
+          sub5_memo:sub5_memo,
+          sub6_memo:sub6_memo,
+          sub7_memo:sub7_memo,
+          sub8_memo:sub8_memo,
+          sub9_memo:sub9_memo,
+          sub10_memo:sub10_memo,
+          sub11_memo:sub11_memo,
+          sub12_memo:sub12_memo,
+          sub13_memo:sub13_memo,
+          sub14_memo:sub14_memo,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            alert("진도표 업데이트 is success")
+            // $(".comment_edit_form_button").attr("hidden",true);
+            window.history.pushState("", "", '/pd/private_task_list/')
+        }
+    });
+
+});
+
+
+{% endblock %}
+</script>

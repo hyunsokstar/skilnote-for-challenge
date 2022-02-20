@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{%block title %}베스트 강의{% endblock %}
+
+{%block content2 %}
+
+<div class="jumbotron">
+    <h2>강의 정보</h2>
+</div>
+
+{% if messages %}
+<div class="alert alert-success">
+    {% for message in messages %}
+     {{ message.message }}<strong>{{ message.tags }}</strong>
+     {% endfor %}
+</div>
+{% endif %}
+
+<a href="/bestlec/new/" class="btn btn-danger float-right">입력 </a>
+
+<br><br>
+
+<table class="table table-bordered" id="todo_list">
+    <tr>
+        <td>index</td>
+        <td>title</td>
+        <td>완강 목록</td>
+        <td>author</td>
+        <td>평점</td>
+        <td>추천</td>
+    </tr>
+
+    {% if object_list.exists %}
+        {% for p in object_list %}
+            <tr>
+                <td>
+                    {{ forloop.counter }}
+                </td>
+                <td>
+                    {{p.title}}
+                    <a class="badge badge-pill badge-dark btn-sm" href="http://{{p.url_lec}}">site</a>
+                    {% if request.user == p.author %}
+                        <a class="badge badge-pill badge-primary btn-sm" href="{% url "bestlec:best20_delete" p.id %}">삭제</a>
+                    {% endif %}
+                </td>
+                <td>
+                    <button type="button" name="button" onclick="location.href='{{p.id}}/finisherlist'" class="btn btn-outline-info btn-sm">완강({{p.finisher_set.count}})</button>
+
+                </td>
+                <td>
+                    {{p.author}}
+                </td>
+                <td>
+                    {{ p.recommandbest20_set.count }}
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" href="{% url "bestlec:recommand_lecture" p.pk %}"> 추천 </a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="4">
+                <h4>아직 게시물이 없습니다.</h4>
+            </td>
+        </tr>
+    {% endif %}
+</table>
+
+
+{%endblock%}
+
+<script type="text/javascript">
+{% block extra_js %}
+
+
+
+{% endblock %}
+</script>

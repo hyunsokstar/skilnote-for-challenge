@@ -1,0 +1,149 @@
+
+{% load static %}
+<!-- mini note for backend -->
+
+{% if object_list.exists %}
+    {% for p in object_list %}
+    <table class="table table-bordered table_row" id="todo_list" width="<100></100>%">
+
+    	{% ifequal p.type.type_name "input" %}
+    	<tr id="shortcut_{{p.id}}" style="background-color:#f1f9f0">
+    		<td id=index_{{ forloop.counter }} width="10%">
+    			<input type="checkbox" id="{{p.pk}}" class="shortcut_check">
+    			{{ forloop.counter }}
+    		</td>
+    		<td>
+    			<span id=title_{{p.id}}>
+    				{{p.title}}
+    			</span>
+    			{% if p.author == request.user %}
+    			<button class="badge badge-pill badge-primary float-right delete_temp_skill_note_for_backendarea_btn" id="{{p.id}}">삭제</button>
+    			<button class="badge badge-pill badge-primary update_temp_skil_title_for_bacekend_btn float-right" id="{{p.id}}">제목 수정</button>
+
+    			{% endif %}
+    		</td>
+    	</tr>
+
+    	<tr id="shortcut_{{p.id}}-2" style="background-color:#f0f1f5">
+    		<td colspan="2">
+    			<input type="text" name="" value="{{p.content1}}" size="40" id="select-input-{{p.id}}" class="form-control">
+    			<button class="btn btn-outline-danger btn-sm myinput float-right copy_code1" id="{{p.id}}">copy</button>
+
+                {% ifequal request.user page_user %}
+                    <button class="btn btn-outline-danger btn-sm float-right edit_temp_skill_note_using_input_for_backend_btn" id="{{p.id}}">edit_complete</button>
+                {% else %}
+                {% endifequal %}
+
+    		</td>
+    	</tr>
+    	{% endifequal %}
+
+    	{% ifequal p.type.type_name "textarea" %}
+    	<tr id="shortcut_{{p.id}}" style="background-color:#f1f9f0">
+    		<td id=index_{{ forloop.counter }} width="10%">
+    			<input type="checkbox" id="{{p.pk}}" class="shortcut_check">
+    			{{ forloop.counter }}
+    		</td>
+    		<td>
+    			<span id=title_{{p.id}}>{{p.title}}</span>
+    			{% if p.author == request.user %}
+    			<button class="badge badge-pill badge-primary float-right delete_temp_skill_note_for_backendarea_btn" id="{{p.id}}">삭제</button>
+    			<button class="badge badge-pill badge-primary float-right update_temp_skil_title_for_bacekend_btn" id="{{p.id}}">제목 수정</button>
+
+    			{% endif %}
+    		</td>
+    	</tr>
+    	<tr id="shortcut_{{p.id}}-2" style="background-color:#f0f1f5">
+    		<td colspan="2">
+    			<button class="btn btn-outline-primary btn-sm show_total_textInput_button" id={{p.id}}>40row</button>
+    			<button class="btn btn-outline-primary btn-sm show_basic_textInput_button" id={{p.id}}>8row</button>
+    			<button class="btn btn-outline-primary btn-sm show_text_popup_button_for_backend_skill_btn" id={{p.id}}>popup</button>
+
+    			<textarea id="select-textarea-{{p.id}}" cols="120" rows="10"
+    				class="form-control">{{p.content2 }}</textarea><br>
+    			<button class="btn btn-outline-danger btn-sm myinput float-right copy_code2 float-right"
+    				id="{{p.id}}">copy</button>
+
+
+                    {% ifequal request.user page_user %}
+                    <button class="btn btn-outline-danger btn-sm float-right edit_temp_skill_note_using_textarea_for_backend_btn float-right" id="{{p.id}}">
+                        edit_complete 1111
+                    </button>
+                    {% else %}
+        			{% endifequal %}
+
+
+    		</td>
+    	</tr>
+    	{% endifequal %}
+
+    	{% ifequal p.type.type_name "summer_note" %}
+    	<tr id="shortcut_{{p.id}}" style="background-color:#f1f9f0">
+    		<td id=index_{{ forloop.counter }} width="10%">
+    			<input type="checkbox" id="{{p.pk}}" class="shortcut_check">
+    			{{ forloop.counter }}
+    		</td>
+    		<td width="90%">
+    			<span id=title_{{p.id}}>{{p.title}}</span>
+    			{% if p.author == request.user %}
+    			<button class="badge badge-pill badge-primary float-right delete_temp_skill_note_for_backendarea_btn" id="{{p.id}}">삭제</button>
+    			<button class="badge badge-pill badge-primary update_temp_skil_title_for_bacekend_btn float-right" id="{{p.id}}">제목 수정</button>
+    			<!-- <img src="{% static 'icon/trashcan.png' %}" alt=""> -->
+    			{% endif %}
+    		</td>
+    	</tr>
+
+    	<tr id="shortcut_{{p.id}}-2" style="background-color:#f0f1f5">
+    		<td colspan="2">
+    			<div id="select-textarea-{{p.id}}" style="width:900px;">{{p.content2 | safe}}</div>
+    			<br>
+    			<button class="btn btn-outline-danger btn-sm myinput float-right copy_code2" id="{{p.id}}">copy</button>
+    			<a href="{% url "wm:update_skilnote_by_summernote" p.id %}"
+    				class="btn btn-outline-danger float-right btn-sm">Update</a>
+    		</td>
+    	</tr>
+    	{% endifequal %}
+
+        <!-- textarea -->
+    	{% ifequal p.type.type_name "input_title" %}
+    	<tr style="background-color:#caf5f5; color:black;" id="shortcut_{{p.id}}">
+    		<td id=index_{{ forloop.counter }} width="10%">
+    			<input type="checkbox" id="{{p.pk}}" class="shortcut_check">
+    			{{ forloop.counter }}
+    		</td>
+    		<td>
+    			제목 :
+    			<span id=title_{{p.id}}>{{p.title}}</span>
+    			{% if p.author == request.user %}
+    			<button class="badge badge-pill badge-primary float-right delete_temp_skill_note_for_backendarea_btn" id="{{p.id}}">삭제</button>
+    			<button class="badge badge-pill badge-primary update_temp_skil_title_for_bacekend_btn float-right" id="{{p.id}}">제목 수정</button>
+    			{% endif %}
+    		</td>
+    	</tr>
+    	<tr id="shortcut_{{p.id}}-2" style="background-color:#f0f1f5;">
+    		<td colspan="2">
+    			<textarea id="select-textarea-{{p.id}}" cols="120" rows="10"
+    				class="form-control">{{p.content2 }}</textarea><br>
+    			<button class="btn btn-outline-danger btn-sm myinput float-right copy_code2" id="{{p.id}}">copy</button>
+                <!-- <button class="btn btn-outline-danger btn-sm float-right edit_temp_skill_note_for_textarea_btn" id="{{p.id}}">edit_complete (backend mininote)</button> -->
+
+                {% ifequal request.user page_user %}
+                <button class="btn btn-outline-danger btn-sm float-right edit_temp_skill_note_for_textarea_btn" id="{{p.id}}">edit_complete (backend mininote)</button>
+      			{% else %}
+                {% endifequal %}
+    		</td>
+    	</tr>
+    	{% endifequal %}
+    </table>
+    {% endfor %}
+{% else %}
+
+<table class="table table-bordered">
+	<tr>
+		<td colspan="4" background-color="skyblue">
+			<h4>there is no article</h4>
+		</td>
+	</tr>
+</table>
+{% endif %}
+<span class="myshort_list_area"></span>

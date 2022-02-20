@@ -1,0 +1,177 @@
+{% extends 'layout.html' %}
+
+{%block title %}SkilBlog{% endblock %}
+{% load static %}
+{% load bootstrap4 %}
+
+
+{%block content4 %}
+
+<br><br><br><br>
+
+<div class="jumbotron">
+    <h2>스킬 블로그</h2>
+</div>
+
+{% if messages %}
+<div class="alert alert-success">
+    {% for message in messages %}
+     {{ message.message }}<strong>{{ message.tags }}</strong>
+     {% endfor %}
+</div>
+{% endif %}
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+        <a class="btn btn-outline-dark btn-block mb-2" href="{% url 'skilblog:SkilBlogTitleList' %}">전체 보기</a>
+    </div>
+    <div class="col-sm">
+        <a class="btn btn-outline-info btn-block mb-2" href="{% url 'skilblog:SkilBlogTitleListForMe' %}">내가 쓴글 보기</a>
+    </div>
+    <div class="col-sm">
+        <form class="" action="" method="get">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="serach word" aria-label="skil column 검색" aria-describedby="basic-addon2"  name="q">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">검색</button>
+              </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+
+<table class="table table-bordered"  id="skilblog_list">
+    <tr>
+        <td>index</td>
+        <td>title</td>
+        <td>author</td>
+        <td>reputation</td>
+    </tr>
+
+    {% if object_list.exists %}
+        {% for p in object_list %}
+            <tr id="column_row_{{p.id}}">
+                <td>
+                    {{ forloop.counter }}
+                </td>
+                <td>
+                    <a href="{% url 'skilblog:SkilBlogContentList' p.pk %}">
+                        {{p.title}}
+
+                        {% if p.author == request.user %}
+                            <a class="badge badge-pill badge-primary btn-sm delete_skil_column_btn" id="{{p.id}}">삭제 </a>
+                            <a class="badge badge-pill badge-primary btn-sm" href="{% url "skilblog:modify_skilblog_title_list" p.id %}">수정</a>
+            			{% endif %}
+                        <a class="badge badge-pill badge-info btn-sm get_link_url" id="{{p.id}}">link</a>
+                    </a>
+                </td>
+                <td>
+                    {{p.author}}
+                </td>
+                <td>
+                    <a class="plus_btn_for_user btn btn-outline-dark btn-sm" href="{% url "skilblog:like_skil_blog_title" p.pk %}">
+                        <img src="{% static 'icon/like.png' %}" alt="">
+                    </a>
+                    ({{p.reputation}})
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="4">
+                <h4>아직 게시물이 없습니다.</h4>
+            </td>
+        </tr>
+    {% endif %}
+</table>
+
+query:{{query}}
+
+{% if query %}
+
+	{% if is_paginated %}
+		<div class="pagination">
+			<span class="page-links">
+				{% if page_obj.has_previous %}
+					<a class="btn btn-outline-dark btn-sm" href="?q={{query}}&page={{ page_obj.previous_page_number }}">previous</a>
+				{% endif %}
+				<span class="page-current">
+					Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+				</span>
+				{% if page_obj.has_next %}
+					<a class="btn btn-outline-dark btn-sm" href="?q={{query}}&page={{ page_obj.next_page_number }}">next</a>
+				{% endif %}
+		   </span>
+	   </div>
+	{% endif  %}
+
+
+{% else %}
+
+	{% if is_paginated %}
+		{% bootstrap_pagination page_obj size="small" justify_content="center" %}
+	{% endif %}
+
+{% endif %}
+
+
+{%endblock%}
+
+
+<script type="text/javascript">
+// js area
+{% block extra_js %}
+function copyToClipboard(text) {
+    var dummy = document.createElement("textarea");
+    // to avoid breaking orgain page when copying more words
+    // cant copy when adding below this code
+    // dummy.style.display = 'none'
+    document.body.appendChild(dummy);
+    //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+}
+
+// get_link_url
+$('body').on('click', '.get_link_url', function (e) {
+    const id = this.id
+    const url = window.location.href;
+    copy_text = url+this.id
+    copyToClipboard(copy_text);
+    alert("link copy 성공 : " + copy_text)
+
+});
+
+$('body').on('click', '.delete_skil_column_btn', function (e) {
+	e.preventDefault();
+	var id = $(this).attr("id");
+
+	$.ajax({
+		type: "POST",
+		url: '/skilblog/delete_for_skil_column_title_list/' + id,
+		data: {
+			csrfmiddlewaretoken: '{{ csrf_token }}'
+		},
+		success: function (result) {
+			$("#column_row_" + id).remove();
+			alert('삭제 성공');
+		}
+	});
+});
+
+
+
+{% endblock %}
+</script>
+
+
+<a class="go_to_next_channer_btn btn btn-outline-success" href="http://www.github.com">
+    <img src="/static/icon/git_icon.png" alt="">
+</a>

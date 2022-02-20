@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2>todo 입력</h2>
+
+<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+
+	{{ form | safe }}
+
+	<button type="submit" class="btn btn-primary float-right btn-block">Submit</button>
+
+</form>
+
+{{ form.media }}
+
+
+{% endblock %}

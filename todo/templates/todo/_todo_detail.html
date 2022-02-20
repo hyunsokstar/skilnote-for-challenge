@@ -1,0 +1,514 @@
+<!-- 이페이지는 모달창 페이지 입니다 22222222222222222 -->
+
+<!-- <div class="modal fade" id="myModal"> -->
+
+    <div class="modal-dialog modal-xl">
+
+
+        <div class="modal-content">
+            <button type="button" class="btn btn-outline-dark mt-2 float-right" data-dismiss="modal">Close</button>
+
+            <div class="d-flex p-2 bd-highlight">
+                <!-- <h4 style="background-color:#00BFFF; padding:10px">할일 상세사항</h4> -->
+                <!-- Modal Header -->
+                <!-- <div class="modal-header">
+                    <h4 class="modal-title"> todo : {{ object.title }}</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div> -->
+
+                <!-- Modal body -->
+                <div class="modal-body mt-1">
+
+                      <div class="row">
+                        <div class="col">
+
+                            <!-- CodeProcess area -->
+                            <div class="card border-info mb-3" style="max-width: 80rem;">
+                                <div class="card-header" style="background-color:black; color:white">
+                                    <h4>Code Process</h4>
+                                </div>
+                                <div class="card-body">
+                                    {% for comment in comments_list_my.all %}
+
+                                    {% if comment.user_type == 1 %} <!-- 댓글 단 사람이 나일 경우 참고 -->
+
+                                    <table class="table table-bordered" id="comment_table_{{comment.id}}">
+
+                                            {% if comment.author == request.user %}
+                                            <tr bgcolor="#BFEFF2">
+                                                <td>
+                                                    Step{{ forloop.counter }}
+                                                </td>
+                                                <td colspan="2">작성자 : <p style="color:blue;">{{comment.author}}</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td bgcolor="#BFEFF2">Title</td>
+                                                <td colspan="3" bgcolor="#BFEFF2">
+                                                    <span id="todo_comment_title_output_{{comment.id}}">
+                                                        {{comment.title}}
+                                                    </span>
+                                                    <input type="text" class="form-control" name="" value="{{comment.title}}" id="todo_comment_title_{{comment.id}}" hidden>
+                                                </td>
+                                            </tr>
+                                            {% else %}
+                                            <tr bgcolor="#FFEC77">
+                                                <td>
+                                                    Step{{ forloop.counter }}
+                                                </td>
+                                                <td colspan="2">작성자 : <p style="color:black;">{{comment.author}}</p></td>
+                                            </tr>
+                                            <tr bgcolor="#FFEC77">
+                                                <td >title</td>
+                                                <td colspan="3" >
+                                                    <span id="todo_comment_title_output_{{comment.id}}">
+                                                        {{comment.title}}
+                                                    </span>
+                                                    <input type="text" class="form-control" name="" value="{{comment.title}}" id="todo_comment_title_{{comment.id}}" hidden>
+                                                </td>
+                                            </tr>
+
+                                            {% endif %}
+
+                                        <tr>
+                                            <td>file_name</td>
+                                            <td colspan="3">
+                                                <span id="todo_comment_filename_output_{{comment.id}}">
+                                                    {{comment.file_name}}
+                                                </span>
+                                                <input type="text" class="form-control" name="" value="{{comment.file_name}}" id="todo_comment_file_name_{{comment.id}}" hidden>
+                                            </td>
+                                        </tr>
+                                            <!-- <td>code</td> -->
+                                            <td colspan="4">
+                                                {% if comment.type.type_name == "summer_note" %}
+                                                <!-- summernote일 경우 -->
+                                                <span id="todo_comment_text_output_{{comment.id}}" contenteditable="true">
+                                                    {{ comment.text | safe }}
+                                                </span>
+                                                <!-- <textarea name="name" rows="10" cols="110" id="my_code_{{comment.id}}" class="summer_for_comment_update_copy_{{comment.id}}" hidden>{{comment.text}}</textarea> -->
+                                                {% else %}
+                                                <!-- textarea일 경우 -->
+                                                <!-- <textarea name="name" rows="10" cols="110" id="{{comment.id}}" class="textarea_for_comment_update_{{comment.id}} form-control">{{comment.text}}</textarea> -->
+                                                <!-- <button type="button" name="button" id="{{comment.id}}" class="btn btn-sm btn-outline-danger copy_code">copy</button> -->
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <!-- <button type="button" class="btn btn-sm btn-outline-primary updateTodoCommentButton" id={{comment.id}}>update2</button> -->
+
+                                                {% if comment.author == request.user %}
+                                                <button type="button" class="btn btn-sm btn-outline-primary float-right" onclick=location.href='{{comment.id}}/update' id={{comment.id}}>update</button>
+
+                                                {% if comment.type.type_name == "summer_note" %}
+                                                <button class="btn btn-sm btn-outline-primary float-right comment_delete_button" id="{{comment.pk}}">delete</button> &nbsp;&nbsp;&nbsp;
+                                                <button class="btn btn-sm btn-outline-primary float-right comment_edit_complete_button_{{comment.pk}} comment_edit_complete_button_for_summernote" id="{{comment.pk}}" hidden>업데이트 완료(summernote)</button> &nbsp;&nbsp;&nbsp;
+                                                <!-- <button class="btn btn-sm btn-outline-primary float-right comment_edit_form_button comment_edit_form_button_{{comment.pk}}" id="{{comment.pk}}">edit_mode</button> -->
+                                                {% else %}
+                                                <button class="btn btn-sm btn-outline-primary float-right comment_delete_button" id="{{comment.pk}}">delete</button> &nbsp;&nbsp;&nbsp;
+                                                <button class="btn btn-sm btn-outline-primary float-right comment_edit_complete_button_{{comment.pk}} comment_edit_complete_button_for_text_area" id="{{comment.pk}}" >업데이트 textarea</button> &nbsp;&nbsp;
+                                                {% endif %}
+
+
+
+                                                {% endif %}
+
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    {% else %}
+
+                                    {% endif %}
+                                    {% endfor %}
+                                    <div class="reply_list"></div>
+
+                                </div>
+
+
+                            </div>
+                            <!-- CodeProcess area end -->
+
+                        </div>
+                        <div class="col">
+                            <!-- insert form area -->
+                            <div class="card border-info mb-3" style="width:100%">
+                                <div class="card-body">
+                                    <div class="comment_insert_area" style="background-color:white">
+                                            <form method="post" action="{{object.get_absolute_url}}new_comment_by_summer_note" id="comment_form_summer_note" class="hi">
+                                                <div class="form-group">
+                                                {% csrf_token %}
+                                                {{ comment_form }}
+                                                </div>
+                                                <button type="submit" class="btn btn-outline-primary btn-block" style="margin-right:20px;">입 력</button>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- insert form area end -->
+                        </div>
+                      </div>
+
+                <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark btn-block" data-dismiss="modal">Close</button>
+                    </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 댓글 템플릿 -->
+<!-- 2244 2244 -->
+<script class="reply_template_summer_note" type="text/x-template">
+    <table class="table table-bordered" id="comment_table_<%= comment_id %>">
+
+        <tr bgcolor="#BFEFF2">
+            <td>new comment</td>
+            <td>작성자 : <%= author %></td>
+        </tr>
+
+        <tr bgcolor="#BFEFF2">
+            <td >title</td>
+            <td colspan="3">
+                <%= title %>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="20%">file_name</td>
+            <td colspan="3">
+                <%= file_name %>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <div class="todo_comment_text_<%= comment_id %>">
+                    <%= text %>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="button" class="btn btn-sm btn-outline-primary" onclick="location.href='<%= comment_id %>/update'" id=<%= comment_id %>>update</button>
+                <button class="btn btn-sm btn-warning float-right" onclick = deleteToDoComment(<%= comment_id %>)>delete</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3" border="0"></td>
+        </tr>
+    </table>
+
+</script>
+
+
+<!-- 2244 -->
+<script class="reply_template_text_area" type="text/x-template">
+    <table class="table table-bordered" id="comment_table_<%=comment_id%>">
+        <tr bgcolor="#BFEFF2">
+            <td>
+                new
+            </td>
+            <td colspan="2">작성자 : <p style="color:blue;"><%=author%></p></td>
+        </tr>
+        <tr>
+            <td bgcolor="#BFEFF2">title</td>
+            <td colspan="3" bgcolor="#BFEFF2">
+                <span id="todo_comment_title_output_<%=comment_id%>">
+                    <%=title%>
+                </span>
+                <input type="text" class="form-control" name="" value="<%=title%>" id="todo_comment_title_<%=comment_id%>" hidden>
+            </td>
+        </tr>
+
+        <tr>
+            <td>file_name</td>
+            <td colspan="3">
+                <span id="todo_comment_filename_output_<%=comment_id%>">
+                    <%=file_name%>
+                </span>
+                <input type="text" class="form-control" name="" value="<%=file_name%>" id="todo_comment_file_name_<%=comment_id%>" hidden>
+            </td>
+        </tr>
+            <td>code</td>
+            <td colspan="3">
+                <!-- textarea일 경우 -->
+                <textarea name="name" rows="10" cols="110" id="<%=comment_id%>" class="textarea_for_comment_update_<%=comment_id%>"><%=text%></textarea>
+                <button type="button" name="button" id="<%=comment_id%>" class="btn btn-sm btn-outline-danger copy_code">copy</button>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="2">
+                <button class="btn btn-sm btn-outline-primary float-right comment_delete_button" id="<%=comment_id%>">delete</button> &nbsp;&nbsp;&nbsp;
+                <button class="btn btn-sm btn-outline-primary float-right comment_edit_complete_button_<%=comment_id%> comment_edit_complete_button_for_text_area" id="<%=comment_id%>">업데이트 textarea</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" border="0"></td>
+        </tr>
+    </table>
+
+</script>
+
+<!-- _todo_detail.html -->
+<script type="text/javascript">
+
+{% block extra_js %}
+
+$(document).ready(function(){
+    // comment_edit_popup_button
+    // $(".updateTodoCommentButton").click(function(e) {
+    //     e.preventDefault();
+    //     alert('modify popup')
+    //     var id = $(this).attr("id");
+    //     alert("id : " +id)
+    //
+    //     $.ajax({
+    //       type: "GET",
+    //       url: 'update_comment_ajax_popup/'+id,
+    //       data: {
+    //           id:id,
+    //           title:title,
+    //           file_name:file_name,
+    //           text:text,
+    //           csrfmiddlewaretoken: '{{ csrf_token }}'
+    //       },
+    //         success: function(result) {
+    //             alert("modify is completted")
+    //             $(".comment_edit_form_button").attr("hidden",true);
+    //
+    //         }
+    //     });
+    // });
+
+    // modify mode click
+    $('body').on('click', '.comment_edit_form_button', function(e) {
+        e.preventDefault();
+
+        alert('modify mode')
+        var id = $(this).attr("id");
+        $("#todo_comment_title_"+id).removeAttr('hidden');
+        $("#todo_comment_file_name_"+id).removeAttr('hidden');
+        $(".summer_for_comment_update_copy_"+id).removeAttr('hidden');
+        $(".comment_edit_complete_button_for_summernote").removeAttr('hidden');
+
+        $("#todo_comment_title_output_"+id).hide();
+        $("#todo_comment_filename_output_"+id).hide();
+        $("#todo_comment_text_output_"+id).hide();
+
+        $(".comment_edit_form_button_"+id).attr('hidden',true);
+
+    });
+
+
+    // todo 입력 by summernote
+    $("#comment_form_summer_note").submit(function(e){
+        e.preventDefault();
+        var $form = $(this);
+        var url = $form.attr('action');
+        // alert("url : "+ url)
+        var data = $form.serialize();
+
+        $.post(url,data)
+            .done(function(obj){
+                alert("코드 입력 by summernote")
+                console.log(obj)
+                var raw_template = $('.reply_template_summer_note').html();
+                console.log("raw_template : ", raw_template);
+
+                // underscore를 이용해 row 추가 하기
+                var tpl = _.template(raw_template);
+
+                var rendered = tpl({
+                    title : obj.title,
+                    author : obj.author,
+                    text : obj.text,
+                    file_name: obj.file_name,
+                    created_at : obj.created_at,
+                    comment_id : obj.edit_id
+                });
+                console.log("rendered : " , rendered);
+                // $('#comment_form_summer_note').summernote('reset');
+
+                $(rendered).appendTo($('.reply_list'));
+                $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+
+            })
+            .fail(function(xhr, textStatus, error){
+                alert("failed : " + error);
+            });
+    });
+
+    // todo 입력 by textarea
+    $("#comment_form_text_area").submit(function(e){
+        e.preventDefault();
+        var $form = $(this);
+        var url = $form.attr('action');
+        var data = $form.serialize();
+
+        $.post(url,data)
+            .done(function(obj){
+                alert("ajax request is done")
+                console.log(obj)
+                var raw_template = $('.reply_template_text_area').html();
+                console.log("raw_template : ", raw_template);
+                var tpl = _.template(raw_template);
+
+                var rendered = tpl({
+                    title : obj.title,
+                    author : obj.author,
+                    text : obj.text,
+                    file_name: obj.file_name,
+                    created_at : obj.created_at,
+                    comment_id : obj.edit_id
+                });
+                console.log("rendered : " , rendered);
+                $(rendered).appendTo($('.reply_list'));
+                $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+            })
+            .fail(function(xhr, textStatus, error){
+                alert("failed : " + error);
+            });
+    });
+
+    $('body').on('click', '.copy_code', function(e) {
+        // alert("복사 버튼 클릭")
+
+        e.preventDefault();
+        var id = this.id
+        // alert("id : "+ id)
+        document.execCommand('copy', false, $(this).parent().find('.textarea_for_comment_update_'+id).select());
+        alert("copy is completed 11")
+    });
+
+
+    $(".comment_edit_complete_button_for_summernote").click(function(e) {
+        e.preventDefault();
+
+        // alert("수정 버튼 클릭 11")
+        var id = $(this).attr("id");
+        var title = $("#todo_comment_title_"+id).val();
+        var file_name = $("#todo_comment_file_name_"+id).val();
+
+        var text = $(".summer_for_comment_update_copy_"+id).val();
+        // alert("text : "+ text)
+
+        $.ajax({
+          type: "POST",
+          url: 'update_comment_ajax/summernote/'+id,
+          data: {
+              id:id,
+              title:title,
+              file_name:file_name,
+              text:text,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+            success: function(result) {
+                alert("modify is completted for summernote")
+                $(".comment_edit_form_button").attr("hidden",true);
+
+            }
+        });
+    });
+
+    $('body').on('click', '.comment_edit_complete_button_for_text_area', function(e) {
+        e.preventDefault();
+
+        // alert("수정 버튼 클릭 11")
+        var id = $(this).attr("id");
+        var text = $(".textarea_for_comment_update_"+id).val();
+        // alert("text : "+ text)
+
+        $.ajax({
+          type: "POST",
+          url: 'update_comment_ajax/textarea/'+id,
+          data: {
+              id:id,
+              text:text,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+            success: function(result) {
+                alert("modify is completted for textarea")
+                $(".comment_edit_form_button").attr("hidden",true);
+
+            }
+        });
+    });
+
+    // 댓글 삭제 버튼
+    $('body').on('click', '.comment_delete_button', function(e) {
+        e.preventDefault();
+        var id = $(this).attr("id");
+        // alert('삭제 id : ' + id);
+
+        $.ajax({
+          type: "POST",
+          url: 'delete_comment_ajax/'+id,
+          data: {
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+            success: function(result) {
+                $("#comment_table_"+id ).remove();
+                alert('comment 삭제 성공');
+            }
+        });
+    });
+
+})
+
+function deleteToDoComment(id){
+    alert("id : " +id)
+    $.ajax({
+      type: "POST",
+      url: 'delete_comment_ajax/'+id,
+      data: {
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            $("#comment_table_"+id ).remove();
+            alert('comment 삭제 complete ');
+        }
+    });
+
+}
+
+
+
+function editToDoComment(id){
+
+    var title = $("#todo_comment_title_"+id).val();
+    var file_name = $("#todo_comment_file_name_"+id).val();
+    var text = $(".todo_comment_text_"+id).val();
+
+    alert('id : ' + id);
+    alert('title : ' + title);
+    alert('file_name : ' + file_name);
+    alert('text : ' + text);
+
+    $.ajax({
+      type: "POST",
+      url: 'update_comment_ajax/'+id,
+      data: {
+          id:id,
+          title:title,
+          file_name:file_name,
+          text:text,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+        success: function(result) {
+            alert('comment update complete ');
+        }
+    });
+}
+
+{% endblock %}
+
+</script>
+
+<!-- </div> -->

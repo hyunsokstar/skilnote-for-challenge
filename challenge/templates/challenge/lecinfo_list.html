@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{%block title %}{{challenge_title}} 에 대한 Challenge List{% endblock %}
+
+{%block content2 %}
+
+<br><br>
+
+<div class="jumbotron">
+	<div class="container">
+		<div class="row p-0">
+			<div class="col p-0">
+				<h4 class="display-4">{{challenge_title}}</h4>
+				challenge 개설자 : {{challenge_leader}} <br>
+				{{challenge_description | safe }}
+			</div>
+			<div class="col">
+
+			</div>
+			<div class="col">
+			</div>
+			<div class="col p-0">
+				{% if challenge_image %}
+				<img class="" src="{{ challenge_image.url }}" alt="Card image cap" width="80%" height="80%">
+				{% endif %}
+			</div>
+		</div>
+		<div class="row mt-2">
+		</div>
+	</div>
+</div>
+
+<button class="new3_btn btn btn-outline-dark float-right ml-1" onclick="window.location.href = '{% url 'challenge:challenge_subject_list' %}';">목록으로 이동</button>
+<button class="new3_btn btn btn-outline-dark float-right ml-1" onclick="window.location.href = '{% url 'challenge:CreatelecInfo' challenge_title %}';">소모임 추가</button>
+
+
+<br><br><br><br>
+
+{% if lecinfo_list.exists %}
+{% for p in lecinfo_list %}
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-body">
+				<p class="card-text">
+					<h4>{{p.lec_name}}</h4><br>
+
+					<span>
+						<a href="{% url 'accounts2:user_profile_information_view' p.manager %}">{{p.manager}}</a>
+						팀장 &nbsp;&nbsp;
+						{{p.student_count2}} 명 참여 &nbsp;&nbsp;
+					</span>
+					<!-- <h6>{{p.student_count2}} 명 참여</h6> -->
+					<!-- <h6>{{p.lec_reputation}} 평점</h6> -->
+					<a href="{% url 'challenge:lec_record_list' p.id %}" class="btn btn-primary float-right">입장</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<br><br>
+{% endfor %}
+{% else %}
+<tr>
+	<td colspan="6">
+		<h4>아직 챌린지 모임이 없습니다.</h4>
+	</td>
+</tr>
+{% endif %}
+
+
+{% endblock %}
+<script type="text/javascript">
+{% block extra_js %}
+
+{% endblock %}
+
+</script>
