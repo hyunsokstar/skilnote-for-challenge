@@ -129,7 +129,7 @@ input[id="tab3"]:checked ~ .bttab-menu-buttonsn label[for="tab3"] {
   </div>
 </div>
 <center>
-  <h4 class="text-danger mt-2"> <a href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/challenge-for-this-week/1" title="{{u.profile.phone}}">
+  <h4 class="text-danger mt-2"> <a href="http://www.skilnote-for-tsco.kr/wm/myshortcut/challenge-for-this-week/1" title="{{u.profile.phone}}">
     도전 과제 상세 사항 (click)
   </a> </h4>
 </center>
@@ -156,7 +156,7 @@ input[id="tab3"]:checked ~ .bttab-menu-buttonsn label[for="tab3"] {
     {% if user_list.exists %} {% for u in user_list %}
     <tr class={% if u.username == request.user.username %} {{"login_user_row"}} {% endif %}>
       <td id="user_name_{{u.id}}">
-        <a href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/{{u.username}}/1" title="{{u.profile.phone}}">
+        <a href="http://www.skilnote-for-tsco.kr/wm/myshortcut/{{u.username}}/1" title="{{u.profile.phone}}">
           {{u.username}}
         </a>
         
@@ -186,10 +186,10 @@ input[id="tab3"]:checked ~ .bttab-menu-buttonsn label[for="tab3"] {
           목록
         </button>
         <button class="btn btn-sm btn-outline-dark">
-          <a href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/{{u.username}}/119">결과1</a>
+          <a href="http://www.skilnote-for-tsco.kr/wm/myshortcut/{{u.username}}/119">결과1</a>
         </button>
         <button class="btn btn-sm btn-outline-dark">
-          <a href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/{{u.username}}/120">결과2</a>
+          <a href="http://www.skilnote-for-tsco.kr/wm/myshortcut/{{u.username}}/120">결과2</a>
         </button>
 
       </td>
@@ -242,7 +242,7 @@ input[id="tab3"]:checked ~ .bttab-menu-buttonsn label[for="tab3"] {
 
       <td>
         <a
-          href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/{{u.username}}/{{ u.profile.last_updated_category }}">ca{{u.profile.last_updated_category}}</a>
+          href="http://www.skilnote-for-tsco.kr/wm/myshortcut/{{u.username}}/{{ u.profile.last_updated_category }}">ca{{u.profile.last_updated_category}}</a>
       </td>
 
       {% if u.username == request.user.username %} {% else %} {% endif %}
@@ -260,7 +260,7 @@ input[id="tab3"]:checked ~ .bttab-menu-buttonsn label[for="tab3"] {
         <button data-username="{{u.username}}" class="btn btn-sm btn-outline-dark showAllowListButton">참여 </button>
 
         <button class="btn btn-sm btn-outline-dark">
-          <a href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/{{u.username}}/1">도전 과제</a>
+          <a href="http://www.skilnote-for-tsco.kr/wm/myshortcut/{{u.username}}/1">도전 과제</a>
         </button>
 
         {% elif u.username == request.user.username %}
@@ -272,7 +272,7 @@ input[id="tab3"]:checked ~ .bttab-menu-buttonsn label[for="tab3"] {
         {%if u.allowlistforskilnote_set.exists %}
           {% for a in u.allowlistforskilnote_set.all %}
 
-            <a href="http://www.skilnote-for-ts.co.kr.co.kr/wm/myshortcut/{{a.member}}/1" title="{{u.profile.phone}}" style="color:blue">
+            <a href="http://www.skilnote-for-tsco.kr/wm/myshortcut/{{a.member}}/1" title="{{u.profile.phone}}" style="color:blue">
               {{a.member}} &nbsp;
             </a>
 
