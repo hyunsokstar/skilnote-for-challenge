@@ -1,7 +1,15 @@
+.login-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .login-form {
     display: flex;
-    justify-content: center;
+    justify-content: end;
+    gap:6px;
+    text-align: end;
     margin-bottom: 5px;
+    margin-right: 4px;
     /* margin-top: -0px;
     /* position: left; */
     /* margin: auto; */

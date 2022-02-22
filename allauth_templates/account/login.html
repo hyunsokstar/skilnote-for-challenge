@@ -26,17 +26,18 @@
 {% endif %}
 
 
-<h2 class="login-title mt-5">Skilnote For Challenge &nbsp;&nbsp;</h2>
-<form method="post" class="login-form">
-  <!-- {% csrf_token %} {{ form.as_p }} -->
-  {% csrf_token %}
-  {{ form|crispy }}
+<div class="login-container">
+  <h1 class="login-title">Skil Note For Challenge &nbsp;&nbsp;</h1>
+  <form method="post" class="login-form">
+    <!-- {% csrf_token %} {{ form.as_p }} -->
+    {% csrf_token %} {{ form|crispy }}
 
-  <button type="submit" class="mybutton">Login</button>
-  <button class="mybutton">
-    <a href="{{ signup_url }}">register</a>
-  </button>
-</form>
+    <button type="submit" class="mybutton">Login</button>
+    <button class="mybutton">
+      <a href="{{ signup_url }}">register</a>
+    </button>
+  </form>
+</div>
 
 <div class="user_list">
   <!-- 유저 정보 출력 -->
