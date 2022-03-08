@@ -33,7 +33,10 @@
                 >수정</a
             >
 
+            {% endif %}
 
+
+            {%if request.user.is_authenticated %}
             <input
                 type="text"
                 placeholder="to"
@@ -56,6 +59,8 @@
                     aria-hidden="true"
                 ></span>
             </a>
+
+            
             {% endif %}
 
         </td>
