@@ -139,6 +139,9 @@ height: auto !important;
 
 	<button type="button" class="btn btn-sm btn-outline-dark guest_book_list_btn">계획</button> <br>
 
+	<!-- 1122 -->
+
+
 	{% ifequal request.user page_user %}
 	<a href="" class="btn btn-sm btn-outline-primary " id="insert_first_for_skill_note_btn">첫글</a> <br>
 	<a href="" class="btn btn-sm btn-outline-primary " id="modify_category_button">이동</a> <br>
@@ -152,6 +155,22 @@ height: auto !important;
 		<span class="" id="loading_for_copy_minus1" role="status" aria-hidden="true"></span>
 	</a> <br>
 	<a href="" class="btn btn-sm btn-outline-primary " id="move_to_skilblog_btn"> 칼럼 </a> <br>
+
+	<a
+		class="btn btn-outline-warning btn-sm copy_chapter_to_x"
+		data-category="ca{{category_num}}"
+		data-owner="{{page_user}}"
+		data-index="{{category_num}}"
+		data-category_title="{{category_nick}}"
+		>
+			복사
+		<span
+			class=""
+			id="copy_chapter_loading_{{category_num}}"
+			role="status"
+			aria-hidden="true"
+		></span>
+	</a> <br>
 
 	{% else %}
 
@@ -1075,6 +1094,66 @@ height: auto !important;
 			});
 		};
 	})(jQuery);
+
+	// js area 1122
+    $(".copy_chapter_to_x").click(function (e) {
+        e.preventDefault();
+        const owner = $(this).data("owner");
+        const category = $(this).data("category");
+        const index = $(this).data("index");
+        const category_title = $(this).data("category_title");
+        // alert(owner);
+        // alert(category);
+        // alert(index);
+
+        // alert(category_title);
+
+        const selection = prompt(
+            `${owner} 노트의 ${category} 를 복사 하시겠습니까? (x,y)`
+        );
+
+        const destination_chapter = prompt(
+            `어느 챕터에 복사하시겠습니까(1 ~ 120)`
+        );
+
+        if (destination_chapter > 0 && destination_chapter < 121) {
+            console.log("챕터 선택 ok");
+        } else {
+            alert("1~ 120을 선택해 주세요");
+        }
+
+        if (selection == "y" || selection == "Y") {
+            $("#copy_chapter_loading_" + index).addClass(
+                "spinner-border spinner-border-sm"
+            );
+            $.ajax({
+                type: "POST",
+                url: "{% url 'wm:copy_chapter_to_x' %}",
+                data: {
+                    owner: owner,
+                    category: category,
+                    index: index,
+                    destination_chapter: destination_chapter,
+                    category_title: category_title,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                },
+                success: function (result) {
+                    $("#copy_chapter_loading_" + index).removeClass(
+                        "spinner-border spinner-border-sm"
+                    );
+                    alert(
+                        "result.message (user_list_for_memo) : " +
+                            result.message
+                    );
+                },
+            });
+        } else {
+            $("#copy_chapter_loading_" + index).removeClass(
+                "spinner-border spinner-border-sm"
+            );
+            alert("취소 하셨습니다.");
+        }
+    });
 
 	// guest_book_list_btn
 	$('body').on('click', '.guest_book_list_btn', function (e) {

@@ -38,118 +38,19 @@
     cursor: pointer;
   }
 
-  .login_user_row {
-    background-color: azure;
+  .empty-row {
+    /* background-color: azure; */
+    height: 22px;
   }
 
-  .tab-menu-container {
-  width: 100%;
-  margin: auto;
-  text-align: center;
-  height: 580px;
-  position: relative;
-  border: 1px solid black;
-}
 
-.tab-menu-title {
-  padding: 10px;
-  font-size: 40px;
-  border: 1px solid blue;
-  background-color: #FFFDDE;
-}
-
-.tab-menu-buttons {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-
-  /* 11 하단 영역에 패딩, vertical-align: 세로 정렬, 박스 사이징 추가 */
-  padding: 10px;
-  vertical-align: middle;
-  box-sizing: border-box; /* padding 으로 인한 전체 넓이 증가 방지 */
-}
-
-/* 22 input 숨기기 */
-input[name="tabmenu"] {
-  display: none;
-}
-
-.content {
-  position: absolute;
-  width: 100%;
-  opacity: 0;
-  visibility: hidden;
-  box-sizing: border-box;
-}
-
-.content img {
-  width: 80%;
-
-  height: 440px;
-  box-sizing: border-box;
-}
-
-input[id="tab1"]:checked ~ .slide1,
-input[id="tab2"]:checked ~ .slide2,
-input[id="tab3"]:checked ~ .slide3 {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* 33 인풋과 연결된 라벨 디자인 변경 */
-.tab-menu-buttons label {
-  background-color: lightgray;
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-  border-radius: 50%;
-  margin-right: 4px;
-  cursor: pointer;
-}
-
-input[id="tab1"]:checked ~ .tab-menu-buttons label[for="tab1"],
-input[id="tab2"]:checked ~ .tab-menu-buttons label[for="tab2"],
-input[id="tab3"]:checked ~ .tab-menu-buttons label[for="tab3"] {
-  background-color: crimson;
-}
 
 </style>
 
-
-<div class="tab-menu-container">
-  <div class="tab-menu-title">Challenge For This Week (Making Daum Style File Attach Component by React)</div>
-  <input type="radio" name="tabmenu" id="tab1" checked />
-  <input type="radio" name="tabmenu" id="tab2" />
-  <input type="radio" name="tabmenu" id="tab3" />
-
-    <div class="content slide1">
-      <a href="#none1"><img src="{% static 'images/file-upload-component-1.png' %}" /></a>
-    </div>
-    <div class="content slide2">
-      <a href="#none1"><img src="{% static 'images/file-upload-component-2.png' %}" /></a>
-    </div>
-    <div class="content slide3">
-      <a href="#none1"><img src="{% static 'images/daum_mail.png' %}" /></a>
-    </div>
-
-  <div class="tab-menu-buttons">
-    <label for="tab1"></label>
-    <label for="tab2"></label>
-    <label for="tab3"></label>
-  </div>
-</div>
-<center>
-  <h4 class="text-danger mt-2"> <a href="http://www.skilnote-for-ts.co.kr/wm/myshortcut/challenge-for-this-week/1" title="{{u.profile.phone}}">
-    도전 과제 상세 사항 (click)
-  </a> </h4>
-</center>
-
-<br><br>
-
 <div class="table-responsive">
 
-  <table class="">
-    <tr style="background-color: #edf3fa">
+  <table class="" style="background-color: #ecf5f1">
+    <tr style="background-color: #dff4f8">
       <td>user</td>
       <td>lecture/git</td>
       <td>chapter</td>
@@ -168,6 +69,11 @@ input[id="tab3"]:checked ~ .tab-menu-buttons label[for="tab3"] {
         <a href="http://www.skilnote-for-ts.co.kr/wm/myshortcut/{{u.username}}/1" title="{{u.profile.phone}}">
           {{u.username}}
         </a>
+        <a href="" class="btn btn-outline-dark btn-sm copy_to_me_from_wm" data-id={{u.id}} id={{u.username}}>
+          복사
+          <span class="" id="loading_for_copy_{{u.id}}" role="status" aria-hidden="true"></span>
+      </a>
+
       </td>
 
       <td>
@@ -284,6 +190,7 @@ input[id="tab3"]:checked ~ .tab-menu-buttons label[for="tab3"] {
 
       </td>
     </tr>
+    <tr class="empty-row"><td colspan="10"></td></tr>
 
     {% endfor %} {% else %}
 
@@ -486,6 +393,40 @@ input[id="tab3"]:checked ~ .tab-menu-buttons label[for="tab3"] {
         console.log('always');
       })
   });
+
+  $(".copy_to_me_from_wm").click(function(e){
+    e.preventDefault();
+    const author = this.id
+    // alert("this.id : " + this.id);
+    const row_id = $(this).data("id");
+
+    if (!author) {
+		return;
+	};
+
+    const selection = prompt("나의 wm을 모두 지운뒤 선택한 유저"+author+"의 노트를 복사하시겠습니까?(x,y)", "");
+    window.history.pushState("", "", '/wm/myshortcut/')
+
+    if (selection == "y" || selection == "Y") {
+        $("#loading_for_copy_"+row_id).addClass("spinner-border spinner-border-sm");
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'wm:copy_to_me_from_user_id' %}",
+            data: {
+                "author":author,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(result) {
+                $("#loading_for_copy_"+row_id).removeClass("spinner-border spinner-border-sm");
+                alert("result.message (user_list_for_memo) : " + result.message)
+            }
+        });
+    } else {
+        alert("취소 하셨습니다.")
+    }
+});  
+
 
   {% endblock %}
 </script>

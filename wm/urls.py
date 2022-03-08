@@ -30,8 +30,16 @@ urlpatterns = [
          views.search_skilnote_by_file_name_for_me.as_view(), name="search_skilnote_by_file_name_for_me"),
     path('myshortcut/search_skilnote_by_file_name_for_all/',
          views.search_skilnote_by_file_name_for_all.as_view(), name="search_skilnote_by_file_name_for_all"),
+    
+    path('myshortcut/copy_chapter_to_x/',
+         views.copy_chapter_to_x, name='copy_chapter_to_x'),     
+    
     path('myshortcut/copy_to_me_from_user_id/',
          views.copy_to_me_from_user_id, name='copy_to_me_from_user_id'),
+   
+    
+    
+    
     path('myshortcut/', views.SkilNoteListView.as_view(), name="my_shortcut_list"),
     path('myshortcut2/', views.MyShortCutListView2.as_view(),
          name="my_shortcut_list2"),

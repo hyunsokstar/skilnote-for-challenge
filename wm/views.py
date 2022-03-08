@@ -677,7 +677,61 @@ def plus_recommand_for_skillnote_user(request):
             "option": "minus",
             "recommand_count": recommand_count
         })
+# 1122
+def copy_chapter_to_x(request):
+    owner = request.POST['owner']
+    category = request.POST['category']
+    index = request.POST['index']
+    destination_chapter = request.POST['destination_chapter']
+    category_title = request.POST['category_title']
 
+    owner_user = User.objects.get(username=owner)
+
+    print("category 111111: ", category)
+
+    list_for_chapter_copy = MyShortCut.objects.filter(Q(author=owner_user) & Q(category = index))
+    comment_for_chapter_copy = CommentForShortCut.objects.filter(Q(author=owner_user))    
+    print("list_for_chapter_copy : ", list_for_chapter_copy)
+    
+    CategoryNick.objects.filter(Q(author=request.user)).update(**{"ca"+destination_chapter: category_title})
+
+    if(request.user.username != owner):
+        MyShortCut.objects.filter(Q(author=request.user) & Q(category = index)).delete()
+    
+    ca = Category.objects.get(id=destination_chapter)
+    
+    
+    for p in list_for_chapter_copy:
+        myshortcut = MyShortCut.objects.create(
+            author=request.user,
+            title=p.title,
+            content1=p.content1,
+            content2=p.content2,
+            type_id=p.type_id,
+            category=ca,
+            filename=p.filename,
+            image=p.image,
+            created=p.created,
+        )
+        # print("myshortcut : " , myshortcut.id)
+        for comment in comment_for_chapter_copy:
+            # print("comment.id : ", comment.id)
+            # print("myshortcut.id : ", myshortcut.id )
+            if comment.shortcut.id == p.id:
+                print("댓글 생성 시도 확인")
+                wm = MyShortCut.objects.filter(id=comment.id)
+                wm_comment = CommentForShortCut.objects.create(
+                    author=request.user,
+                    title=comment.title,
+                    shortcut=myshortcut,
+                    content=comment.content,
+                    created_at=comment.created_at,
+                )    
+    
+    print("챕터 복사 버튼 클릭", owner, category, index)
+    return JsonResponse({
+        'message': owner + '의 노트 ' + category + '를 ' + destination_chapter +'로 복사 했습니다'
+    })    
 
 # MyShortCut , CommentForShortCut, CategoryNick
 def copy_to_me_from_user_id(request):
@@ -1783,9 +1837,18 @@ def CategoryNickListByUserId_for_user(request, user_name):
         cn_my = CategoryNick.objects.get(author=user.id)
         print("cn_my : ", cn_my)
 
+        column_list = []
+
+        for i in range(1,121):
+            field_name = "ca" + str(i)
+            column_list.append(getattr(cn_my, field_name))
+            
+
         return render(request, 'wm/categorynick_list_for_user.html', {
             "category": cn_my,
-            "page_user": user_name
+            "column_list": column_list,
+            "page_user": user_name,
+            "range": range(1,120)
         })
     else:
         return HttpResponse("Request method is not a GET")
